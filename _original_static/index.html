@@ -1,0 +1,2437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>4U.lk — Everything local. Just for you.</title>
+  <meta name="description" content="Buy, sell, rent and find. Explore local businesses, events, activities and community notices on 4U.lk." />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/brand/app-icon-512.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#0B0618" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="4U.lk" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta property="og:site_name" content="4U.lk" />
+  <meta property="og:title" content="4U.lk — Everything local. Just for you." />
+  <meta property="og:description" content="Buy & sell, discover local businesses, RSVP to events and connect with your neighbours." />
+  <meta property="og:image" content="https://4u.lk/assets/brand/og-image.png" />
+  <meta property="og:url" content="https://4u.lk/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://4u.lk/" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"Organization","name":"4U.lk","url":"https://4u.lk/","logo":"https://4u.lk/assets/brand/app-icon-512.png","slogan":"Everything local. Just for you.","areaServed":"LK"},
+    {"@type":"WebSite","name":"4U.lk","url":"https://4u.lk/","inLanguage":"en-LK"}
+  ]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://esm.sh" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'] } } } };
+  </script>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
+      "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react"
+    }
+  }
+  </script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+  <style>
+    html, body { margin: 0; background: #0B0618; font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; }
+    #boot { position: fixed; inset: 0; display: flex; flex-direction: column; gap: 18px; align-items: center; justify-content: center; background: radial-gradient(600px 400px at 70% 10%, rgba(168,85,247,.35), transparent 60%), #0B0618; color: rgba(255,255,255,.6); font-size: 13px; letter-spacing: .08em; }
+    #boot img { width: 64px; height: 75px; animation: bootPulse 1.4s ease-in-out infinite; }
+    @keyframes bootPulse { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.04); } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"><div class="min-h-screen bg-[#F4F2F9] text-[#1E1B4B] font-sans overflow-x-clip"><style>
+        html { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        @media (hover: none) {
+          header .hover:bg-white/10:hover { background-color: transparent; }
+        }
+        @media (max-width: 1023px) {
+          a, button { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+          img { -webkit-user-drag: none; }
+        }
+        body { overscroll-behavior-y: none; }
+        .font-display { font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui, sans-serif; }
+        .brand-gradient { background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); }
+        .hero-band {
+          background:
+            radial-gradient(900px 420px at 90% -20%, rgba(168,85,247,.55), transparent 60%),
+            radial-gradient(700px 380px at -10% 120%, rgba(99,102,241,.35), transparent 60%),
+            linear-gradient(160deg, #1E0F45 0%, #2E1065 60%, #3B0F7A 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { scrollbar-width: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+        @media (max-width: 1023px) {
+          input, select, textarea { font-size: 16px !important; }
+          .tap { transition: transform .12s ease; }
+          .tap:active { transform: scale(.97); }
+        }
+        @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes popIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .overlay-in { animation: fadeIn .2s ease both; }
+        .sheet { animation: popIn .3s cubic-bezier(.16,1,.3,1) both; }
+        @media (max-width: 639px) { .sheet { animation: sheetUp .32s cubic-bezier(.16,1,.3,1) both; } }
+        .page-in { animation: fadeIn .25s ease backwards; }
+      </style><header class="sticky top-0 z-40 bg-[#1E0F45] text-white pt-safe shadow-[0_6px_20px_-12px_rgba(14,8,32,.8)]"><div class="flex max-w-6xl mx-auto px-4 h-14 lg:h-[68px] items-center gap-4"><a href="#/" aria-label="4U.lk home" class="shrink-0"><svg viewBox="0 0 154 56" class="h-8 lg:h-9 w-auto" role="img" aria-label="4U.lk"><defs><linearGradient id="pin-l" x1="6" y1="2" x2="44" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"></stop><stop offset=".55" stop-color="#7C3AED"></stop><stop offset="1" stop-color="#4C1D95"></stop></linearGradient></defs><path d="M24 2C12.4 2 3 11.2 3 22.6c0 14.8 17.6 29.6 19.6 31.2a2.2 2.2 0 0 0 2.8 0C27.4 52.2 45 37.4 45 22.6 45 11.2 35.6 2 24 2z" fill="url(#pin-l)"></path><g stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M19 12.5V31M19 12.5L10 26.5H22.5"></path><path d="M27 12.5V23.5a5 5 0 0 0 10 0V12.5"></path></g><circle cx="41.5" cy="6.5" r="4" fill="#FCD34D" stroke="#0E0820" stroke-width="1.6"></circle><g stroke="#FFFFFF" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M76 15V40M76 15L62 32.5H81.5"></path><path d="M89.5 15V31a8.75 8.75 0 0 0 17.5 0V15"></path></g><circle cx="116.5" cy="37.4" r="3.6" fill="#FCD34D"></circle><g stroke="#FCD34D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M125.5 12.5V40"></path><path d="M134.5 12.5V40M146 23.5L135 32M139.5 29L147 40"></path></g></svg></a><nav class="hidden md:flex items-center gap-1 ml-2 text-[14px] font-semibold" aria-label="Main"><a href="#/ads" class="px-3 py-2 rounded-lg hover:bg-white/10 text-white/80">All ads</a><a href="#/ads?cat=vehicles" class="px-3 py-2 rounded-lg hover:bg-white/10 text-white/80">Vehicles</a><a href="#/ads?cat=property" class="px-3 py-2 rounded-lg hover:bg-white/10 text-white/80">Property</a><a href="#/ads?cat=mobiles" class="px-3 py-2 rounded-lg hover:bg-white/10 text-white/80">Mobiles</a><a href="#/ads?cat=jobs" class="px-3 py-2 rounded-lg hover:bg-white/10 text-white/80">Jobs</a></nav><div class="ml-auto flex items-center gap-1.5 sm:gap-2"><a href="#/saved" aria-label="Saved ads" class="tap relative p-2.5 rounded-xl hover:bg-white/10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-5 h-5 text-white/80"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></a><button class="tap inline-flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-white/10 text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-5 h-5 sm:w-4 sm:h-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span class="hidden sm:inline">Login</span></button><a href="#/post" class="tap hidden lg:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] text-sm font-extrabold tracking-wide">POST YOUR AD</a></div></div></header><main class="page-in pb-[calc(76px+env(safe-area-inset-bottom))] lg:pb-0"><section class="hero-band text-white"><div class="max-w-6xl mx-auto px-4 pt-8 pb-12 sm:pt-14 sm:pb-20 relative text-center"><p class="text-[12px] sm:text-[13px] font-bold tracking-[0.18em] text-[#FCD34D] uppercase">Sri Lanka’s local marketplace</p><h1 class="font-display mt-2 text-[30px] sm:text-[46px] font-extrabold leading-[1.05] tracking-[-0.03em]">Everything local. <br class="sm:hidden"><span class="text-[#FDE68A]">Just for you.</span></h1><p class="mt-2 sm:mt-3 text-[15px] sm:text-[17px] text-white/75 max-w-2xl mx-auto text-balance">Buy and sell cars, phones, property and more, or find a job, across all 25 districts.</p><div class="mt-6 sm:mt-8 max-w-3xl mx-auto text-left"><form role="search" class="flex flex-col sm:flex-row gap-2 bg-white rounded-2xl p-2 shadow-[0_24px_60px_-24px_rgba(14,8,32,.7)]"><button type="button" class="tap flex items-center gap-2 px-3.5 py-3 rounded-xl bg-[#F5F3FF] text-sm font-semibold text-[#1E1B4B] sm:w-[210px] shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4 text-[#7C3AED] shrink-0"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg><span class="truncate flex-1 text-left">All of Sri Lanka</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down w-4 h-4 text-[#94A3B8]"><path d="m6 9 6 6 6-6"></path></svg></button><div class="flex flex-1 gap-2"><label class="flex-1 flex items-center gap-2 px-3 rounded-xl focus-within:bg-[#FAF9FF]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-4 h-4 text-[#94A3B8] shrink-0"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span class="sr-only">What are you looking for?</span><input placeholder="What are you looking for?" class="w-full py-3 bg-transparent text-[15px] text-[#1E1B4B] placeholder-[#94A3B8] focus:outline-none" value=""></label><button type="submit" class="tap shrink-0 px-5 sm:px-7 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] font-extrabold text-sm">Search</button></div></form></div><div class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-[13px] text-white/70"><span class="text-white/50">Popular:</span><a href="#/ads?cat=vehicles&amp;loc=Colombo" class="hover:text-white underline-offset-4 hover:underline">Cars in Colombo</a><a href="#/ads?cat=property&amp;loc=Colombo" class="hover:text-white underline-offset-4 hover:underline">Land in Colombo</a><a href="#/ads?q=iPhone" class="hover:text-white underline-offset-4 hover:underline">iPhone</a><a href="#/ads?q=house" class="hover:text-white underline-offset-4 hover:underline">Houses for sale</a><a href="#/ads?q=scooter" class="hover:text-white underline-offset-4 hover:underline">Scooters</a></div></div></section><div class="max-w-6xl mx-auto px-4 -mt-6 sm:-mt-10 relative space-y-6 sm:space-y-8"><section class="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6 shadow-[0_12px_40px_-24px_rgba(76,29,149,.35)]" aria-labelledby="cat-title"><div class="flex items-center justify-between mb-3 sm:mb-4"><h2 id="cat-title" class="text-[17px] sm:text-xl font-extrabold text-[#1E1B4B]">Browse items by category</h2><a href="#/ads" class="text-sm font-semibold text-[#6D28D9] hover:underline">All ads</a></div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1"><a href="#/ads?cat=vehicles" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car w-5 h-5"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Vehicles</span><span class="hidden sm:inline">Vehicles</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">4 ads</span></span></a><a href="#/ads?cat=property" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house w-5 h-5"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Property</span><span class="hidden sm:inline">Property</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">3 ads</span></span></a><a href="#/ads?cat=mobiles" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone w-5 h-5"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Mobiles</span><span class="hidden sm:inline">Mobile Phones &amp; Tablets</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">2 ads</span></span></a><a href="#/ads?cat=electronics" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-laptop w-5 h-5"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Electronics</span><span class="hidden sm:inline">Electronics</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">2 ads</span></span></a><a href="#/ads?cat=home" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sofa w-5 h-5"><path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"></path><path d="M2 16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"></path><path d="M4 18v2"></path><path d="M20 18v2"></path><path d="M12 4v9"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Home &amp; Garden</span><span class="hidden sm:inline">Home &amp; Garden</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a><a href="#/ads?cat=fashion" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shirt w-5 h-5"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Fashion</span><span class="hidden sm:inline">Fashion &amp; Beauty</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a><a href="#/ads?cat=jobs" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Jobs</span><span class="hidden sm:inline">Jobs</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">2 ads</span></span></a><a href="#/ads?cat=services" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench w-5 h-5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Services</span><span class="hidden sm:inline">Services</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">2 ads</span></span></a><a href="#/ads?cat=business" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-store w-5 h-5"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path><path d="M2 7h20"></path><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Business</span><span class="hidden sm:inline">Business &amp; Industry</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a><a href="#/ads?cat=hobby" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dumbbell w-5 h-5"><path d="M14.4 14.4 9.6 9.6"></path><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z"></path><path d="m21.5 21.5-1.4-1.4"></path><path d="M3.9 3.9 2.5 2.5"></path><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Hobby &amp; Sport</span><span class="hidden sm:inline">Hobby, Sport &amp; Kids</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a><a href="#/ads?cat=animals" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-paw-print w-5 h-5"><circle cx="11" cy="4" r="2"></circle><circle cx="18" cy="8" r="2"></circle><circle cx="20" cy="16" r="2"></circle><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Animals</span><span class="hidden sm:inline">Animals</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a><a href="#/ads?cat=education" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap w-5 h-5"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Education</span><span class="hidden sm:inline">Education</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a><a href="#/ads?cat=agriculture" class="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]"><span class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tractor w-5 h-5"><path d="m10 11 11 .9a1 1 0 0 1 .8 1.1l-.665 4.158a1 1 0 0 1-.988.842H20"></path><path d="M16 18h-5"></path><path d="M18 5a1 1 0 0 0-1 1v5.573"></path><path d="M3 4h8.129a1 1 0 0 1 .99.863L13 11.246"></path><path d="M4 11V4"></path><path d="M7 15h.01"></path><path d="M8 10.1V4"></path><circle cx="18" cy="18" r="2"></circle><circle cx="7" cy="15" r="5"></circle></svg></span><span class="min-w-0"><span class="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight"><span class="sm:hidden">Agriculture</span><span class="hidden sm:inline">Agriculture</span></span><span class="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">1 ad</span></span></a></div></section><section aria-labelledby="top-title"><div class="flex items-center justify-between mb-3"><h2 id="top-title" class="inline-flex items-center gap-2 text-[17px] sm:text-xl font-extrabold text-[#1E1B4B]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-5 h-5 text-[#F59E0B]"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg> Top ads</h2><a href="#/ads" class="text-sm font-semibold text-[#6D28D9] hover:underline">See all</a></div><div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"><a href="#/ad/a101" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Toyota Aqua G 2015</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Nugegoda, Colombo</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 6,450,000</p></div></a><a href="#/ad/a102" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Apple iPhone 14 Pro 128GB (Used)</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Peradeniya, Kandy</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 238,000</p></div></a><a href="#/ad/a110" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Land for Sale – 12 Perches, Kottawa</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Kottawa, Colombo</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 1,450,000/perch</p></div></a><a href="#/ad/a122" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Toyota Premio 2017 – Registered 2018</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Negombo, Gampaha</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 15,900,000</p></div></a></div></section><section class="rounded-2xl bg-[#1E0F45] text-white p-5 sm:p-7 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 overflow-hidden relative"><div class="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-[#7C3AED]/40 blur-2xl" aria-hidden="true"></div><div class="relative flex-1"><h2 class="text-lg sm:text-2xl font-extrabold">Got something to sell?</h2><p class="mt-1 text-sm text-white/70">Post your ad for free in under two minutes and reach buyers across Sri Lanka.</p></div><a href="#/post" class="tap relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] font-extrabold text-sm"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-4 h-4 stroke-[3]"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg> Post your ad for free</a></section><section aria-labelledby="latest-title"><div class="flex items-center justify-between mb-3"><h2 id="latest-title" class="text-[17px] sm:text-xl font-extrabold text-[#1E1B4B]">Latest ads</h2><a href="#/ads?sort=date" class="text-sm font-semibold text-[#6D28D9] hover:underline">See all</a></div><div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"><a href="#/ad/a101" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Toyota Aqua G 2015</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Nugegoda, Colombo</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 6,450,000</p></div></a><a href="#/ad/a110" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Land for Sale – 12 Perches, Kottawa</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Kottawa, Colombo</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 1,450,000/perch</p></div></a><a href="#/ad/a102" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Apple iPhone 14 Pro 128GB (Used)</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Peradeniya, Kandy</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 238,000</p></div></a><a href="#/ad/a111" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Samsung Galaxy A54 5G 8GB/256GB</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Maharagama, Colombo</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 92,000</p></div></a><a href="#/ad/a103" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Furnished 2BR Apartment for Rent – Colombo 5</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Colombo 1-15, Colombo</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 145,000/month</p></div></a><a href="#/ad/a104" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Samsung 55" Crystal 4K Smart TV – Brand New</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Kadawatha, Gampaha</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 189,500</p></div></a><a href="#/ad/a122" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><span class="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">TOP AD</span><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Toyota Premio 2017 – Registered 2018</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Negombo, Gampaha</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 15,900,000</p></div></a><a href="#/ad/a105" class="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"><div class="relative aspect-[4/3] overflow-hidden"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&amp;fit=crop&amp;w=420&amp;q=72" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"><button type="button" aria-label="Save ad" aria-pressed="false" class="tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center absolute top-2 right-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-[#64748B]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></button></div><div class="p-2.5 sm:p-3 flex-1 flex flex-col"><h3 class="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">Teak Sofa Set 3+1+1 with Cushions</h3><p class="mt-1 text-[11.5px] text-[#64748B] truncate">Karapitiya, Galle</p><p class="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">Rs 135,000</p></div></a></div></section><section class="grid md:grid-cols-2 gap-4 sm:gap-6"><div class="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6"><h2 class="text-base sm:text-lg font-extrabold text-[#1E1B4B] mb-3">Popular searches</h2><div class="flex flex-wrap gap-2"><a href="#/ads?cat=vehicles&amp;loc=Colombo" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Cars in Colombo</a><a href="#/ads?cat=property&amp;loc=Colombo" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Land in Colombo</a><a href="#/ads?q=iPhone" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">iPhone</a><a href="#/ads?q=house" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Houses for sale</a><a href="#/ads?q=scooter" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Scooters</a><a href="#/ads?cat=jobs&amp;loc=Colombo" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Jobs in Colombo</a><a href="#/ads?q=apartment" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Apartments for rent</a><a href="#/ads?q=three-wheeler" class="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]">Three-wheelers</a></div></div><div class="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6"><h2 class="text-base sm:text-lg font-extrabold text-[#1E1B4B] mb-3">Ads by district</h2><div class="grid grid-cols-2 gap-x-4 gap-y-1"><a href="#/ads?loc=Colombo" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Colombo<span class="text-xs text-[#94A3B8]">7</span></a><a href="#/ads?loc=Gampaha" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Gampaha<span class="text-xs text-[#94A3B8]">5</span></a><a href="#/ads?loc=Kandy" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Kandy<span class="text-xs text-[#94A3B8]">4</span></a><a href="#/ads?loc=Galle" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Galle<span class="text-xs text-[#94A3B8]">2</span></a><a href="#/ads?loc=Kurunegala" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Kurunegala<span class="text-xs text-[#94A3B8]">2</span></a><a href="#/ads?loc=Matara" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Matara<span class="text-xs text-[#94A3B8]">1</span></a><a href="#/ads?loc=Kalutara" class="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">Kalutara<span class="text-xs text-[#94A3B8]">1</span></a></div><button class="mt-2 text-sm font-semibold text-[#6D28D9] hover:underline">See all 25 districts</button></div></section><section class="grid sm:grid-cols-3 gap-3"><div class="flex gap-3 items-start bg-white rounded-2xl border border-[#E9E5F5] p-4"><span class="w-10 h-10 rounded-xl bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-5 h-5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span><span><span class="block text-sm font-bold text-[#1E1B4B]">Verified members</span><span class="block text-[13px] text-[#64748B] mt-0.5">Shops and agents marked MEMBER are checked by our team.</span></span></div><div class="flex gap-3 items-start bg-white rounded-2xl border border-[#E9E5F5] p-4"><span class="w-10 h-10 rounded-xl bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square w-5 h-5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span><span class="block text-sm font-bold text-[#1E1B4B]">Contact directly</span><span class="block text-[13px] text-[#64748B] mt-0.5">Call, chat or WhatsApp sellers. No middleman, no fees.</span></span></div><div class="flex gap-3 items-start bg-white rounded-2xl border border-[#E9E5F5] p-4"><span class="w-10 h-10 rounded-xl bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert w-5 h-5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg></span><span><span class="block text-sm font-bold text-[#1E1B4B]">Stay safe</span><span class="block text-[13px] text-[#64748B] mt-0.5">Meet in public and never pay in advance.</span></span></div></section></div></main><footer class="hidden lg:block bg-[#140A30] text-white/70 mt-10"><div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm"><div class="col-span-2 md:col-span-1"><svg viewBox="0 0 154 56" class="h-9 w-auto" role="img" aria-label="4U.lk"><defs><linearGradient id="pin-l" x1="6" y1="2" x2="44" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#A855F7"></stop><stop offset=".55" stop-color="#7C3AED"></stop><stop offset="1" stop-color="#4C1D95"></stop></linearGradient></defs><path d="M24 2C12.4 2 3 11.2 3 22.6c0 14.8 17.6 29.6 19.6 31.2a2.2 2.2 0 0 0 2.8 0C27.4 52.2 45 37.4 45 22.6 45 11.2 35.6 2 24 2z" fill="url(#pin-l)"></path><g stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M19 12.5V31M19 12.5L10 26.5H22.5"></path><path d="M27 12.5V23.5a5 5 0 0 0 10 0V12.5"></path></g><circle cx="41.5" cy="6.5" r="4" fill="#FCD34D" stroke="#0E0820" stroke-width="1.6"></circle><g stroke="#FFFFFF" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M76 15V40M76 15L62 32.5H81.5"></path><path d="M89.5 15V31a8.75 8.75 0 0 0 17.5 0V15"></path></g><circle cx="116.5" cy="37.4" r="3.6" fill="#FCD34D"></circle><g stroke="#FCD34D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M125.5 12.5V40"></path><path d="M134.5 12.5V40M146 23.5L135 32M139.5 29L147 40"></path></g></svg><p class="mt-3 text-[13px] leading-relaxed text-white/55">Sri Lanka’s local marketplace. Buy, sell and find what you need near you.</p></div><div><h3 class="text-white font-bold mb-3">Browse</h3><ul class="space-y-2"><li><a href="#/ads?cat=vehicles" class="hover:text-white">Vehicles</a></li><li><a href="#/ads?cat=property" class="hover:text-white">Property</a></li><li><a href="#/ads?cat=mobiles" class="hover:text-white">Mobiles</a></li><li><a href="#/ads?cat=electronics" class="hover:text-white">Electronics</a></li><li><a href="#/ads?cat=home" class="hover:text-white">Home &amp; Garden</a></li><li><a href="#/ads?cat=fashion" class="hover:text-white">Fashion</a></li></ul></div><div><h3 class="text-white font-bold mb-3">Districts</h3><ul class="space-y-2"><li><a href="#/ads?loc=Colombo" class="hover:text-white">Colombo</a></li><li><a href="#/ads?loc=Gampaha" class="hover:text-white">Gampaha</a></li><li><a href="#/ads?loc=Kandy" class="hover:text-white">Kandy</a></li><li><a href="#/ads?loc=Galle" class="hover:text-white">Galle</a></li><li><a href="#/ads?loc=Kurunegala" class="hover:text-white">Kurunegala</a></li><li><a href="#/ads?loc=Matara" class="hover:text-white">Matara</a></li></ul></div><div><h3 class="text-white font-bold mb-3">Help &amp; support</h3><ul class="space-y-2"><li><a href="#/post" class="hover:text-white">Post an ad</a></li><li><a href="#/safety" class="hover:text-white">Stay safe</a></li><li><a href="#/saved" class="hover:text-white">Saved ads</a></li><li><a href="mailto:support@4u.lk" class="hover:text-white">support@4u.lk</a></li></ul></div></div><div class="border-t border-white/10"><div class="max-w-6xl mx-auto px-4 py-5 text-xs text-white/45 flex flex-col sm:flex-row justify-between gap-2"><span>© 2026 4U.lk · Everything local. Just for you.</span><span>Made in Sri Lanka</span></div></div></footer><nav aria-label="App navigation" class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl border-t border-[#E9E5F5] pb-safe"><div class="grid grid-cols-5 h-[62px] max-w-md mx-auto"><a href="#/" class="tap flex flex-col items-center justify-center gap-0.5 text-[10.5px] font-semibold text-[#6D28D9]" aria-current="page"><span class="w-12 h-7 rounded-full flex items-center justify-center bg-[#EDE9FE]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house w-[19px] h-[19px]"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span>Home</a><a href="#/ads" class="tap flex flex-col items-center justify-center gap-0.5 text-[10.5px] font-semibold text-[#64748B]"><span class="w-12 h-7 rounded-full flex items-center justify-center "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-[19px] h-[19px]"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></span>Search</a><div class="flex justify-center"><a href="#/post" aria-label="Post your ad" class="tap -mt-4 w-14 h-14 rounded-2xl bg-[#FCD34D] text-[#1E1B4B] flex flex-col items-center justify-center shadow-[0_10px_22px_-8px_rgba(217,119,6,.7)] ring-4 ring-[#F4F2F9]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-5 h-5 stroke-[3]"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><span class="text-[9.5px] font-extrabold -mt-0.5">SELL</span></a></div><a href="#/saved" class="tap flex flex-col items-center justify-center gap-0.5 text-[10.5px] font-semibold text-[#64748B]"><span class="w-12 h-7 rounded-full flex items-center justify-center "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-[19px] h-[19px]"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></span>Saved</a><a href="#/account" class="tap flex flex-col items-center justify-center gap-0.5 text-[10.5px] font-semibold text-[#64748B]"><span class="w-12 h-7 rounded-full flex items-center justify-center "><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-[19px] h-[19px]"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>Account</a></div></nav></div></div>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+    }
+  </script>
+
+  <script type="text/babel" data-type="module" data-presets="react">
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import {
+  Search,
+  MapPin,
+  Plus,
+  Heart,
+  CheckCircle2,
+  Clock,
+  MessageSquare,
+  Phone,
+  Share2,
+  ShieldCheck,
+  ShieldAlert,
+  Flag,
+  ChevronRight,
+  ChevronLeft,
+  ChevronDown,
+  X,
+  SlidersHorizontal,
+  Home,
+  Car,
+  Laptop,
+  Smartphone,
+  Shirt,
+  Sofa,
+  Wrench,
+  Briefcase,
+  Dumbbell,
+  PawPrint,
+  GraduationCap,
+  Tractor,
+  User,
+  Camera,
+  ImagePlus,
+  BadgeCheck,
+  Store,
+  Eye,
+  Trash2,
+  Send,
+  TrendingUp,
+  WifiOff,
+  Download,
+} from 'lucide-react';
+
+// =====================================================================
+//  DATA
+// =====================================================================
+
+const CATEGORIES = [
+  { id: 'vehicles', name: 'Vehicles', icon: Car, hint: 'Cars, bikes, three-wheelers' },
+  { id: 'property', name: 'Property', icon: Home, hint: 'Houses, land, apartments' },
+  { id: 'mobiles', name: 'Mobile Phones & Tablets', short: 'Mobiles', icon: Smartphone, hint: 'Phones, tablets, accessories' },
+  { id: 'electronics', name: 'Electronics', icon: Laptop, hint: 'TVs, laptops, cameras' },
+  { id: 'home', name: 'Home & Garden', icon: Sofa, hint: 'Furniture, appliances' },
+  { id: 'fashion', name: 'Fashion & Beauty', short: 'Fashion', icon: Shirt, hint: 'Clothing, jewellery' },
+  { id: 'jobs', name: 'Jobs', icon: Briefcase, hint: 'Vacancies in Sri Lanka' },
+  { id: 'services', name: 'Services', icon: Wrench, hint: 'Repairs, trades, catering' },
+  { id: 'business', name: 'Business & Industry', short: 'Business', icon: Store, hint: 'Machinery, office, shops' },
+  { id: 'hobby', name: 'Hobby, Sport & Kids', short: 'Hobby & Sport', icon: Dumbbell, hint: 'Bicycles, gym, toys' },
+  { id: 'animals', name: 'Animals', icon: PawPrint, hint: 'Pets, pet food, farm animals' },
+  { id: 'education', name: 'Education', icon: GraduationCap, hint: 'Classes, books' },
+  { id: 'agriculture', name: 'Agriculture', icon: Tractor, hint: 'Plants, seeds, crops' },
+];
+const catById = (id) => CATEGORIES.find((c) => c.id === id) || CATEGORIES[0];
+
+const DISTRICTS = [
+  'Colombo', 'Gampaha', 'Kalutara', 'Kandy', 'Matale', 'Nuwara Eliya', 'Galle', 'Matara', 'Hambantota',
+  'Jaffna', 'Kilinochchi', 'Mannar', 'Vavuniya', 'Mullaitivu', 'Batticaloa', 'Ampara', 'Trincomalee',
+  'Kurunegala', 'Puttalam', 'Anuradhapura', 'Polonnaruwa', 'Badulla', 'Monaragala', 'Ratnapura', 'Kegalle',
+];
+const ALL_LK = 'All of Sri Lanka';
+
+const CITIES = {
+  Colombo: ['Colombo 1-15', 'Nugegoda', 'Dehiwala', 'Mount Lavinia', 'Maharagama', 'Kottawa', 'Battaramulla', 'Rajagiriya', 'Kaduwela', 'Homagama', 'Moratuwa', 'Piliyandala'],
+  Gampaha: ['Negombo', 'Gampaha', 'Kadawatha', 'Kiribathgoda', 'Wattala', 'Ja-Ela', 'Kelaniya', 'Minuwangoda', 'Nittambuwa'],
+  Kandy: ['Kandy', 'Peradeniya', 'Katugastota', 'Gampola', 'Kundasale', 'Digana', 'Pilimathalawa'],
+  Galle: ['Galle', 'Karapitiya', 'Hikkaduwa', 'Ambalangoda', 'Unawatuna', 'Baddegama'],
+  Kurunegala: ['Kurunegala', 'Kuliyapitiya', 'Pannala', 'Narammala', 'Wariyapola'],
+  Matara: ['Matara', 'Weligama', 'Akuressa', 'Dikwella'],
+  Kalutara: ['Panadura', 'Kalutara', 'Horana', 'Beruwala', 'Wadduwa'],
+};
+
+const U = (id, w = 900) => (id.startsWith('data:') ? id : `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=72`);
+
+const IMG = {
+  aqua: '1549317661-bd32c8ce0db2',
+  car2: '1503376780353-7e6692767b70',
+  scooter: '1558981806-ec527fa84c39',
+  bicycle: '1485965120184-e220f721d03e',
+  iphone: '1592750475338-74b7b21085ab',
+  phone2: '1511707171634-5f897ff02aa9',
+  tv: '1593359677879-a4bb92f829d1',
+  monitor: '1527443224154-c4a3942d3acf',
+  sofa: '1555041469-a586c61ea9bc',
+  chair: '1580480055273-228ff5388ef8',
+  apartment: '1502672260266-1c1ef2d93688',
+  house: '1600585154340-be6161a56a0c',
+  interior: '1586023492125-27b2c045efd7',
+  office: '1497366216548-37526070297c',
+  ac: '1621905251918-48416bd8575a',
+  saree: '1610030469983-98e550d6193c',
+  clothes: '1445205170230-053b83016050',
+  garden: '1416879595882-3373a0480b5b',
+  bakery: '1509440159596-0249088772ff',
+  spa: '1544161515-4ab6ce6db874',
+};
+
+// posted = minutes ago. Sample content for launch preview.
+const INITIAL_ADS = [
+  { id: 'a101', title: 'Toyota Aqua G 2015', cat: 'vehicles', district: 'Colombo', city: 'Nugegoda', price: 6450000, negotiable: true, condition: 'Used', posted: 35, top: true, member: false, photos: [IMG.aqua, IMG.car2],
+    seller: { name: 'Nuwan Perera', phone: '077 000 0101', since: 'March 2022' },
+    specs: { Brand: 'Toyota', Model: 'Aqua G', 'Model year': '2015', Mileage: '78,000 km', Transmission: 'Automatic', 'Fuel type': 'Hybrid', 'Engine capacity': '1,500 cc', 'Body type': 'Hatchback' },
+    description: 'Single owner, full agent service record.\nNew hybrid battery fitted in 2024.\nPush start, reverse camera, alloy wheels, dual airbags.\nLeasing can be arranged. Inspection welcome in Nugegoda.' },
+  { id: 'a102', title: 'Apple iPhone 14 Pro 128GB (Used)', cat: 'mobiles', district: 'Kandy', city: 'Peradeniya', price: 238000, negotiable: false, condition: 'Used', posted: 70, top: true, member: false, photos: [IMG.iphone, IMG.phone2],
+    seller: { name: 'Ishara Bandara', phone: '071 000 0202', since: 'January 2023' },
+    specs: { Brand: 'Apple', Model: 'iPhone 14 Pro', Storage: '128 GB', Colour: 'Deep Purple', 'Battery health': '92%' },
+    description: 'Original device with box and cable, never repaired.\nFace ID and all cameras working perfectly.\nAlways used with a case and screen guard.\nMeet-up in Kandy town or Peradeniya.' },
+  { id: 'a103', title: 'Furnished 2BR Apartment for Rent – Colombo 5', cat: 'property', district: 'Colombo', city: 'Colombo 1-15', price: 145000, per: '/month', negotiable: false, condition: null, posted: 180, top: false, member: true, photos: [IMG.apartment, IMG.interior],
+    seller: { name: 'Lanka Homes Realty', phone: '011 000 0303', since: 'June 2021' },
+    specs: { Type: 'Apartment for rent', Bedrooms: '2', Bathrooms: '2', Size: '1,050 sqft', Floor: '7th', Furnishing: 'Fully furnished', 'Available from': '1 December' },
+    description: '1,050 sqft apartment in Havelock Town with A/C, hot water, parking and 24-hour security.\nSix months advance.\nWalking distance to shops and schools.' },
+  { id: 'a104', title: 'Samsung 55" Crystal 4K Smart TV – Brand New', cat: 'electronics', district: 'Gampaha', city: 'Kadawatha', price: 189500, negotiable: false, condition: 'Brand New', posted: 260, top: false, member: true, photos: [IMG.tv],
+    seller: { name: 'Digital Zone Kadawatha', phone: '033 000 0404', since: 'August 2020' },
+    specs: { Brand: 'Samsung', 'Screen size': '55 inch', Resolution: '4K UHD', Warranty: '2 years (local)' },
+    description: 'Sealed box with official local warranty.\nIsland-wide delivery, free within Gampaha district.\nCard payments and instalment plans accepted in-store.' },
+  { id: 'a105', title: 'Teak Sofa Set 3+1+1 with Cushions', cat: 'home', district: 'Galle', city: 'Karapitiya', price: 135000, negotiable: true, condition: 'Used', posted: 600, top: false, member: false, photos: [IMG.sofa, IMG.interior],
+    seller: { name: 'Dilani Wickramasinghe', phone: '076 000 0505', since: 'February 2024' },
+    specs: { Item: 'Sofa set', Material: 'Solid teak', Seats: '5 (3+1+1)' },
+    description: 'Solid teak frame, polished last year, with washable beige cushion covers.\nMoving abroad so must sell.\nBuyer to arrange transport from Karapitiya.' },
+  { id: 'a106', title: 'Honda Dio 2019', cat: 'vehicles', district: 'Kurunegala', city: 'Kurunegala', price: 465000, negotiable: true, condition: 'Used', posted: 900, top: false, member: false, photos: [IMG.scooter],
+    seller: { name: 'Chamara Rathnayake', phone: '070 000 0606', since: 'May 2023' },
+    specs: { Brand: 'Honda', Model: 'Dio', 'Model year': '2019', Mileage: '21,000 km', 'Engine capacity': '110 cc' },
+    description: 'Well-maintained scooter, licence and insurance valid.\nNew tyres and battery.\nGenuine buyers only, price slightly negotiable after inspection.' },
+  { id: 'a107', title: 'Accounts Executive – Colombo 3', cat: 'jobs', district: 'Colombo', city: 'Colombo 1-15', price: 95000, per: '/month', negotiable: false, condition: null, posted: 1500, top: false, member: true, photos: [IMG.office],
+    seller: { name: 'Serendib Trading (Pvt) Ltd', phone: '011 000 0707', since: 'October 2021' },
+    specs: { 'Job type': 'Full-time', Experience: '2+ years', Education: 'Part-qualified CA / CIMA', Salary: 'Rs. 85,000 – 110,000', 'Application deadline': '15 December' },
+    description: 'Handle payables, VAT returns and month-end closing.\nEPF/ETF, medical cover and annual bonus.\nSend your CV through 4U.lk chat.' },
+  { id: 'a108', title: 'A/C Repair, Service & Gas Refill – Same Day', cat: 'services', district: 'Gampaha', city: 'Negombo', price: 3500, from: true, negotiable: false, condition: null, posted: 2200, top: false, member: true, photos: [IMG.ac],
+    seller: { name: 'CoolAir Technicians', phone: '077 000 0808', since: 'April 2019' },
+    specs: { Service: 'A/C repair & servicing', Coverage: 'Negombo, Ja-Ela, Katunayake, Seeduwa', Availability: '7 days' },
+    description: 'Split and inverter A/C servicing, gas top-up, leak repair and installation.\nWeekend visits available.' },
+  { id: 'a109', title: 'Handloom Cotton Sarees – New Arrivals', cat: 'fashion', district: 'Kandy', city: 'Kandy', price: 8900, negotiable: false, condition: 'Brand New', posted: 2900, top: false, member: true, photos: [IMG.saree, IMG.clothes],
+    seller: { name: 'Kandy Weaves', phone: '081 000 0909', since: 'July 2022' },
+    specs: { Item: 'Saree', Material: 'Handloom cotton', Colours: '12 available', Delivery: 'Cash on delivery island-wide' },
+    description: 'Hand-woven cotton sarees, blouse piece included.\nCash on delivery island-wide, or visit our shop near the Kandy Clock Tower.' },
+  { id: 'a110', title: 'Land for Sale – 12 Perches, Kottawa', cat: 'property', district: 'Colombo', city: 'Kottawa', price: 1450000, per: '/perch', negotiable: true, condition: null, posted: 45, top: true, member: true, photos: [IMG.garden],
+    seller: { name: 'Prime Lands Advisory', phone: '011 000 1010', since: 'September 2020' },
+    specs: { Type: 'Land for sale', 'Land size': '12 perches', 'Road access': '20 ft carpeted road', Deeds: 'Clear deeds' },
+    description: 'Residential land 1.2 km from Kottawa town and the expressway entrance.\nWater and electricity available.\nBank loans can be arranged.' },
+  { id: 'a111', title: 'Samsung Galaxy A54 5G 8GB/256GB', cat: 'mobiles', district: 'Colombo', city: 'Maharagama', price: 92000, negotiable: true, condition: 'Used', posted: 140, top: false, member: false, photos: [IMG.phone2],
+    seller: { name: 'Kasun Jayawardena', phone: '075 000 1111', since: 'November 2023' },
+    specs: { Brand: 'Samsung', Model: 'Galaxy A54 5G', Storage: '256 GB', RAM: '8 GB' },
+    description: 'Excellent condition, used for 10 months.\nCharger and box included. Swap not available.' },
+  { id: 'a112', title: 'Modern 3-Bedroom House for Sale – Kadawatha', cat: 'property', district: 'Gampaha', city: 'Kadawatha', price: 32500000, negotiable: true, condition: null, posted: 3600, top: false, member: true, photos: [IMG.house, IMG.interior],
+    seller: { name: 'Lanka Homes Realty', phone: '011 000 0303', since: 'June 2021' },
+    specs: { Type: 'House for sale', Bedrooms: '3', Bathrooms: '2', 'House size': '1,850 sqft', 'Land size': '10 perches' },
+    description: 'Two-storey house, 500 m to Kandy Road.\nSolar panels, garage for two vehicles.\nClear deeds, bank loan facilities available.' },
+  { id: 'a113', title: 'Dell 27" Monitor + Office Chair Bundle', cat: 'electronics', district: 'Colombo', city: 'Rajagiriya', price: 68000, negotiable: true, condition: 'Used', posted: 4300, top: false, member: false, photos: [IMG.monitor, IMG.chair],
+    seller: { name: 'Hiran de Silva', phone: '072 000 1313', since: 'March 2024' },
+    specs: { Item: 'Monitor and chair', 'Screen size': '27 inch' },
+    description: 'Work-from-home setup, both in very good condition.\nWill not sell separately.' },
+  { id: 'a114', title: 'Mountain Bicycle 27.5" – 21 Speed', cat: 'hobby', district: 'Kandy', city: 'Katugastota', price: 54000, negotiable: true, condition: 'Used', posted: 5200, top: false, member: false, photos: [IMG.bicycle],
+    seller: { name: 'Sahan Gunasekara', phone: '078 000 1414', since: 'July 2023' },
+    specs: { Item: 'Bicycle', 'Wheel size': '27.5"', Gears: '21 speed' },
+    description: 'Aluminium frame, disc brakes, recently serviced.' },
+  { id: 'a115', title: 'Wedding & Event Cakes – Order Now', cat: 'services', district: 'Kandy', city: 'Kandy', price: 6500, from: true, negotiable: false, condition: null, posted: 6000, top: false, member: true, photos: [IMG.bakery],
+    seller: { name: 'Hill Country Bakehouse', phone: '081 000 1515', since: 'May 2021' },
+    specs: { Service: 'Cakes & catering', Delivery: 'Kandy district' },
+    description: 'Butter cakes, wedding structures and short-eat platters.\nOrder three days in advance.' },
+  { id: 'a116', title: 'Ayurveda Massage Therapist – Galle Fort', cat: 'jobs', district: 'Galle', city: 'Galle', price: 70000, per: '/month', negotiable: false, condition: null, posted: 6500, top: false, member: true, photos: [IMG.spa],
+    seller: { name: 'Serene Ayurveda Spa', phone: '091 000 1616', since: 'February 2022' },
+    specs: { 'Job type': 'Full-time', Experience: '1+ year', Benefits: 'Meals, accommodation' },
+    description: 'Certified therapists preferred. Training provided.' },
+  { id: 'a117', title: 'Golden Retriever Puppies', cat: 'animals', district: 'Gampaha', city: 'Kiribathgoda', price: 45000, negotiable: false, condition: null, posted: 7000, top: false, member: false, photos: [],
+    seller: { name: 'Rashmi Peiris', phone: '077 000 1717', since: 'October 2024' },
+    specs: { Animal: 'Dog', Breed: 'Golden Retriever', Age: '8 weeks', Vaccinated: 'First vaccine done' },
+    description: 'Healthy, playful puppies raised at home.\nBoth parents can be seen.' },
+  { id: 'a118', title: 'A/L Combined Maths – Individual & Group Classes', cat: 'education', district: 'Matara', city: 'Matara', price: 2500, per: '/month', negotiable: false, condition: null, posted: 8000, top: false, member: false, photos: [],
+    seller: { name: 'Pradeep Kumara', phone: '071 000 1818', since: 'January 2023' },
+    specs: { Subject: 'Combined Mathematics', Level: 'A/L', Medium: 'Sinhala / English', Mode: 'Physical & online' },
+    description: 'Theory and revision classes for 2026 and 2027 batches.' },
+  { id: 'a119', title: 'Hybrid Coconut Seedlings', cat: 'agriculture', district: 'Kurunegala', city: 'Kuliyapitiya', price: 450, per: '/each', negotiable: false, condition: null, posted: 9000, top: false, member: true, photos: [],
+    seller: { name: 'Wayamba Nursery', phone: '037 000 1919', since: 'June 2020' },
+    specs: { Plant: 'Coconut seedling', Variety: 'Hybrid', 'Minimum order': '20' },
+    description: 'Healthy seedlings, delivery for orders above 100.' },
+  { id: 'a120', title: 'Bajaj RE Three-Wheeler 2017', cat: 'vehicles', district: 'Kalutara', city: 'Panadura', price: 1385000, negotiable: true, condition: 'Used', posted: 1100, top: false, member: false, photos: [],
+    seller: { name: 'Ajith Kumara', phone: '070 000 2020', since: 'August 2023' },
+    specs: { Brand: 'Bajaj', Model: 'RE 4 Stroke', 'Model year': '2017', Mileage: '64,000 km' },
+    description: 'Original paint, good engine, ready for transfer.' },
+  { id: 'a121', title: 'Commercial Chest Freezer 400L', cat: 'business', district: 'Colombo', city: 'Battaramulla', price: 118000, negotiable: true, condition: 'Used', posted: 4800, top: false, member: false, photos: [],
+    seller: { name: 'Malith Stores', phone: '077 000 2121', since: 'March 2022' },
+    specs: { Item: 'Chest freezer', Capacity: '400 L' },
+    description: 'Closing the shop. Working perfectly, two years old.' },
+  { id: 'a122', title: 'Toyota Premio 2017 – Registered 2018', cat: 'vehicles', district: 'Gampaha', city: 'Negombo', price: 15900000, negotiable: true, condition: 'Used', posted: 300, top: true, member: true, photos: [IMG.car2],
+    seller: { name: 'Negombo Auto Traders', phone: '031 000 2222', since: 'January 2020' },
+    specs: { Brand: 'Toyota', Model: 'Premio', 'Model year': '2017', Mileage: '52,000 km', Transmission: 'Automatic', 'Fuel type': 'Petrol', 'Body type': 'Saloon' },
+    description: 'Fully loaded, original paint and mileage guaranteed.\nLeasing facilities up to 60%.' },
+];
+
+const POPULAR = [
+  { label: 'Cars in Colombo', cat: 'vehicles', loc: 'Colombo' },
+  { label: 'Land in Colombo', cat: 'property', loc: 'Colombo' },
+  { label: 'iPhone', q: 'iPhone' },
+  { label: 'Houses for sale', q: 'house' },
+  { label: 'Scooters', q: 'scooter' },
+  { label: 'Jobs in Colombo', cat: 'jobs', loc: 'Colombo' },
+  { label: 'Apartments for rent', q: 'apartment' },
+  { label: 'Three-wheelers', q: 'three-wheeler' },
+];
+
+// =====================================================================
+//  HELPERS
+// =====================================================================
+
+const fmtLKR = (n) => `Rs ${Math.round(n).toLocaleString('en-LK')}`;
+const priceLabel = (ad) =>
+  ad.price == null || ad.price === 0 ? 'Price on request' : `${ad.from ? 'From ' : ''}${fmtLKR(ad.price)}${ad.per || ''}`;
+const placeOf = (ad) => (ad.city && ad.city !== ad.district ? `${ad.city}, ${ad.district}` : ad.district);
+const timeAgo = (m) => {
+  if (m < 1) return 'Just now';
+  if (m < 60) return `${m} min`;
+  const h = Math.floor(m / 60);
+  if (m < 1440) return `${h} hour${h > 1 ? 's' : ''}`;
+  const d = Math.floor(m / 1440);
+  return `${d} day${d > 1 ? 's' : ''}`;
+};
+const postedDate = (m) =>
+  new Date(Date.now() - m * 60000).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true });
+const telHref = (p) => `tel:${p.replace(/[^\d+]/g, '')}`;
+const waHref = (p, text) => `https://wa.me/${p.replace(/\D/g, '').replace(/^0/, '94')}?text=${encodeURIComponent(text)}`;
+const initialsOf = (name) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+
+const readLS = (k, fallback) => {
+  try {
+    const v = localStorage.getItem(k);
+    return v ? JSON.parse(v) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+};
+const writeLS = (k, v) => {
+  try {
+    localStorage.setItem(k, JSON.stringify(v));
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+// --- hash router: #/  #/ads?cat=vehicles&loc=Colombo  #/ad/a101  #/post  #/saved  #/safety
+const parseHash = () => {
+  const raw = window.location.hash.replace(/^#/, '') || '/';
+  const [path, qs] = raw.split('?');
+  return { path: path || '/', params: Object.fromEntries(new URLSearchParams(qs || '')) };
+};
+const link = (path, params) => {
+  const qs = params
+    ? new URLSearchParams(Object.entries(params).filter(([, v]) => v !== '' && v != null && v !== ALL_LK)).toString()
+    : '';
+  return `#${path}${qs ? `?${qs}` : ''}`;
+};
+// App-style navigation: a tapped link opens a page at the top; Back returns to where you were.
+const nav = { pushed: false, depth: 0, scroll: {} };
+const go = (path, params) => {
+  nav.pushed = true;
+  window.location.hash = link(path, params);
+};
+const goBack = (fallback = '/') => {
+  if (nav.depth > 0) window.history.back();
+  else go(fallback);
+};
+if (typeof window !== 'undefined') {
+  if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+  document.addEventListener(
+    'click',
+    (e) => {
+      const a = e.target.closest && e.target.closest('a[href^="#/"]');
+      if (a && !e.defaultPrevented && !e.metaKey && !e.ctrlKey) nav.pushed = true;
+    },
+    true
+  );
+}
+
+const useRoute = () => {
+  const [route, setRoute] = useState(parseHash);
+  const prevKey = useRef(window.location.hash || '#/');
+  useEffect(() => {
+    const onChange = () => {
+      const key = window.location.hash || '#/';
+      nav.scroll[prevKey.current] = window.scrollY;
+      const samePath = key.split('?')[0] === prevKey.current.split('?')[0];
+      const pushed = nav.pushed;
+      nav.pushed = false;
+      nav.depth = Math.max(0, nav.depth + (pushed ? 1 : -1));
+      prevKey.current = key;
+      setRoute(parseHash());
+      const y = pushed ? (samePath ? null : 0) : nav.scroll[key] || 0;
+      if (y !== null) requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+    };
+    window.addEventListener('hashchange', onChange);
+    return () => window.removeEventListener('hashchange', onChange);
+  }, []);
+  return route;
+};
+
+// install-as-app prompt (Android/desktop Chrome); iOS needs Share → Add to Home Screen
+const installState = { prompt: null, listeners: new Set() };
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    installState.prompt = e;
+    installState.listeners.forEach((f) => f());
+  });
+}
+const isStandalone = () =>
+  (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+const isIOS = () => /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+const useInstall = () => {
+  const [, force] = useState(0);
+  useEffect(() => {
+    const f = () => force((n) => n + 1);
+    installState.listeners.add(f);
+    return () => installState.listeners.delete(f);
+  }, []);
+  const can = !isStandalone() && (!!installState.prompt || isIOS());
+  const install = async (toast) => {
+    if (installState.prompt) {
+      installState.prompt.prompt();
+      await installState.prompt.userChoice.catch(() => null);
+      installState.prompt = null;
+      force((n) => n + 1);
+    } else if (toast) toast('Tap the Share button, then “Add to Home Screen”.');
+  };
+  return { can, install };
+};
+
+const useOnline = () => {
+  const [online, setOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
+  useEffect(() => {
+    const on = () => setOnline(true);
+    const off = () => setOnline(false);
+    window.addEventListener('online', on);
+    window.addEventListener('offline', off);
+    return () => {
+      window.removeEventListener('online', on);
+      window.removeEventListener('offline', off);
+    };
+  }, []);
+  return online;
+};
+
+const shareAd = async (ad, toast) => {
+  const url = window.location.href.split('#')[0] + link(`/ad/${ad.id}`);
+  try {
+    if (navigator.share) await navigator.share({ title: ad.title, text: `${ad.title} – ${priceLabel(ad)}`, url });
+    else {
+      await navigator.clipboard.writeText(url);
+      toast('Link copied');
+    }
+  } catch (e) {}
+};
+
+// shrink uploaded photos so they fit in local storage
+const compressImage = (file) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, 900 / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * scale);
+        c.height = Math.round(img.height * scale);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', 0.72));
+      };
+      img.onerror = () => resolve(null);
+      img.src = reader.result;
+    };
+    reader.onerror = () => resolve(null);
+    reader.readAsDataURL(file);
+  });
+
+// =====================================================================
+//  SMALL COMPONENTS
+// =====================================================================
+
+const BrandLogo = ({ light = false, className = 'h-10' }) => {
+  const ink = light ? '#FFFFFF' : '#1E1B4B';
+  const accent = light ? '#FCD34D' : '#7C3AED';
+  return (
+    <svg viewBox="0 0 154 56" className={`${className} w-auto`} role="img" aria-label="4U.lk">
+      <defs>
+        <linearGradient id={`pin-${light ? 'l' : 'd'}`} x1="6" y1="2" x2="44" y2="54" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#A855F7" />
+          <stop offset=".55" stopColor="#7C3AED" />
+          <stop offset="1" stopColor="#4C1D95" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M24 2C12.4 2 3 11.2 3 22.6c0 14.8 17.6 29.6 19.6 31.2a2.2 2.2 0 0 0 2.8 0C27.4 52.2 45 37.4 45 22.6 45 11.2 35.6 2 24 2z"
+        fill={`url(#pin-${light ? 'l' : 'd'})`}
+      />
+      <g stroke="#fff" strokeWidth="4.2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        <path d="M19 12.5V31M19 12.5L10 26.5H22.5" />
+        <path d="M27 12.5V23.5a5 5 0 0 0 10 0V12.5" />
+      </g>
+      <circle cx="41.5" cy="6.5" r="4" fill="#FCD34D" stroke={light ? '#0E0820' : '#fff'} strokeWidth="1.6" />
+      <g stroke={ink} strokeWidth="6.4" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        <path d="M76 15V40M76 15L62 32.5H81.5" />
+        <path d="M89.5 15V31a8.75 8.75 0 0 0 17.5 0V15" />
+      </g>
+      <circle cx="116.5" cy="37.4" r="3.6" fill={accent} />
+      <g stroke={accent} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        <path d="M125.5 12.5V40" />
+        <path d="M134.5 12.5V40M146 23.5L135 32M139.5 29L147 40" />
+      </g>
+    </svg>
+  );
+};
+
+const AdImage = ({ ad, idx = 0, w = 600, className = '' }) => {
+  const [failed, setFailed] = useState(false);
+  const src = ad.photos && ad.photos[idx];
+  const Icon = catById(ad.cat).icon;
+  if (!src || failed) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#F3EEFF] via-[#EDE7FF] to-[#E4DAFF]">
+        <Icon className="w-[30%] h-[30%] max-w-16 max-h-16 text-[#7C3AED]/60" strokeWidth={1.6} />
+      </div>
+    );
+  }
+  return (
+    <img
+      src={U(src, w)}
+      alt=""
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className={`absolute inset-0 w-full h-full object-cover ${className}`}
+    />
+  );
+};
+
+const SaveButton = ({ saved, onToggle, className = '' }) => (
+  <button
+    type="button"
+    aria-label={saved ? 'Remove from saved' : 'Save ad'}
+    aria-pressed={saved}
+    onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onToggle();
+    }}
+    className={`tap w-8 h-8 rounded-full bg-white/95 shadow flex items-center justify-center ${className}`}
+  >
+    <Heart className={`w-4 h-4 ${saved ? 'fill-[#E11D48] text-[#E11D48]' : 'text-[#64748B]'}`} />
+  </button>
+);
+
+const MemberBadge = () => (
+  <span className="inline-flex items-center gap-1 text-[10px] font-extrabold tracking-wider text-[#1E1B4B] bg-[#FCD34D] px-1.5 py-0.5 rounded">
+    <BadgeCheck className="w-3 h-3" /> MEMBER
+  </span>
+);
+
+// list row: the main ad layout on the search page
+const AdRow = ({ ad, saved, onToggleSave }) => (
+  <a
+    href={link(`/ad/${ad.id}`)}
+    className={`tap group relative flex gap-3 sm:gap-4 rounded-xl border p-2.5 sm:p-3 transition-shadow hover:shadow-[0_8px_24px_-12px_rgba(76,29,149,.35)] ${
+      ad.top ? 'bg-[#FFFBEB] border-[#FDE68A]' : 'bg-white border-[#E9E5F5]'
+    }`}
+  >
+    <div className="relative w-[112px] h-[96px] sm:w-[168px] sm:h-[124px] shrink-0 rounded-lg overflow-hidden">
+      <AdImage ad={ad} w={360} className="transition-transform duration-500 group-hover:scale-105" />
+      {ad.top && (
+        <span className="absolute top-1.5 left-1.5 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">
+          TOP AD
+        </span>
+      )}
+      {ad.photos && ad.photos.length > 1 && (
+        <span className="absolute bottom-1.5 left-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-white bg-black/55 px-1.5 py-0.5 rounded">
+          <Camera className="w-3 h-3" /> {ad.photos.length}
+        </span>
+      )}
+    </div>
+    <div className="min-w-0 flex-1 flex flex-col py-0.5 pr-7">
+      <h3 className="text-[14px] sm:text-[16px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2 group-hover:text-[#6D28D9]">
+        {ad.title}
+      </h3>
+      <p className="mt-1 text-[12px] sm:text-[13px] text-[#64748B] truncate">
+        {placeOf(ad)}, {catById(ad.cat).short || catById(ad.cat).name}
+      </p>
+      {ad.condition && <p className="text-[12px] text-[#64748B]">{ad.condition}</p>}
+      <div className="mt-auto pt-1.5 flex flex-wrap items-end justify-between gap-x-2 gap-y-1">
+        <span className="text-[14px] sm:text-[16px] font-extrabold text-[#6D28D9]">{priceLabel(ad)}</span>
+        {ad.member && <MemberBadge />}
+      </div>
+    </div>
+    <span className="absolute right-3 top-12 hidden sm:block text-[11px] text-[#94A3B8]">{timeAgo(ad.posted)}</span>
+    <SaveButton saved={saved} onToggle={onToggleSave} className="absolute top-2.5 right-2.5 !w-7 !h-7 !shadow-none border border-[#E9E5F5]" />
+  </a>
+);
+
+// grid tile: home page & similar ads
+const AdTile = ({ ad, saved, onToggleSave }) => (
+  <a
+    href={link(`/ad/${ad.id}`)}
+    className="tap group bg-white rounded-xl border border-[#E9E5F5] overflow-hidden flex flex-col hover:shadow-[0_10px_28px_-14px_rgba(76,29,149,.4)] transition-shadow"
+  >
+    <div className="relative aspect-[4/3] overflow-hidden">
+      <AdImage ad={ad} w={420} className="transition-transform duration-500 group-hover:scale-105" />
+      {ad.top && (
+        <span className="absolute top-2 left-2 text-[10px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-1.5 py-0.5 rounded">
+          TOP AD
+        </span>
+      )}
+      <SaveButton saved={saved} onToggle={onToggleSave} className="absolute top-2 right-2" />
+    </div>
+    <div className="p-2.5 sm:p-3 flex-1 flex flex-col">
+      <h3 className="text-[13px] sm:text-[14px] font-semibold text-[#1E1B4B] leading-snug line-clamp-2">{ad.title}</h3>
+      <p className="mt-1 text-[11.5px] text-[#64748B] truncate">{placeOf(ad)}</p>
+      <p className="mt-auto pt-1.5 text-[14px] sm:text-[15px] font-extrabold text-[#6D28D9]">{priceLabel(ad)}</p>
+    </div>
+  </a>
+);
+
+const Sheet = ({ open, onClose, title, children, wide = false }) => {
+  if (!open) return null;
+  return (
+    <div onClick={onClose} className="fixed inset-0 z-[80] bg-[#0E0820]/50 backdrop-blur-[2px] flex items-end sm:items-center justify-center overlay-in">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        className={`sheet bg-white w-full ${wide ? 'sm:max-w-2xl' : 'sm:max-w-md'} rounded-t-[22px] sm:rounded-2xl max-h-[88dvh] flex flex-col shadow-2xl pb-safe`}
+      >
+        <div className="sm:hidden mx-auto mt-2.5 w-10 h-1.5 rounded-full bg-[#E4DDF5]" />
+        <div className="flex items-center justify-between px-5 pt-3 sm:pt-4 pb-3 border-b border-[#F1EEF9]">
+          <h3 className="text-base font-bold text-[#1E1B4B]">{title}</h3>
+          <button onClick={onClose} aria-label="Close" className="tap p-2 -mr-2 rounded-full hover:bg-[#F5F3FF]">
+            <X className="w-5 h-5 text-[#64748B]" />
+          </button>
+        </div>
+        <div className="overflow-y-auto overscroll-contain">{children}</div>
+      </div>
+    </div>
+  );
+};
+
+const LocationList = ({ ads, current, onPick, includeAll = true, showCounts = true }) => {
+  const [q, setQ] = useState('');
+  const counts = useMemo(() => {
+    const c = {};
+    ads.forEach((a) => {
+      c[a.district] = (c[a.district] || 0) + 1;
+    });
+    return c;
+  }, [ads]);
+  const list = DISTRICTS.filter((d) => d.toLowerCase().includes(q.toLowerCase()));
+  return (
+    <div className="p-4">
+      <label className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[#F5F3FF] mb-3">
+        <Search className="w-4 h-4 text-[#7C3AED]" />
+        <span className="sr-only">Search district</span>
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search district" className="bg-transparent w-full text-sm focus:outline-none" />
+      </label>
+      {includeAll && !q && (
+        <button
+          onClick={() => onPick(ALL_LK)}
+          className={`w-full flex items-center justify-between px-3 py-3 rounded-xl text-sm font-bold ${
+            current === ALL_LK ? 'bg-[#EDE9FE] text-[#6D28D9]' : 'hover:bg-[#F8F6FD] text-[#1E1B4B]'
+          }`}
+        >
+          {ALL_LK}
+          <span className="text-xs font-semibold text-[#64748B]">{ads.length}</span>
+        </button>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2">
+        {list.map((d) => (
+          <button
+            key={d}
+            onClick={() => onPick(d)}
+            className={`flex items-center justify-between px-3 py-3 rounded-xl text-sm text-left ${
+              current === d ? 'bg-[#EDE9FE] text-[#6D28D9] font-bold' : 'hover:bg-[#F8F6FD] text-[#1E1B4B]'
+            }`}
+          >
+            {d}
+            <span className="flex items-center gap-1 text-xs text-[#94A3B8]">
+              {showCounts && (counts[d] || 0)}
+              <ChevronRight className="w-3.5 h-3.5" />
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// search bar: [ location ▾ ] [ what are you looking for? ] [ Search ]
+const SearchBar = ({ loc, q: initialQ = '', cat, onPickLocation, big = false }) => {
+  const [q, setQ] = useState(initialQ);
+  useEffect(() => setQ(initialQ), [initialQ]);
+  const submit = (e) => {
+    e.preventDefault();
+    go('/ads', { q: q.trim(), loc, cat });
+  };
+  return (
+    <form
+      onSubmit={submit}
+      role="search"
+      className={`flex flex-col sm:flex-row gap-2 bg-white rounded-2xl ${big ? 'p-2 shadow-[0_24px_60px_-24px_rgba(14,8,32,.7)]' : 'p-1.5 border border-[#E9E5F5]'}`}
+    >
+      <button
+        type="button"
+        onClick={onPickLocation}
+        className="tap flex items-center gap-2 px-3.5 py-3 rounded-xl bg-[#F5F3FF] text-sm font-semibold text-[#1E1B4B] sm:w-[210px] shrink-0"
+      >
+        <MapPin className="w-4 h-4 text-[#7C3AED] shrink-0" />
+        <span className="truncate flex-1 text-left">{loc || ALL_LK}</span>
+        <ChevronDown className="w-4 h-4 text-[#94A3B8]" />
+      </button>
+      <div className="flex flex-1 gap-2">
+        <label className="flex-1 flex items-center gap-2 px-3 rounded-xl focus-within:bg-[#FAF9FF]">
+          <Search className="w-4 h-4 text-[#94A3B8] shrink-0" />
+          <span className="sr-only">What are you looking for?</span>
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="What are you looking for?"
+            className="w-full py-3 bg-transparent text-[15px] text-[#1E1B4B] placeholder-[#94A3B8] focus:outline-none"
+          />
+        </label>
+        <button type="submit" className="tap shrink-0 px-5 sm:px-7 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] font-extrabold text-sm">
+          Search
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const Breadcrumbs = ({ items }) => (
+  <nav aria-label="Breadcrumb" className="flex items-center flex-wrap gap-1 text-[12.5px] text-[#64748B]">
+    {items.map((it, i) => (
+      <span key={i} className="inline-flex items-center gap-1">
+        {i > 0 && <ChevronRight className="w-3.5 h-3.5 text-[#C4B5FD]" />}
+        {it.href ? (
+          <a href={it.href} className="hover:text-[#6D28D9] hover:underline">
+            {it.label}
+          </a>
+        ) : (
+          <span className="text-[#1E1B4B] font-semibold">{it.label}</span>
+        )}
+      </span>
+    ))}
+  </nav>
+);
+
+// =====================================================================
+//  PAGES
+// =====================================================================
+
+const HomePage = ({ ads, savedIds, toggleSave, pickLocation, loc }) => {
+  const catCounts = useMemo(() => {
+    const c = {};
+    ads.forEach((a) => {
+      c[a.cat] = (c[a.cat] || 0) + 1;
+    });
+    return c;
+  }, [ads]);
+  const topAds = ads.filter((a) => a.top).slice(0, 4);
+  const latest = [...ads].sort((a, b) => a.posted - b.posted).slice(0, 8);
+  const districtCounts = useMemo(() => {
+    const c = {};
+    ads.forEach((a) => {
+      c[a.district] = (c[a.district] || 0) + 1;
+    });
+    return Object.entries(c).sort((a, b) => b[1] - a[1]);
+  }, [ads]);
+
+  return (
+    <>
+      {/* Search banner */}
+      <section className="hero-band text-white">
+        <div className="max-w-6xl mx-auto px-4 pt-8 pb-12 sm:pt-14 sm:pb-20 relative text-center">
+          <p className="text-[12px] sm:text-[13px] font-bold tracking-[0.18em] text-[#FCD34D] uppercase">Sri Lanka’s local marketplace</p>
+          <h1 className="font-display mt-2 text-[30px] sm:text-[46px] font-extrabold leading-[1.05] tracking-[-0.03em]">
+            Everything local. <br className="sm:hidden" /><span className="text-[#FDE68A]">Just for you.</span>
+          </h1>
+          <p className="mt-2 sm:mt-3 text-[15px] sm:text-[17px] text-white/75 max-w-2xl mx-auto text-balance">
+            Buy and sell cars, phones, property and more, or find a job, across all 25 districts.
+          </p>
+          <div className="mt-6 sm:mt-8 max-w-3xl mx-auto text-left">
+            <SearchBar loc={loc} onPickLocation={pickLocation} big />
+          </div>
+          <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-[13px] text-white/70">
+            <span className="text-white/50">Popular:</span>
+            {POPULAR.slice(0, 5).map((p) => (
+              <a key={p.label} href={link('/ads', { cat: p.cat, loc: p.loc, q: p.q })} className="hover:text-white underline-offset-4 hover:underline">
+                {p.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-6xl mx-auto px-4 -mt-6 sm:-mt-10 relative space-y-6 sm:space-y-8">
+        {/* Categories */}
+        <section className="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6 shadow-[0_12px_40px_-24px_rgba(76,29,149,.35)]" aria-labelledby="cat-title">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h2 id="cat-title" className="text-[17px] sm:text-xl font-extrabold text-[#1E1B4B]">
+              Browse items by category
+            </h2>
+            <a href={link('/ads')} className="text-sm font-semibold text-[#6D28D9] hover:underline">
+              All ads
+            </a>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-1">
+            {CATEGORIES.map((c) => {
+              const Icon = c.icon;
+              return (
+                <a key={c.id} href={link('/ads', { cat: c.id, loc })} className="tap group flex items-center gap-3 p-2 sm:p-2.5 rounded-xl hover:bg-[#F8F6FD]">
+                  <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0 group-hover:bg-[#7C3AED] group-hover:text-white transition-colors">
+                    <Icon className="w-5 h-5" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[13px] sm:text-[14.5px] font-semibold text-[#1E1B4B] leading-tight">
+                      <span className="sm:hidden">{c.short || c.name}</span>
+                      <span className="hidden sm:inline">{c.name}</span>
+                    </span>
+                    <span className="block text-[11.5px] sm:text-xs text-[#94A3B8] mt-0.5">{(catCounts[c.id] || 0).toLocaleString('en-LK')} {catCounts[c.id] === 1 ? 'ad' : 'ads'}</span>
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Top ads */}
+        {topAds.length > 0 && (
+          <section aria-labelledby="top-title">
+            <div className="flex items-center justify-between mb-3">
+              <h2 id="top-title" className="inline-flex items-center gap-2 text-[17px] sm:text-xl font-extrabold text-[#1E1B4B]">
+                <TrendingUp className="w-5 h-5 text-[#F59E0B]" /> Top ads
+              </h2>
+              <a href={link('/ads')} className="text-sm font-semibold text-[#6D28D9] hover:underline">
+                See all
+              </a>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              {topAds.map((ad) => (
+                <AdTile key={ad.id} ad={ad} saved={savedIds.includes(ad.id)} onToggleSave={() => toggleSave(ad)} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Post ad promo */}
+        <section className="rounded-2xl bg-[#1E0F45] text-white p-5 sm:p-7 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 overflow-hidden relative">
+          <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-[#7C3AED]/40 blur-2xl" aria-hidden="true" />
+          <div className="relative flex-1">
+            <h2 className="text-lg sm:text-2xl font-extrabold">Got something to sell?</h2>
+            <p className="mt-1 text-sm text-white/70">Post your ad for free in under two minutes and reach buyers across Sri Lanka.</p>
+          </div>
+          <a
+            href={link('/post')}
+            className="tap relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] font-extrabold text-sm"
+          >
+            <Plus className="w-4 h-4 stroke-[3]" /> Post your ad for free
+          </a>
+        </section>
+
+        {/* Latest ads */}
+        <section aria-labelledby="latest-title">
+          <div className="flex items-center justify-between mb-3">
+            <h2 id="latest-title" className="text-[17px] sm:text-xl font-extrabold text-[#1E1B4B]">
+              Latest ads
+            </h2>
+            <a href={link('/ads', { sort: 'date' })} className="text-sm font-semibold text-[#6D28D9] hover:underline">
+              See all
+            </a>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            {latest.map((ad) => (
+              <AdTile key={ad.id} ad={ad} saved={savedIds.includes(ad.id)} onToggleSave={() => toggleSave(ad)} />
+            ))}
+          </div>
+        </section>
+
+        {/* Popular + districts */}
+        <section className="grid md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6">
+            <h2 className="text-base sm:text-lg font-extrabold text-[#1E1B4B] mb-3">Popular searches</h2>
+            <div className="flex flex-wrap gap-2">
+              {POPULAR.map((p) => (
+                <a
+                  key={p.label}
+                  href={link('/ads', { cat: p.cat, loc: p.loc, q: p.q })}
+                  className="tap text-[13px] font-medium px-3 py-1.5 rounded-full bg-[#F5F3FF] text-[#4C1D95] hover:bg-[#EDE9FE]"
+                >
+                  {p.label}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6">
+            <h2 className="text-base sm:text-lg font-extrabold text-[#1E1B4B] mb-3">Ads by district</h2>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {districtCounts.slice(0, 8).map(([d, n]) => (
+                <a key={d} href={link('/ads', { loc: d })} className="flex items-center justify-between py-1.5 text-[13.5px] text-[#1E1B4B] hover:text-[#6D28D9]">
+                  {d}
+                  <span className="text-xs text-[#94A3B8]">{n}</span>
+                </a>
+              ))}
+            </div>
+            <button onClick={pickLocation} className="mt-2 text-sm font-semibold text-[#6D28D9] hover:underline">
+              See all 25 districts
+            </button>
+          </div>
+        </section>
+
+        {/* Trust strip */}
+        <section className="grid sm:grid-cols-3 gap-3">
+          {[
+            [ShieldCheck, 'Verified members', 'Shops and agents marked MEMBER are checked by our team.'],
+            [MessageSquare, 'Contact directly', 'Call, chat or WhatsApp sellers. No middleman, no fees.'],
+            [ShieldAlert, 'Stay safe', 'Meet in public and never pay in advance.'],
+          ].map(([Icon, t, d]) => (
+            <div key={t} className="flex gap-3 items-start bg-white rounded-2xl border border-[#E9E5F5] p-4">
+              <span className="w-10 h-10 rounded-xl bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0">
+                <Icon className="w-5 h-5" />
+              </span>
+              <span>
+                <span className="block text-sm font-bold text-[#1E1B4B]">{t}</span>
+                <span className="block text-[13px] text-[#64748B] mt-0.5">{d}</span>
+              </span>
+            </div>
+          ))}
+        </section>
+      </div>
+    </>
+  );
+};
+
+const FilterPanel = ({ params, setParams, ads, pickLocation, onDone }) => {
+  const [min, setMin] = useState(params.min || '');
+  const [max, setMax] = useState(params.max || '');
+  useEffect(() => {
+    setMin(params.min || '');
+    setMax(params.max || '');
+  }, [params.min, params.max]);
+  const loc = params.loc || ALL_LK;
+  const catCounts = useMemo(() => {
+    const c = {};
+    ads.forEach((a) => {
+      c[a.cat] = (c[a.cat] || 0) + 1;
+    });
+    return c;
+  }, [ads]);
+
+  return (
+    <div className="space-y-5">
+      <div>
+        <h4 className="text-[13px] font-bold text-[#1E1B4B] mb-2">Sort results by</h4>
+        <select
+          value={params.sort || 'top'}
+          onChange={(e) => setParams({ sort: e.target.value })}
+          aria-label="Sort results by"
+          className="w-full px-3 py-2.5 rounded-xl border border-[#E9E5F5] bg-white text-sm font-medium text-[#1E1B4B] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]"
+        >
+          <option value="top">Top ads first</option>
+          <option value="date">Date: newest on top</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+        </select>
+      </div>
+
+      <div>
+        <h4 className="text-[13px] font-bold text-[#1E1B4B] mb-2">Location</h4>
+        <button
+          onClick={pickLocation}
+          className="tap w-full flex items-center gap-2 px-3 py-2.5 rounded-xl border border-[#E9E5F5] bg-white text-sm font-semibold text-[#1E1B4B]"
+        >
+          <MapPin className="w-4 h-4 text-[#7C3AED]" />
+          <span className="flex-1 text-left truncate">{loc}</span>
+          <ChevronRight className="w-4 h-4 text-[#94A3B8]" />
+        </button>
+      </div>
+
+      <div>
+        <h4 className="text-[13px] font-bold text-[#1E1B4B] mb-1.5">Category</h4>
+        <div className="space-y-0.5">
+          <button
+            onClick={() => setParams({ cat: '' })}
+            className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[13.5px] ${
+              !params.cat ? 'bg-[#EDE9FE] text-[#6D28D9] font-bold' : 'text-[#1E1B4B] hover:bg-[#F8F6FD]'
+            }`}
+          >
+            All categories <span className="text-xs text-[#94A3B8]">{ads.length}</span>
+          </button>
+          {CATEGORIES.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => setParams({ cat: c.id })}
+              className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-[13.5px] text-left ${
+                params.cat === c.id ? 'bg-[#EDE9FE] text-[#6D28D9] font-bold' : 'text-[#1E1B4B] hover:bg-[#F8F6FD]'
+              }`}
+            >
+              <span className="truncate">{c.name}</span>
+              <span className="text-xs text-[#94A3B8]">{catCounts[c.id] || 0}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-[13px] font-bold text-[#1E1B4B] mb-2">Price (Rs)</h4>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            inputMode="numeric"
+            min="0"
+            value={min}
+            onChange={(e) => setMin(e.target.value)}
+            placeholder="Min"
+            aria-label="Minimum price"
+            className="w-full min-w-0 px-3 py-2.5 rounded-xl border border-[#E9E5F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]"
+          />
+          <span className="text-[#94A3B8]">–</span>
+          <input
+            type="number"
+            inputMode="numeric"
+            min="0"
+            value={max}
+            onChange={(e) => setMax(e.target.value)}
+            placeholder="Max"
+            aria-label="Maximum price"
+            className="w-full min-w-0 px-3 py-2.5 rounded-xl border border-[#E9E5F5] text-sm focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]"
+          />
+        </div>
+        <button
+          onClick={() => {
+            setParams({ min, max });
+            if (onDone) onDone();
+          }}
+          className="tap mt-2 w-full py-2.5 rounded-xl bg-[#1E1B4B] text-white text-sm font-bold"
+        >
+          Apply price
+        </button>
+      </div>
+
+      <div>
+        <h4 className="text-[13px] font-bold text-[#1E1B4B] mb-2">Condition</h4>
+        <div className="flex gap-2">
+          {[['', 'Any'], ['new', 'Brand new'], ['used', 'Used']].map(([v, l]) => (
+            <button
+              key={l}
+              onClick={() => setParams({ cond: v })}
+              className={`tap flex-1 py-2 rounded-xl text-[13px] font-semibold border ${
+                (params.cond || '') === v ? 'bg-[#7C3AED] border-[#7C3AED] text-white' : 'bg-white border-[#E9E5F5] text-[#1E1B4B]'
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <label className="flex items-center gap-2.5 text-[13.5px] text-[#1E1B4B] cursor-pointer">
+        <input
+          type="checkbox"
+          checked={params.member === '1'}
+          onChange={(e) => setParams({ member: e.target.checked ? '1' : '' })}
+          className="w-4 h-4 accent-[#7C3AED]"
+        />
+        Only show <MemberBadge /> ads
+      </label>
+    </div>
+  );
+};
+
+const PAGE_SIZE = 10;
+
+const AdsPage = ({ ads, params, savedIds, toggleSave, pickLocation }) => {
+  const [filterOpen, setFilterOpen] = useState(false);
+  const setParams = (patch) => go('/ads', { ...params, page: '', ...patch });
+  const loc = params.loc || ALL_LK;
+  const cat = params.cat ? catById(params.cat) : null;
+  const q = (params.q || '').trim().toLowerCase();
+
+  // ads matching location + keyword (used for category counts)
+  const base = useMemo(
+    () =>
+      ads.filter((a) => {
+        if (loc !== ALL_LK && a.district !== loc) return false;
+        if (q && !`${a.title} ${a.description} ${a.city} ${a.district} ${catById(a.cat).name}`.toLowerCase().includes(q)) return false;
+        return true;
+      }),
+    [ads, loc, q]
+  );
+
+  const results = useMemo(() => {
+    const min = Number(params.min) || 0;
+    const max = Number(params.max) || Infinity;
+    const r = base.filter((a) => {
+      if (params.cat && a.cat !== params.cat) return false;
+      if (params.member === '1' && !a.member) return false;
+      if (params.cond === 'new' && a.condition !== 'Brand New') return false;
+      if (params.cond === 'used' && a.condition !== 'Used') return false;
+      if ((params.min || params.max) && (a.price == null || a.price < min || a.price > max)) return false;
+      return true;
+    });
+    const sort = params.sort || 'top';
+    const p = (a) => (a.price == null ? Infinity : a.price);
+    return r.sort((a, b) =>
+      sort === 'price-asc'
+        ? p(a) - p(b)
+        : sort === 'price-desc'
+        ? (b.price || 0) - (a.price || 0)
+        : sort === 'date'
+        ? a.posted - b.posted
+        : Number(b.top) - Number(a.top) || a.posted - b.posted
+    );
+  }, [base, params]);
+
+  const pages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+  const page = Math.min(pages, Math.max(1, Number(params.page) || 1));
+  const shown = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  const heading = `${cat ? cat.name : params.q ? `“${params.q}”` : 'All ads'} in ${loc === ALL_LK ? 'Sri Lanka' : loc}`;
+  const activeChips = [
+    params.q && { k: 'q', label: `“${params.q}”` },
+    cat && { k: 'cat', label: cat.short || cat.name },
+    loc !== ALL_LK && { k: 'loc', label: loc },
+    (params.min || params.max) && { k: 'price', label: `Rs ${params.min || 0} – ${params.max || 'any'}` },
+    params.cond && { k: 'cond', label: params.cond === 'new' ? 'Brand new' : 'Used' },
+    params.member === '1' && { k: 'member', label: 'Members only' },
+  ].filter(Boolean);
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-4 sm:py-6">
+      <div className="hidden sm:block mb-4">
+        <SearchBar loc={loc} q={params.q || ''} cat={params.cat} onPickLocation={pickLocation} />
+      </div>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: link('/') },
+          { label: 'All ads', href: cat || loc !== ALL_LK ? link('/ads') : null },
+          cat && { label: cat.name, href: loc !== ALL_LK ? link('/ads', { cat: params.cat }) : null },
+          loc !== ALL_LK && { label: loc },
+        ].filter(Boolean)}
+      />
+
+      <div className="mt-3 sm:mt-4 grid lg:grid-cols-[270px_1fr] gap-6 items-start">
+        <aside className="hidden lg:block bg-white rounded-2xl border border-[#E9E5F5] p-5 sticky top-[88px]" aria-label="Filters">
+          <FilterPanel params={params} setParams={setParams} ads={base} pickLocation={pickLocation} />
+        </aside>
+
+        <section aria-labelledby="results-title">
+          <h1 id="results-title" className="text-[19px] sm:text-2xl font-extrabold text-[#1E1B4B] leading-tight">
+            {heading}
+          </h1>
+          <p className="text-[12.5px] text-[#64748B] mt-0.5">
+            {results.length === 0
+              ? 'No ads found'
+              : `Showing ${(page - 1) * PAGE_SIZE + 1}–${Math.min(page * PAGE_SIZE, results.length)} of ${results.length} ads`}
+          </p>
+
+          {/* mobile search + filter bar */}
+          <div className="lg:hidden sticky top-[calc(56px+env(safe-area-inset-top))] z-20 -mx-4 px-4 py-2.5 mt-2 bg-[#F4F2F9]/95 backdrop-blur flex gap-2">
+            <form
+              className="flex-1 min-w-0 flex items-center gap-2 px-3 rounded-xl bg-white border border-[#E9E5F5]"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setParams({ q: String(new FormData(e.currentTarget).get('q') || '').trim() });
+              }}
+            >
+              <Search className="w-4 h-4 text-[#94A3B8]" />
+              <input name="q" defaultValue={params.q || ''} key={params.q || ''} placeholder="Search ads" aria-label="Search ads" className="w-full min-w-0 py-2.5 bg-transparent focus:outline-none" />
+            </form>
+            <button onClick={() => setFilterOpen(true)} className="tap relative shrink-0 flex items-center gap-1.5 px-3.5 rounded-xl bg-[#1E1B4B] text-white text-sm font-bold">
+              <SlidersHorizontal className="w-4 h-4" /> Filter
+              {activeChips.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#FCD34D] text-[#1E1B4B] text-[11px] font-extrabold flex items-center justify-center">
+                  {activeChips.length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {activeChips.length > 0 && (
+            <div className="mt-2 sm:mt-3 flex flex-wrap items-center gap-2">
+              {activeChips.map((c) => (
+                <button
+                  key={c.k}
+                  onClick={() => setParams(c.k === 'price' ? { min: '', max: '' } : { [c.k]: '' })}
+                  className="tap inline-flex items-center gap-1 pl-3 pr-2 py-1 rounded-full bg-[#EDE9FE] text-[#4C1D95] text-[12.5px] font-semibold"
+                >
+                  {c.label} <X className="w-3.5 h-3.5" />
+                </button>
+              ))}
+              <a href={link('/ads')} className="text-[12.5px] font-semibold text-[#6D28D9] hover:underline px-1">
+                Clear all
+              </a>
+            </div>
+          )}
+
+          <div className="mt-3 sm:mt-4 space-y-2.5 sm:space-y-3">
+            {shown.map((ad) => (
+              <AdRow key={ad.id} ad={ad} saved={savedIds.includes(ad.id)} onToggleSave={() => toggleSave(ad)} />
+            ))}
+            {results.length === 0 && (
+              <div className="bg-white rounded-2xl border border-[#E9E5F5] p-8 sm:p-12 text-center">
+                <Search className="w-10 h-10 mx-auto text-[#C4B5FD]" />
+                <p className="mt-3 text-base font-bold text-[#1E1B4B]">No ads match your search</p>
+                <p className="text-sm text-[#64748B] mt-1">Try another district, a wider price range or fewer filters.</p>
+                <a href={link('/ads')} className="tap inline-block mt-4 px-5 py-2.5 rounded-xl bg-[#7C3AED] text-white text-sm font-bold">
+                  See all ads
+                </a>
+              </div>
+            )}
+          </div>
+
+          {pages > 1 && (
+            <nav aria-label="Pages" className="mt-5 flex items-center justify-center gap-1.5">
+              <button
+                disabled={page === 1}
+                onClick={() => setParams({ page: String(page - 1) })}
+                className="tap w-10 h-10 rounded-xl bg-white border border-[#E9E5F5] flex items-center justify-center disabled:opacity-40"
+                aria-label="Previous page"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setParams({ page: String(n) })}
+                  aria-current={n === page ? 'page' : undefined}
+                  className={`tap w-10 h-10 rounded-xl text-sm font-bold ${
+                    n === page ? 'bg-[#7C3AED] text-white' : 'bg-white border border-[#E9E5F5] text-[#1E1B4B]'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+              <button
+                disabled={page === pages}
+                onClick={() => setParams({ page: String(page + 1) })}
+                className="tap w-10 h-10 rounded-xl bg-white border border-[#E9E5F5] flex items-center justify-center disabled:opacity-40"
+                aria-label="Next page"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </nav>
+          )}
+        </section>
+      </div>
+
+      <Sheet open={filterOpen} onClose={() => setFilterOpen(false)} title="Filter & sort">
+        <div className="p-5">
+          <FilterPanel
+            params={params}
+            setParams={setParams}
+            ads={base}
+            pickLocation={() => {
+              setFilterOpen(false);
+              pickLocation();
+            }}
+            onDone={() => setFilterOpen(false)}
+          />
+          <button onClick={() => setFilterOpen(false)} className="tap mt-5 w-full py-3.5 rounded-xl bg-[#7C3AED] text-white font-bold">
+            Show {results.length} ads
+          </button>
+        </div>
+      </Sheet>
+    </div>
+  );
+};
+
+const AdPage = ({ ad, ads, savedIds, toggleSave, toast }) => {
+  const [photo, setPhoto] = useState(0);
+  const [showPhone, setShowPhone] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
+  const stripRef = useRef(null);
+  useEffect(() => {
+    if (stripRef.current) stripRef.current.scrollLeft = 0;
+    setPhoto(0);
+    setShowPhone(false);
+    setReportOpen(false);
+  }, [ad && ad.id]);
+
+  if (!ad) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-20 text-center">
+        <p className="text-xl font-extrabold text-[#1E1B4B]">This ad is no longer available</p>
+        <p className="text-sm text-[#64748B] mt-2">It may have been sold or removed by the seller.</p>
+        <a href={link('/ads')} className="tap inline-block mt-5 px-5 py-3 rounded-xl bg-[#7C3AED] text-white font-bold text-sm">
+          Browse all ads
+        </a>
+      </div>
+    );
+  }
+  const cat = catById(ad.cat);
+  const saved = savedIds.includes(ad.id);
+  const similar = ads
+    .filter((a) => a.id !== ad.id && a.cat === ad.cat)
+    .concat(ads.filter((a) => a.id !== ad.id && a.cat !== ad.cat && a.district === ad.district))
+    .slice(0, 4);
+  const nPhotos = Math.max(1, (ad.photos || []).length);
+  const waText = `Hi, is your ad "${ad.title}" on 4U.lk still available?`;
+  const chatSoon = () => toast(`Chat opens when accounts launch. Call or WhatsApp ${ad.seller.name} for now.`);
+
+  const share = () => shareAd(ad, toast);
+  const showPhoto = (i) => {
+    const el = stripRef.current;
+    if (el) el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' });
+    setPhoto(i);
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 pb-4 sm:py-6">
+      <div className="hidden sm:block">
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: link('/') },
+            { label: cat.name, href: link('/ads', { cat: ad.cat }) },
+            { label: ad.district, href: link('/ads', { cat: ad.cat, loc: ad.district }) },
+            { label: ad.title.length > 32 ? `${ad.title.slice(0, 32)}…` : ad.title },
+          ]}
+        />
+      </div>
+
+      <div className="sm:mt-4 grid lg:grid-cols-[1fr_340px] gap-4 sm:gap-6 items-start">
+        <article className="-mx-4 sm:mx-0 bg-white sm:rounded-2xl border-b sm:border border-[#E9E5F5] overflow-hidden flex flex-col">
+          <div className="order-2 sm:order-none p-4 sm:p-6 pb-0 sm:pb-4">
+            <h1 className="text-[20px] sm:text-[26px] font-extrabold text-[#1E1B4B] leading-tight">{ad.title}</h1>
+            <p className="mt-1.5 text-[12.5px] sm:text-[13px] text-[#64748B] flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className="inline-flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5" /> Posted on {postedDate(ad.posted)}
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5" /> {placeOf(ad)}
+              </span>
+              {!ad.mine && (
+                <span className="inline-flex items-center gap-1">
+                  <Eye className="w-3.5 h-3.5" /> {120 + ((ad.id.charCodeAt(3) * 37) % 900)} views
+                </span>
+              )}
+            </p>
+          </div>
+
+          {/* Gallery: swipe on phones, arrows on larger screens */}
+          <div className="order-1 sm:order-none relative bg-[#0E0820] aspect-[4/3] sm:aspect-[16/10]">
+            <div
+              ref={stripRef}
+              onScroll={(e) => {
+                const el = e.currentTarget;
+                const i = Math.round(el.scrollLeft / Math.max(1, el.clientWidth));
+                if (i !== photo) setPhoto(i);
+              }}
+              className="absolute inset-0 flex overflow-x-auto snap-x snap-mandatory no-scrollbar overscroll-x-contain"
+            >
+              {Array.from({ length: nPhotos }).map((_, i) => (
+                <div key={i} className="relative w-full h-full shrink-0 snap-center">
+                  <AdImage ad={ad} idx={i} w={1200} />
+                </div>
+              ))}
+            </div>
+            {ad.top && <span className="absolute top-3 left-3 text-[11px] font-extrabold tracking-wider bg-[#FCD34D] text-[#1E1B4B] px-2 py-1 rounded">TOP AD</span>}
+            {nPhotos > 1 && (
+              <>
+                <button
+                  onClick={() => showPhoto((photo - 1 + nPhotos) % nPhotos)}
+                  aria-label="Previous photo"
+                  className="tap hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 items-center justify-center shadow"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => showPhoto((photo + 1) % nPhotos)}
+                  aria-label="Next photo"
+                  className="tap hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 items-center justify-center shadow"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+                <span className="absolute bottom-3 right-3 text-xs font-semibold text-white bg-black/55 px-2 py-1 rounded-full">
+                  {photo + 1} / {nPhotos}
+                </span>
+                <div className="sm:hidden absolute bottom-3.5 inset-x-0 flex justify-center gap-1.5 pointer-events-none" aria-hidden="true">
+                  {Array.from({ length: nPhotos }).map((_, i) => (
+                    <span key={i} className={`h-1.5 rounded-full transition-all ${i === photo ? 'w-4 bg-white' : 'w-1.5 bg-white/55'}`} />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          {nPhotos > 1 && (
+            <div className="hidden sm:flex gap-2 p-3 overflow-x-auto no-scrollbar border-b border-[#F1EEF9]">
+              {ad.photos.map((p, i) => (
+                <button
+                  key={i}
+                  onClick={() => showPhoto(i)}
+                  aria-label={`Photo ${i + 1}`}
+                  className={`relative w-20 h-16 rounded-lg overflow-hidden shrink-0 ring-2 ${i === photo ? 'ring-[#7C3AED]' : 'ring-transparent opacity-70'}`}
+                >
+                  <AdImage ad={ad} idx={i} w={200} />
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="order-3 sm:order-none p-4 sm:p-6 space-y-5">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[24px] sm:text-[30px] font-extrabold text-[#6D28D9] leading-none">{priceLabel(ad)}</p>
+                {ad.negotiable && <p className="text-[13px] text-[#64748B] mt-1">Negotiable</p>}
+              </div>
+              <div className="hidden sm:flex gap-2">
+                <button onClick={() => toggleSave(ad)} className="tap inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#E9E5F5] text-[13px] font-semibold text-[#1E1B4B]">
+                  <Heart className={`w-4 h-4 ${saved ? 'fill-[#E11D48] text-[#E11D48]' : ''}`} />
+                  <span className="hidden sm:inline">{saved ? 'Saved' : 'Save ad'}</span>
+                </button>
+                <button onClick={share} className="tap inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#E9E5F5] text-[13px] font-semibold text-[#1E1B4B]">
+                  <Share2 className="w-4 h-4" />
+                  <span className="hidden sm:inline">Share</span>
+                </button>
+              </div>
+            </div>
+
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 border-t border-[#F1EEF9]">
+              {[['Condition', ad.condition], ...Object.entries(ad.specs || {})]
+                .filter(([, v]) => v)
+                .map(([k, v]) => (
+                  <div key={k} className="flex justify-between gap-4 py-2.5 border-b border-[#F1EEF9] text-[14px]">
+                    <dt className="text-[#64748B]">{k}</dt>
+                    <dd className="font-semibold text-[#1E1B4B] text-right">{v}</dd>
+                  </div>
+                ))}
+            </dl>
+
+            <div>
+              <h2 className="text-base font-bold text-[#1E1B4B] mb-2">Description</h2>
+              <p className="text-[14.5px] text-[#334155] leading-relaxed whitespace-pre-line">{ad.description}</p>
+            </div>
+
+            <div className="pt-1">
+              {!reportOpen ? (
+                <button onClick={() => setReportOpen(true)} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#64748B] hover:text-red-600">
+                  <Flag className="w-4 h-4" /> Report this ad
+                </button>
+              ) : (
+                <div className="rounded-xl border border-red-100 bg-red-50/50 p-3">
+                  <p className="text-[13px] font-bold text-[#1E1B4B] mb-2">Why are you reporting this ad?</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['Fraud or scam', 'Item sold / unavailable', 'Wrong category', 'Duplicate ad', 'Offensive content'].map((r) => (
+                      <button
+                        key={r}
+                        onClick={() => {
+                          setReportOpen(false);
+                          toast('Thanks. Our team will review this ad within 24 hours.');
+                        }}
+                        className="tap text-[12.5px] font-semibold px-3 py-1.5 rounded-full bg-white border border-[#E9E5F5] hover:border-red-300 hover:text-red-600"
+                      >
+                        {r}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </article>
+
+        {/* Seller column */}
+        <aside className="space-y-4 lg:sticky lg:top-[88px]">
+          <div className="bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-5">
+            <p className="text-[12px] font-semibold text-[#94A3B8] uppercase tracking-wider">For sale by</p>
+            <div className="mt-2 flex items-center gap-3">
+              <span className="w-12 h-12 rounded-full brand-gradient text-white font-bold flex items-center justify-center shrink-0">{initialsOf(ad.seller.name)}</span>
+              <div className="min-w-0">
+                <p className="font-bold text-[#1E1B4B] truncate">{ad.seller.name}</p>
+                <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                  {ad.member ? (
+                    <MemberBadge />
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Phone verified
+                    </span>
+                  )}
+                  <span className="text-[11.5px] text-[#94A3B8]">Since {ad.seller.since}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-2 hidden lg:block">
+              {showPhone ? (
+                <a href={telHref(ad.seller.phone)} className="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#1E1B4B] text-white font-bold">
+                  <Phone className="w-4 h-4" /> {ad.seller.phone}
+                </a>
+              ) : (
+                <button onClick={() => setShowPhone(true)} className="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#1E1B4B] text-white font-bold">
+                  <Phone className="w-4 h-4" /> {ad.seller.phone.slice(0, 4)}XXX XXXX · Show number
+                </button>
+              )}
+              <button onClick={chatSoon} className="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl brand-gradient text-white font-bold">
+                <MessageSquare className="w-4 h-4" /> Chat
+              </button>
+              <a
+                href={waHref(ad.seller.phone, waText)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#25D366] text-white font-bold"
+              >
+                <Send className="w-4 h-4" /> WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-[#FFFBEB] border border-[#FDE68A] p-4 text-[13px] text-[#78350F] leading-relaxed">
+            <p className="font-bold flex items-center gap-1.5 mb-1.5 text-[#92400E]">
+              <ShieldAlert className="w-4 h-4" /> Safety tips
+            </p>
+            <ul className="list-disc pl-4 space-y-1">
+              <li>Meet the seller in a safe, public place.</li>
+              <li>Check the item before you pay.</li>
+              <li>Never send an advance payment or share an OTP.</li>
+            </ul>
+            <a href={link('/safety')} className="inline-block mt-2 font-semibold text-[#92400E] underline underline-offset-2">
+              More safety advice
+            </a>
+          </div>
+
+          <a
+            href={link('/post')}
+            className="tap hidden lg:flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-dashed border-[#C4B5FD] text-[#6D28D9] font-bold text-sm hover:bg-[#F5F3FF]"
+          >
+            <Plus className="w-4 h-4" /> Post an ad like this
+          </a>
+        </aside>
+      </div>
+
+      {similar.length > 0 && (
+        <section className="mt-8" aria-labelledby="similar-title">
+          <h2 id="similar-title" className="text-lg sm:text-xl font-extrabold text-[#1E1B4B] mb-3">
+            Similar ads
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            {similar.map((a) => (
+              <AdTile key={a.id} ad={a} saved={savedIds.includes(a.id)} onToggleSave={() => toggleSave(a)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Mobile contact bar */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-t border-[#E9E5F5] px-3 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] grid grid-cols-3 gap-2">
+        <a href={telHref(ad.seller.phone)} className="tap flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#1E1B4B] text-white text-sm font-bold">
+          <Phone className="w-4 h-4" /> Call
+        </a>
+        <button onClick={chatSoon} className="tap flex items-center justify-center gap-1.5 py-3 rounded-xl brand-gradient text-white text-sm font-bold">
+          <MessageSquare className="w-4 h-4" /> Chat
+        </button>
+        <a
+          href={waHref(ad.seller.phone, waText)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="tap flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#25D366] text-white text-sm font-bold"
+        >
+          <Send className="w-4 h-4" /> WhatsApp
+        </a>
+      </div>
+    </div>
+  );
+};
+
+const PostAdPage = ({ onPublish, toast }) => {
+  const [step, setStep] = useState(1);
+  const [cat, setCat] = useState('');
+  const [district, setDistrict] = useState('');
+  const [city, setCity] = useState('');
+  const [form, setForm] = useState({ title: '', condition: 'Used', price: '', negotiable: false, description: '', name: '', phone: '' });
+  const [photos, setPhotos] = useState([]);
+  const [errors, setErrors] = useState({});
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+  const steps = ['Category', 'Location', 'Details'];
+  const needsCondition = ['vehicles', 'mobiles', 'electronics', 'home', 'fashion', 'hobby', 'business'].includes(cat);
+
+  const addPhotos = async (files) => {
+    const list = Array.from(files || []).slice(0, 5 - photos.length);
+    const out = [];
+    for (const f of list) {
+      const d = await compressImage(f);
+      if (d) out.push(d);
+    }
+    setPhotos((p) => [...p, ...out].slice(0, 5));
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    const err = {};
+    if (form.title.trim().length < 5) err.title = 'Please enter a title (at least 5 characters).';
+    if (!form.price || Number(form.price) <= 0) err.price = 'Please enter a price in rupees.';
+    if (form.description.trim().length < 15) err.description = 'Please describe your item (at least 15 characters).';
+    if (!form.name.trim()) err.name = 'Please enter your name.';
+    if (!/^0\d{9}$/.test(form.phone.replace(/\s/g, ''))) err.phone = 'Enter a 10-digit Sri Lankan number, e.g. 0771234567.';
+    setErrors(err);
+    if (Object.keys(err).length) {
+      toast('Please fix the highlighted fields');
+      return;
+    }
+    const p = form.phone.replace(/\s/g, '');
+    onPublish({
+      id: `u${Date.now()}`,
+      title: form.title.trim(),
+      cat,
+      district,
+      city: city.trim() || district,
+      price: Number(form.price),
+      negotiable: form.negotiable,
+      condition: needsCondition ? form.condition : null,
+      posted: 0,
+      top: false,
+      member: false,
+      photos,
+      mine: true,
+      seller: { name: form.name.trim(), phone: `${p.slice(0, 3)} ${p.slice(3, 6)} ${p.slice(6)}`, since: new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) },
+      specs: {},
+      description: form.description.trim(),
+    });
+  };
+
+  const inputCls = (k) =>
+    `w-full px-3.5 py-3 rounded-xl border bg-white text-[15px] text-[#1E1B4B] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD] ${
+      errors[k] ? 'border-red-400' : 'border-[#E2DCF3]'
+    }`;
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-5 sm:py-8">
+      <h1 className="sr-only lg:not-sr-only lg:block text-[22px] sm:text-[28px] font-extrabold text-[#1E1B4B]">Post your ad</h1>
+      <p className="text-sm text-[#64748B] mt-1">Free to post. Your ad goes live straight away.</p>
+
+      <ol className="mt-5 flex items-center gap-2" aria-label="Steps">
+        {steps.map((s, i) => {
+          const n = i + 1;
+          const done = step > n;
+          const on = step === n;
+          return (
+            <li key={s} className="flex items-center gap-2 flex-1 last:flex-none">
+              <button
+                disabled={n > step}
+                onClick={() => setStep(n)}
+                className={`flex items-center gap-2 text-[13px] font-bold ${on ? 'text-[#6D28D9]' : done ? 'text-[#1E1B4B]' : 'text-[#94A3B8]'}`}
+              >
+                <span
+                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs ${
+                    on ? 'bg-[#7C3AED] text-white' : done ? 'bg-[#1E1B4B] text-white' : 'bg-[#EDE9FE] text-[#94A3B8]'
+                  }`}
+                >
+                  {done ? <CheckCircle2 className="w-4 h-4" /> : n}
+                </span>
+                {s}
+              </button>
+              {n < 3 && <span className={`flex-1 h-0.5 rounded ${done ? 'bg-[#1E1B4B]' : 'bg-[#E9E5F5]'}`} />}
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className="mt-5 bg-white rounded-2xl border border-[#E9E5F5] p-4 sm:p-6">
+        {step === 1 && (
+          <>
+            <h2 className="text-base sm:text-lg font-bold text-[#1E1B4B] mb-3">What are you posting?</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {CATEGORIES.map((c) => {
+                const Icon = c.icon;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => {
+                      setCat(c.id);
+                      setStep(2);
+                    }}
+                    className={`tap flex items-center gap-3 p-3 rounded-xl border text-left ${
+                      cat === c.id ? 'border-[#7C3AED] bg-[#F5F3FF]' : 'border-[#E9E5F5] hover:border-[#C4B5FD]'
+                    }`}
+                  >
+                    <span className="w-10 h-10 rounded-full bg-[#F3EEFF] text-[#7C3AED] flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold text-[#1E1B4B]">{c.name}</span>
+                      <span className="block text-xs text-[#94A3B8] truncate">{c.hint}</span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-[#C4B5FD]" />
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <h2 className="text-base sm:text-lg font-bold text-[#1E1B4B]">Where is it located?</h2>
+            <p className="text-sm text-[#64748B] mb-1">Choose your district, then add your town.</p>
+            {district ? (
+              <div className="mt-3 space-y-3">
+                <button onClick={() => setDistrict('')} className="tap inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-[#EDE9FE] text-[#4C1D95] text-sm font-bold">
+                  <MapPin className="w-4 h-4" /> {district} <X className="w-3.5 h-3.5" />
+                </button>
+                <label className="block">
+                  <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">City / area</span>
+                  <input list="city-list" value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. Nugegoda" className={inputCls('city')} />
+                  <datalist id="city-list">
+                    {(CITIES[district] || []).map((c) => (
+                      <option key={c} value={c} />
+                    ))}
+                  </datalist>
+                </label>
+                {CITIES[district] && (
+                  <div className="flex flex-wrap gap-2">
+                    {CITIES[district].map((c) => (
+                      <button
+                        key={c}
+                        onClick={() => setCity(c)}
+                        className={`tap text-[13px] px-3 py-1.5 rounded-full border ${city === c ? 'bg-[#7C3AED] border-[#7C3AED] text-white' : 'border-[#E9E5F5] text-[#1E1B4B]'}`}
+                      >
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                <button onClick={() => setStep(3)} className="tap w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#7C3AED] text-white font-bold">
+                  Continue
+                </button>
+              </div>
+            ) : (
+              <div className="-mx-4 sm:-mx-6 -mb-4">
+                <LocationList
+                  ads={[]}
+                  current=""
+                  includeAll={false}
+                  showCounts={false}
+                  onPick={(d) => {
+                    setDistrict(d);
+                    setCity('');
+                  }}
+                />
+              </div>
+            )}
+          </>
+        )}
+
+        {step === 3 && (
+          <form onSubmit={submit} className="space-y-4" noValidate>
+            <div className="flex flex-wrap gap-2 text-[12.5px]">
+              <span className="px-2.5 py-1 rounded-full bg-[#F5F3FF] text-[#4C1D95] font-semibold">{catById(cat).name}</span>
+              <span className="px-2.5 py-1 rounded-full bg-[#F5F3FF] text-[#4C1D95] font-semibold">{city ? `${city}, ${district}` : district}</span>
+            </div>
+
+            <div>
+              <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Photos (up to 5)</span>
+              <div className="flex gap-2 flex-wrap">
+                {photos.map((p, i) => (
+                  <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden border border-[#E9E5F5]">
+                    <img src={p} alt="" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setPhotos((ps) => ps.filter((_, j) => j !== i))}
+                      aria-label="Remove photo"
+                      className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
+                {photos.length < 5 && (
+                  <label className="tap w-20 h-20 rounded-xl border-2 border-dashed border-[#C4B5FD] text-[#7C3AED] flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-[#F5F3FF]">
+                    <ImagePlus className="w-5 h-5" />
+                    <span className="text-[10.5px] font-bold">Add photo</span>
+                    <input type="file" accept="image/*" multiple className="sr-only" onChange={(e) => addPhotos(e.target.files)} />
+                  </label>
+                )}
+              </div>
+              <p className="text-xs text-[#94A3B8] mt-1.5">Clear photos help your ad get more replies.</p>
+            </div>
+
+            <label className="block">
+              <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Title</span>
+              <input value={form.title} onChange={(e) => set('title', e.target.value)} maxLength={70} placeholder="e.g. Toyota Aqua 2015 – excellent condition" className={inputCls('title')} />
+              {errors.title && <span className="block text-xs text-red-600 mt-1">{errors.title}</span>}
+            </label>
+
+            {needsCondition && (
+              <div>
+                <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Condition</span>
+                <div className="flex gap-2">
+                  {['Brand New', 'Used'].map((c) => (
+                    <button
+                      type="button"
+                      key={c}
+                      onClick={() => set('condition', c)}
+                      className={`tap flex-1 sm:flex-none sm:px-8 py-2.5 rounded-xl text-sm font-bold border ${
+                        form.condition === c ? 'bg-[#7C3AED] border-[#7C3AED] text-white' : 'bg-white border-[#E2DCF3] text-[#1E1B4B]'
+                      }`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="block">
+                <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Price (Rs)</span>
+                <input type="number" inputMode="numeric" min="0" value={form.price} onChange={(e) => set('price', e.target.value)} placeholder="e.g. 250000" className={inputCls('price')} />
+              </label>
+              {errors.price && <span className="block text-xs text-red-600 mt-1">{errors.price}</span>}
+              <label className="mt-2 inline-flex items-center gap-2 text-sm text-[#1E1B4B] cursor-pointer">
+                <input type="checkbox" checked={form.negotiable} onChange={(e) => set('negotiable', e.target.checked)} className="w-4 h-4 accent-[#7C3AED]" />
+                Negotiable
+              </label>
+            </div>
+
+            <label className="block">
+              <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Description</span>
+              <textarea rows={5} value={form.description} onChange={(e) => set('description', e.target.value)} placeholder="Condition, features, reason for selling, where buyers can see it…" className={inputCls('description')} />
+              {errors.description && <span className="block text-xs text-red-600 mt-1">{errors.description}</span>}
+            </label>
+
+            <div className="grid sm:grid-cols-2 gap-4 pt-2 border-t border-[#F1EEF9]">
+              <label className="block">
+                <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Your name</span>
+                <input value={form.name} onChange={(e) => set('name', e.target.value)} autoComplete="name" className={inputCls('name')} />
+                {errors.name && <span className="block text-xs text-red-600 mt-1">{errors.name}</span>}
+              </label>
+              <label className="block">
+                <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Phone number</span>
+                <input type="tel" inputMode="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="07X XXX XXXX" autoComplete="tel" className={inputCls('phone')} />
+                {errors.phone && <span className="block text-xs text-red-600 mt-1">{errors.phone}</span>}
+              </label>
+            </div>
+
+            <p className="text-xs text-[#94A3B8]">By posting, you confirm your ad follows the 4U.lk posting rules. Fake or prohibited items will be removed.</p>
+            <button type="submit" className="tap w-full py-3.5 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] font-extrabold">
+              Post ad
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const SavedPage = ({ ads, savedIds, toggleSave }) => {
+  const list = savedIds.map((id) => ads.find((a) => a.id === id)).filter(Boolean);
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-5 sm:py-8">
+      <h1 className="sr-only lg:not-sr-only lg:block text-[22px] sm:text-[28px] font-extrabold text-[#1E1B4B]">Saved ads</h1>
+      <p className="text-sm text-[#64748B] mt-1">Saved on this device.</p>
+      <div className="mt-5 space-y-3">
+        {list.map((ad) => (
+          <AdRow key={ad.id} ad={ad} saved onToggleSave={() => toggleSave(ad)} />
+        ))}
+        {list.length === 0 && (
+          <div className="bg-white rounded-2xl border border-[#E9E5F5] p-10 text-center">
+            <Heart className="w-10 h-10 mx-auto text-[#C4B5FD]" />
+            <p className="mt-3 font-bold text-[#1E1B4B]">No saved ads yet</p>
+            <p className="text-sm text-[#64748B] mt-1">Tap the heart on any ad to keep it here.</p>
+            <a href={link('/ads')} className="tap inline-block mt-4 px-5 py-2.5 rounded-xl bg-[#7C3AED] text-white text-sm font-bold">
+              Browse ads
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const SafetyPage = () => (
+  <div className="max-w-3xl mx-auto px-4 py-5 sm:py-8">
+    <h1 className="sr-only lg:not-sr-only lg:block text-[22px] sm:text-[28px] font-extrabold text-[#1E1B4B]">Stay safe on 4U.lk</h1>
+    <div className="mt-5 bg-white rounded-2xl border border-[#E9E5F5] p-5 sm:p-7 space-y-5 text-[15px] text-[#334155] leading-relaxed">
+      {[
+        ['Meet in person, in public', 'Meet the buyer or seller in a busy public place. Bring a friend for high-value items.'],
+        ['Check before you pay', 'Inspect the item, test that it works, and check documents such as the vehicle book, deeds or warranty card.'],
+        ['Never pay in advance', 'Do not send money by bank transfer or mobile wallet before you have seen the item. 4U.lk never asks for payments for ads.'],
+        ['Never share an OTP', 'Nobody from 4U.lk will ask for your OTP, PIN or password. Anyone who asks is trying to take over your account or bank.'],
+        ['Report anything suspicious', 'Use “Report this ad” on any ad that looks fake. Our team reviews every report.'],
+      ].map(([t, d]) => (
+        <div key={t} className="flex gap-3">
+          <ShieldCheck className="w-5 h-5 text-[#7C3AED] shrink-0 mt-0.5" />
+          <div>
+            <h2 className="font-bold text-[#1E1B4B]">{t}</h2>
+            <p className="mt-0.5">{d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const AccountPage = ({ myAds, savedCount, onLogin, toast }) => {
+  const { can, install } = useInstall();
+  const Row = ({ icon: Icon, label, sub, href, onClick, tone = 'text-[#6D28D9] bg-[#F5F3FF]' }) => {
+    const inner = (
+      <>
+        <span className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tone}`}>
+          <Icon className="w-5 h-5" />
+        </span>
+        <span className="flex-1 min-w-0 text-left">
+          <span className="block font-semibold text-[15px] text-[#1E1B4B]">{label}</span>
+          {sub && <span className="block text-[12.5px] text-[#64748B] truncate">{sub}</span>}
+        </span>
+        <ChevronRight className="w-5 h-5 text-[#CBD5E1] shrink-0" />
+      </>
+    );
+    const cls = 'tap w-full flex items-center gap-3 px-4 py-3 hover:bg-[#FAF8FF] active:bg-[#F5F3FF]';
+    return href ? (
+      <a href={href} className={cls} {...(href.startsWith('#') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+        {inner}
+      </a>
+    ) : (
+      <button onClick={onClick} className={cls}>
+        {inner}
+      </button>
+    );
+  };
+  const Group = ({ title, children }) => (
+    <section className="mt-5">
+      {title && <h2 className="px-1 mb-2 text-[12px] font-bold uppercase tracking-wider text-[#94A3B8]">{title}</h2>}
+      <div className="bg-white rounded-2xl border border-[#E9E5F5] divide-y divide-[#F1EEF9] overflow-hidden">{children}</div>
+    </section>
+  );
+
+  return (
+    <div className="max-w-xl mx-auto px-4 py-5 sm:py-8">
+      <h1 className="sr-only lg:not-sr-only lg:block text-[28px] font-extrabold text-[#1E1B4B] mb-4">Account</h1>
+      <div className="rounded-2xl hero-band text-white p-5 flex items-center gap-4">
+        <span className="w-14 h-14 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+          <User className="w-7 h-7" />
+        </span>
+        <div className="flex-1 min-w-0">
+          <p className="font-extrabold text-lg leading-tight">Welcome to 4U.lk</p>
+          <p className="text-[13px] text-white/70">Log in to manage your ads anywhere.</p>
+        </div>
+        <button onClick={onLogin} className="tap px-4 py-2.5 rounded-xl bg-[#FCD34D] text-[#1E1B4B] text-sm font-extrabold shrink-0">
+          Log in
+        </button>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-3">
+        {[
+          { n: myAds.length, label: 'My ads', onClick: () => document.getElementById('my-ads').scrollIntoView({ behavior: 'smooth', block: 'start' }) },
+          { n: savedCount, label: 'Saved', href: link('/saved') },
+          { n: '+', label: 'Post ad', href: link('/post') },
+        ].map((t) => {
+          const Tag = t.href ? 'a' : 'button';
+          return (
+            <Tag key={t.label} href={t.href} onClick={t.onClick} className="tap bg-white rounded-2xl border border-[#E9E5F5] py-3.5 text-center">
+              <span className="block text-[22px] font-extrabold text-[#6D28D9] leading-none">{t.n}</span>
+              <span className="block mt-1 text-[12.5px] font-semibold text-[#64748B]">{t.label}</span>
+            </Tag>
+          );
+        })}
+      </div>
+
+      {can && (
+        <Group>
+          <Row
+            icon={Smartphone}
+            label="Install the 4U.lk app"
+            sub={isIOS() && !installState.prompt ? 'Share → Add to Home Screen' : 'Opens full screen from your home screen'}
+            onClick={() => install(toast)}
+            tone="text-[#1E1B4B] bg-[#FEF3C7]"
+          />
+        </Group>
+      )}
+
+      <section className="mt-5 scroll-mt-20" id="my-ads">
+        <h2 className="px-1 mb-2 text-[12px] font-bold uppercase tracking-wider text-[#94A3B8]">My ads on this device</h2>
+        {myAds.length ? (
+          <div className="space-y-3">
+            {myAds.map((ad) => (
+              <AdRow key={ad.id} ad={ad} saved={false} onToggleSave={() => {}} />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-2xl border border-[#E9E5F5] p-6 text-center">
+            <p className="font-bold text-[#1E1B4B]">You haven’t posted an ad yet</p>
+            <p className="text-sm text-[#64748B] mt-1">It’s free and takes about 2 minutes.</p>
+            <a href={link('/post')} className="tap inline-flex items-center gap-1.5 mt-4 px-5 py-2.5 rounded-xl bg-[#7C3AED] text-white text-sm font-bold">
+              <Plus className="w-4 h-4" /> Post your ad
+            </a>
+          </div>
+        )}
+      </section>
+
+      <Group title="Browse">
+        <Row icon={Search} label="All ads" sub="Everything for sale across Sri Lanka" href={link('/ads')} />
+        <Row icon={Heart} label="Saved ads" sub={`${savedCount} saved`} href={link('/saved')} />
+      </Group>
+
+      <Group title="Help">
+        <Row icon={ShieldCheck} label="Stay safe" sub="How to buy and sell safely" href={link('/safety')} />
+        <Row icon={MessageSquare} label="Contact support" sub="support@4u.lk" href="mailto:support@4u.lk" />
+      </Group>
+
+      <p className="mt-6 text-center text-xs text-[#94A3B8]">4U.lk · Everything local. Just for you.<br />Made in Sri Lanka</p>
+    </div>
+  );
+};
+
+// =====================================================================
+//  APP SHELL
+// =====================================================================
+
+export default function App() {
+  const route = useRoute();
+  const [userAds, setUserAds] = useState(() => readLS('4u-my-ads', []));
+  const [savedIds, setSavedIds] = useState(() => readLS('4u-saved', []));
+  const [homeLoc, setHomeLoc] = useState(ALL_LK);
+  const [locPicker, setLocPicker] = useState(null); // { current, onPick }
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [toastMsg, setToastMsg] = useState(null);
+  const [installHidden, setInstallHidden] = useState(() => readLS('4u-install-hidden', false));
+  const { can: canInstall, install } = useInstall();
+  const online = useOnline();
+
+  const ads = useMemo(() => [...userAds, ...INITIAL_ADS], [userAds]);
+
+  const toast = (msg) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg((m) => (m === msg ? null : m)), 3200);
+  };
+
+  const toggleSave = (ad) => {
+    const has = savedIds.includes(ad.id);
+    const next = has ? savedIds.filter((x) => x !== ad.id) : [ad.id, ...savedIds];
+    setSavedIds(next);
+    writeLS('4u-saved', next);
+    toast(has ? 'Removed from saved ads' : 'Saved. Find it under Saved.');
+  };
+
+  const publish = (ad) => {
+    const next = [ad, ...userAds];
+    setUserAds(next);
+    if (!writeLS('4u-my-ads', next)) {
+      // storage full: keep the ad for this visit, drop photos from storage
+      writeLS('4u-my-ads', next.map((a) => ({ ...a, photos: [] })));
+    }
+    go(`/ad/${ad.id}`);
+    toast('Your ad is live!');
+  };
+
+  // scroll lock + Escape for overlays
+  const overlay = !!locPicker || loginOpen;
+  useEffect(() => {
+    if (!overlay) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setLocPicker(null);
+        setLoginOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [overlay]);
+
+  const { path, params } = route;
+  const adId = path.startsWith('/ad/') ? path.slice(4) : null;
+
+  // location picker: on the ads page it filters straight away; elsewhere it opens results for that district
+  const pickLocation = () =>
+    setLocPicker({
+      current: path === '/ads' ? params.loc || ALL_LK : homeLoc,
+      onPick: (d) => {
+        if (path === '/ads') go('/ads', { ...params, loc: d, page: '' });
+        else {
+          setHomeLoc(d);
+          go('/ads', { loc: d });
+        }
+      },
+    });
+
+  useEffect(() => {
+    const ad = adId && ads.find((a) => a.id === adId);
+    document.title = ad
+      ? `${ad.title} | ${priceLabel(ad)} | 4U.lk`
+      : path === '/ads'
+      ? `${params.cat ? catById(params.cat).name : 'All ads'} in ${params.loc || 'Sri Lanka'} | 4U.lk`
+      : path === '/post'
+      ? 'Post your ad for free | 4U.lk'
+      : path === '/account'
+      ? 'Account | 4U.lk'
+      : path === '/saved'
+      ? 'Saved ads | 4U.lk'
+      : '4U.lk — Everything local. Just for you.';
+  }, [path, params.cat, params.loc, adId, ads]);
+
+  const tab = path === '/' ? 'home' : path === '/ads' ? 'ads' : path === '/saved' ? 'saved' : path === '/account' ? 'account' : '';
+  const showTabBar = !adId && path !== '/post';
+  const currentAd = adId ? ads.find((a) => a.id === adId) : null;
+
+  // phone top bar: tab pages get a title, inner pages get Back + title
+  const appBar =
+    path === '/saved'
+      ? { title: 'Saved ads' }
+      : path === '/account'
+      ? { title: 'Account' }
+      : path === '/post'
+      ? { title: 'Post your ad', back: '/' }
+      : path === '/safety'
+      ? { title: 'Stay safe', back: '/account' }
+      : adId
+      ? { title: currentAd ? catById(currentAd.cat).name : 'Ad', back: currentAd ? link('/ads', { cat: currentAd.cat }).slice(1) : '/ads', ad: currentAd }
+      : null;
+
+  let page;
+  if (path === '/ads') page = <AdsPage ads={ads} params={params} savedIds={savedIds} toggleSave={toggleSave} pickLocation={pickLocation} />;
+  else if (adId) page = <AdPage ad={ads.find((a) => a.id === adId)} ads={ads} savedIds={savedIds} toggleSave={toggleSave} toast={toast} />;
+  else if (path === '/post') page = <PostAdPage onPublish={publish} toast={toast} />;
+  else if (path === '/saved') page = <SavedPage ads={ads} savedIds={savedIds} toggleSave={toggleSave} />;
+  else if (path === '/safety') page = <SafetyPage />;
+  else if (path === '/account') page = <AccountPage myAds={userAds} savedCount={savedIds.length} onLogin={() => setLoginOpen(true)} toast={toast} />;
+  else page = <HomePage ads={ads} savedIds={savedIds} toggleSave={toggleSave} pickLocation={pickLocation} loc={homeLoc} />;
+
+  return (
+    <div className="min-h-screen bg-[#F4F2F9] text-[#1E1B4B] font-sans overflow-x-clip">
+      <style>{`
+        html { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        @media (hover: none) {
+          header .hover\:bg-white\/10:hover { background-color: transparent; }
+        }
+        @media (max-width: 1023px) {
+          a, button { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+          img { -webkit-user-drag: none; }
+        }
+        body { overscroll-behavior-y: none; }
+        .font-display { font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui, sans-serif; }
+        .brand-gradient { background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); }
+        .hero-band {
+          background:
+            radial-gradient(900px 420px at 90% -20%, rgba(168,85,247,.55), transparent 60%),
+            radial-gradient(700px 380px at -10% 120%, rgba(99,102,241,.35), transparent 60%),
+            linear-gradient(160deg, #1E0F45 0%, #2E1065 60%, #3B0F7A 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { scrollbar-width: none; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+        @media (max-width: 1023px) {
+          input, select, textarea { font-size: 16px !important; }
+          .tap { transition: transform .12s ease; }
+          .tap:active { transform: scale(.97); }
+        }
+        @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes popIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .overlay-in { animation: fadeIn .2s ease both; }
+        .sheet { animation: popIn .3s cubic-bezier(.16,1,.3,1) both; }
+        @media (max-width: 639px) { .sheet { animation: sheetUp .32s cubic-bezier(.16,1,.3,1) both; } }
+        .page-in { animation: fadeIn .25s ease backwards; }
+      `}</style>
+
+      {/* ============ HEADER ============ */}
+      <header className="sticky top-0 z-40 bg-[#1E0F45] text-white pt-safe shadow-[0_6px_20px_-12px_rgba(14,8,32,.8)]">
+        {appBar && (
+          <div className="lg:hidden h-14 px-1.5 flex items-center gap-1">
+            {appBar.back ? (
+              <button onClick={() => goBack(appBar.back)} aria-label="Back" className="tap w-11 h-11 rounded-full flex items-center justify-center hover:bg-white/10">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+            ) : (
+              <span className="w-2.5" />
+            )}
+            <p className="flex-1 min-w-0 truncate text-[17px] font-bold">{appBar.title}</p>
+            {appBar.ad ? (
+              <>
+                <button onClick={() => shareAd(appBar.ad, toast)} aria-label="Share ad" className="tap w-11 h-11 rounded-full flex items-center justify-center hover:bg-white/10">
+                  <Share2 className="w-5 h-5" />
+                </button>
+                <button onClick={() => toggleSave(appBar.ad)} aria-label={savedIds.includes(appBar.ad.id) ? 'Remove from saved' : 'Save ad'} className="tap w-11 h-11 rounded-full flex items-center justify-center hover:bg-white/10">
+                  <Heart className={`w-5 h-5 ${savedIds.includes(appBar.ad.id) ? 'fill-[#FCD34D] text-[#FCD34D]' : ''}`} />
+                </button>
+              </>
+            ) : null}
+          </div>
+        )}
+        <div className={`${appBar ? 'hidden lg:flex' : 'flex'} max-w-6xl mx-auto px-4 h-14 lg:h-[68px] items-center gap-4`}>
+          <a href={link('/')} aria-label="4U.lk home" className="shrink-0">
+            <BrandLogo light className="h-8 lg:h-9" />
+          </a>
+          <nav className="hidden md:flex items-center gap-1 ml-2 text-[14px] font-semibold" aria-label="Main">
+            <a href={link('/ads')} className={`px-3 py-2 rounded-lg hover:bg-white/10 ${tab === 'ads' && !params.cat ? 'bg-white/10' : 'text-white/80'}`}>
+              All ads
+            </a>
+            {['vehicles', 'property', 'mobiles', 'jobs'].map((id) => (
+              <a
+                key={id}
+                href={link('/ads', { cat: id })}
+                className={`px-3 py-2 rounded-lg hover:bg-white/10 ${tab === 'ads' && params.cat === id ? 'bg-white/10' : 'text-white/80'}`}
+              >
+                {catById(id).short || catById(id).name}
+              </a>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+            <a href={link('/saved')} aria-label="Saved ads" className="tap relative p-2.5 rounded-xl hover:bg-white/10">
+              <Heart className={`w-5 h-5 ${savedIds.length ? 'fill-[#FCD34D] text-[#FCD34D]' : 'text-white/80'}`} />
+              {savedIds.length > 0 && (
+                <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#FCD34D] text-[#1E1B4B] text-[10.5px] font-extrabold flex items-center justify-center">
+                  {savedIds.length}
+                </span>
+              )}
+            </a>
+            <button onClick={() => setLoginOpen(true)} className="tap inline-flex items-center gap-1.5 px-3 py-2 rounded-xl hover:bg-white/10 text-sm font-semibold">
+              <User className="w-5 h-5 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Login</span>
+            </button>
+            <a
+              href={link('/post')}
+              className="tap hidden lg:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#FCD34D] hover:bg-[#FBBF24] text-[#1E1B4B] text-sm font-extrabold tracking-wide"
+            >
+              POST YOUR AD
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {!online && (
+        <div role="status" className="sticky top-[calc(56px+env(safe-area-inset-top))] lg:top-[68px] z-30 bg-[#1E1B4B] text-white/90 text-[13px] font-medium px-4 py-2 flex items-center justify-center gap-2">
+          <WifiOff className="w-4 h-4 text-[#FCD34D]" /> You’re offline. Showing what was saved on this device.
+        </div>
+      )}
+
+      {path === '/' && canInstall && !installHidden && (
+        <div className="lg:hidden max-w-6xl mx-auto px-4 pt-3 -mb-1">
+          <div className="flex items-center gap-3 bg-white rounded-2xl border border-[#E9E5F5] p-3 shadow-sm">
+            <img src="assets/brand/app-icon-512.png" alt="" className="w-11 h-11 rounded-xl shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[14px] font-bold text-[#1E1B4B] leading-tight">Get the 4U.lk app</p>
+              <p className="text-[12px] text-[#64748B] truncate">Faster, full screen, right on your home screen</p>
+            </div>
+            <button onClick={() => install(toast)} className="tap inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-[#7C3AED] text-white text-[13px] font-bold shrink-0">
+              <Download className="w-4 h-4" /> Install
+            </button>
+            <button
+              onClick={() => {
+                setInstallHidden(true);
+                writeLS('4u-install-hidden', true);
+              }}
+              aria-label="Dismiss"
+              className="tap p-1.5 -mr-1 text-[#94A3B8] shrink-0"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      <main
+        key={path}
+        className={`page-in ${showTabBar ? 'pb-[calc(76px+env(safe-area-inset-bottom))]' : adId ? 'pb-[calc(74px+env(safe-area-inset-bottom))]' : 'pb-[env(safe-area-inset-bottom)]'} lg:pb-0`}
+      >
+        {page}
+      </main>
+
+      {/* ============ FOOTER ============ */}
+      <footer className="hidden lg:block bg-[#140A30] text-white/70 mt-10">
+        <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+          <div className="col-span-2 md:col-span-1">
+            <BrandLogo light className="h-9" />
+            <p className="mt-3 text-[13px] leading-relaxed text-white/55">Sri Lanka’s local marketplace. Buy, sell and find what you need near you.</p>
+          </div>
+          <div>
+            <h3 className="text-white font-bold mb-3">Browse</h3>
+            <ul className="space-y-2">
+              {CATEGORIES.slice(0, 6).map((c) => (
+                <li key={c.id}>
+                  <a href={link('/ads', { cat: c.id })} className="hover:text-white">
+                    {c.short || c.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-white font-bold mb-3">Districts</h3>
+            <ul className="space-y-2">
+              {['Colombo', 'Gampaha', 'Kandy', 'Galle', 'Kurunegala', 'Matara'].map((d) => (
+                <li key={d}>
+                  <a href={link('/ads', { loc: d })} className="hover:text-white">
+                    {d}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-white font-bold mb-3">Help & support</h3>
+            <ul className="space-y-2">
+              <li><a href={link('/post')} className="hover:text-white">Post an ad</a></li>
+              <li><a href={link('/safety')} className="hover:text-white">Stay safe</a></li>
+              <li><a href={link('/saved')} className="hover:text-white">Saved ads</a></li>
+              <li><a href="mailto:support@4u.lk" className="hover:text-white">support@4u.lk</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-white/10">
+          <div className="max-w-6xl mx-auto px-4 py-5 text-xs text-white/45 flex flex-col sm:flex-row justify-between gap-2">
+            <span>© 2026 4U.lk · Everything local. Just for you.</span>
+            <span>Made in Sri Lanka</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* ============ MOBILE TAB BAR ============ */}
+      {showTabBar && (
+        <nav aria-label="App navigation" className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl border-t border-[#E9E5F5] pb-safe">
+          <div className="grid grid-cols-5 h-[62px] max-w-md mx-auto">
+            {[
+              { id: 'home', label: 'Home', icon: Home, href: link('/') },
+              { id: 'ads', label: 'Search', icon: Search, href: link('/ads') },
+              { id: 'post' },
+              { id: 'saved', label: 'Saved', icon: Heart, href: link('/saved') },
+              { id: 'account', label: 'Account', icon: User, href: link('/account') },
+            ].map((t) => {
+              if (t.id === 'post') {
+                return (
+                  <div key="post" className="flex justify-center">
+                    <a
+                      href={link('/post')}
+                      aria-label="Post your ad"
+                      className="tap -mt-4 w-14 h-14 rounded-2xl bg-[#FCD34D] text-[#1E1B4B] flex flex-col items-center justify-center shadow-[0_10px_22px_-8px_rgba(217,119,6,.7)] ring-4 ring-[#F4F2F9]"
+                    >
+                      <Plus className="w-5 h-5 stroke-[3]" />
+                      <span className="text-[9.5px] font-extrabold -mt-0.5">SELL</span>
+                    </a>
+                  </div>
+                );
+              }
+              const Icon = t.icon;
+              const on = tab === t.id;
+              const cls = `tap flex flex-col items-center justify-center gap-0.5 text-[10.5px] font-semibold ${on ? 'text-[#6D28D9]' : 'text-[#64748B]'}`;
+              const inner = (
+                <>
+                  <span className={`w-12 h-7 rounded-full flex items-center justify-center ${on ? 'bg-[#EDE9FE]' : ''}`}>
+                    <Icon className="w-[19px] h-[19px]" />
+                  </span>
+                  {t.label}
+                </>
+              );
+              return t.href ? (
+                <a key={t.id} href={t.href} className={cls} aria-current={on ? 'page' : undefined}>
+                  {inner}
+                </a>
+              ) : (
+                <button key={t.id} onClick={() => setLoginOpen(true)} className={cls}>
+                  {inner}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+      )}
+
+      {/* ============ OVERLAYS ============ */}
+      <Sheet open={!!locPicker} onClose={() => setLocPicker(null)} title="Select location" wide>
+        {locPicker && (
+          <LocationList
+            ads={ads}
+            current={locPicker.current}
+            onPick={(d) => {
+              const cb = locPicker.onPick;
+              setLocPicker(null);
+              cb(d);
+            }}
+          />
+        )}
+      </Sheet>
+
+      <Sheet open={loginOpen} onClose={() => setLoginOpen(false)} title="Log in to 4U.lk">
+        <form
+          className="p-5 space-y-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setLoginOpen(false);
+            toast('Accounts open at launch. You can already post and save ads on this device.');
+          }}
+        >
+          <p className="text-sm text-[#64748B]">Log in to manage your ads, chat with buyers and save searches.</p>
+          <label className="block">
+            <span className="block text-[13px] font-bold text-[#1E1B4B] mb-1.5">Mobile number or email</span>
+            <input required autoComplete="username" placeholder="07X XXX XXXX" className="w-full px-3.5 py-3 rounded-xl border border-[#E2DCF3] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" />
+          </label>
+          <button type="submit" className="tap w-full py-3.5 rounded-xl bg-[#7C3AED] text-white font-bold">
+            Continue
+          </button>
+          <p className="text-xs text-center text-[#94A3B8]">We’ll send you a one-time code. Never share it with anyone.</p>
+        </form>
+      </Sheet>
+
+      {toastMsg && (
+        <div
+          role="status"
+          className={`fixed left-4 right-4 sm:left-auto sm:right-6 ${
+            showTabBar || adId ? 'bottom-[calc(84px+env(safe-area-inset-bottom))]' : 'bottom-6'
+          } lg:bottom-6 z-[90] sm:max-w-sm bg-[#1E1B4B] text-white px-4 py-3 rounded-2xl shadow-xl text-sm font-medium flex items-center gap-2.5 overlay-in`}
+        >
+          <CheckCircle2 className="w-4 h-4 text-[#FCD34D] shrink-0" />
+          {toastMsg}
+        </div>
+      )}
+    </div>
+  );
+}
+
+import { createRoot as __createRoot } from 'react-dom/client';
+__createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

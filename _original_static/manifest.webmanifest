@@ -1,0 +1,19 @@
+{
+  "name": "4U.lk — Everything local. Just for you.",
+  "short_name": "4U.lk",
+  "description": "Buy & sell, discover local businesses, RSVP to events and connect with your neighbours across Sri Lanka.",
+  "id": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0618",
+  "theme_color": "#0B0618",
+  "lang": "en-LK",
+  "categories": ["shopping", "lifestyle", "social"],
+  "icons": [
+    { "src": "assets/brand/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/brand/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/brand/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

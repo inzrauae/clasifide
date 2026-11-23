@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../../app/**/*.php';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui, sans-serif;
+
+    /* 4U.lk brand */
+    --color-ink: #1E1B4B;
+    --color-night: #1E0F45;
+    --color-deep: #0E0820;
+    --color-brand: #7C3AED;
+    --color-brand-dark: #6D28D9;
+    --color-brand-light: #A855F7;
+    --color-lilac: #F3EEFF;
+    --color-mist: #F5F3FF;
+    --color-line: #E9E5F5;
+    --color-line-soft: #F1EEF9;
+    --color-page: #F4F2F9;
+    --color-sun: #FCD34D;
+    --color-sun-dark: #FBBF24;
+    --color-muted: #64748B;
+    --color-faint: #94A3B8;
+    --color-wa: #25D366;
+}
+
+@layer base {
+    html { -webkit-tap-highlight-color: transparent; }
+    body { overscroll-behavior-y: none; }
+    [x-cloak] { display: none !important; }
+    @media (max-width: 1023px) {
+        input, select, textarea { font-size: 16px !important; }
+    }
+}
+
+@utility brand-gradient { background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); }
+@utility hero-band {
+    background:
+        radial-gradient(900px 420px at 90% -20%, rgba(168, 85, 247, .55), transparent 60%),
+        radial-gradient(700px 380px at -10% 120%, rgba(99, 102, 241, .35), transparent 60%),
+        linear-gradient(160deg, #1E0F45 0%, #2E1065 60%, #3B0F7A 100%);
+}
+@utility card { @apply bg-white rounded-2xl border border-line; }
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition cursor-pointer active:scale-[.98] disabled:opacity-50; }
+@utility btn-primary { @apply btn brand-gradient text-white hover:brightness-110; }
+@utility btn-sun { @apply btn bg-sun text-ink font-extrabold hover:bg-sun-dark; }
+@utility btn-dark { @apply btn bg-ink text-white hover:bg-night; }
+@utility btn-ghost { @apply btn border border-line bg-white text-ink hover:bg-mist; }
+@utility btn-danger { @apply btn border border-red-200 bg-white text-red-600 hover:bg-red-50; }
+@utility input { @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder-faint focus:border-brand focus:ring-2 focus:ring-brand/20 focus:outline-none; }
+@utility label { @apply block text-[13px] font-bold text-ink mb-1.5; }
+@utility help { @apply mt-1 text-xs text-muted; }
+@utility error { @apply mt-1 text-xs font-semibold text-red-600; }
+@utility chip { @apply inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] font-medium bg-mist text-[#4C1D95] hover:bg-[#EDE9FE]; }
+@utility badge { @apply inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider; }
+@utility no-scrollbar {
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+}
+/* bigger invisible touch area for small links/icons (about 44px) */
+@utility hit {
+    position: relative;
+    &::before { content: ''; position: absolute; inset: -12px -8px; }
+}
+@utility pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+@utility tap {
+    transition: transform .12s ease;
+    &:active { transform: scale(.97); }
+}
+
+@keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+.sheet { animation: popIn .3s cubic-bezier(.16, 1, .3, 1) both; }
+@media (max-width: 639px) { .sheet { animation: sheetUp .32s cubic-bezier(.16, 1, .3, 1) both; } }
+
+/* hero art: gentle motion */
+@keyframes lkTrain { 0% { transform: translateX(-70px); } 100% { transform: translateX(90px); } }
+@keyframes lkBirds { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(14px, -6px); } }
+.lk-train { animation: lkTrain 14s ease-in-out infinite alternate; }
+.lk-birds { animation: lkBirds 7s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
