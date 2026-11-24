@@ -7,7 +7,7 @@
     'orders' => ['Payments', 'lucide-credit-card', route('admin.orders')],
     'banners' => ['Banners', 'lucide-megaphone', route('admin.banners')],
     'packages' => ['Packages', 'lucide-crown', route('admin.packages')],
-    'categories' => ['Categories & fees', 'lucide-sliders-horizontal', route('admin.categories')],
+    'categories' => ['Ad categories', 'lucide-layout-grid', route('admin.categories')],
 ])
 <x-layouts.app :title="'Admin · '.$title">
 <div class="max-w-7xl mx-auto px-4 py-4 sm:py-6">

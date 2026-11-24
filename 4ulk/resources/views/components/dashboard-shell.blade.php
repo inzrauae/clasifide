@@ -1,10 +1,12 @@
 @props(['title', 'active' => 'dashboard'])
 @php
+    $title = __($title);
     $u = auth()->user();
     $sub = $u->activeSubscription;
     $nav = [
         'dashboard' => ['Overview', 'lucide-chart-column', route('dashboard')],
         'ads' => ['My ads', 'lucide-tag', route('dashboard.ads')],
+        'categories' => ['By category', 'lucide-layout-grid', route('dashboard.categories')],
         'messages' => ['Messages', 'lucide-inbox', route('messages.index')],
         'leads' => ['Buyer inquiries', 'lucide-users-round', route('dashboard.leads')],
         'saved' => ['Saved ads', 'lucide-heart', route('dashboard.saved')],
@@ -24,21 +26,21 @@
                 <div class="min-w-0">
                     <p class="font-bold truncate">{{ $u->name }}</p>
                     <p class="text-xs text-muted flex items-center gap-1">
-                        {{ $sub ? $sub->package->name.' package' : 'Free plan' }}
-                        @if ($u->isVerified()) · <span class="text-emerald-700 font-semibold">Verified</span>@endif
+                        {{ $sub ? __(':package package', ['package' => $sub->package->name]) : __('Free plan') }}
+                        @if ($u->isVerified()) · <span class="text-emerald-700 font-semibold">{{ __('Verified') }}</span>@endif
                     </p>
                 </div>
             </div>
-            <nav class="card p-2 flex lg:flex-col overflow-x-auto no-scrollbar gap-0.5 text-sm font-semibold" aria-label="Dashboard">
+            <nav class="card p-2 flex lg:flex-col overflow-x-auto no-scrollbar gap-0.5 text-sm font-semibold" aria-label="{{ __('Dashboard') }}">
                 @foreach ($nav as $key => [$label, $icon, $href])
-                    <a href="{{ $href }}" class="shrink-0 flex items-center gap-2.5 px-3 py-2.5 rounded-xl {{ $active === $key ? 'bg-[#EDE9FE] text-brand-dark' : 'text-ink hover:bg-mist' }}">@svg($icon, 'w-4 h-4') {{ $label }}</a>
+                    <a href="{{ $href }}" class="shrink-0 flex items-center gap-2.5 px-3 py-2.5 rounded-xl {{ $active === $key ? 'bg-[#EDE9FE] text-brand-dark' : 'text-ink hover:bg-mist' }}">@svg($icon, 'w-4 h-4') {{ __($label) }}</a>
                 @endforeach
-                <form method="POST" action="{{ route('logout') }}" class="lg:hidden shrink-0">@csrf<button class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-muted">@svg('lucide-log-out', 'w-4 h-4') Sign out</button></form>
+                <form method="POST" action="{{ route('logout') }}" class="lg:hidden shrink-0">@csrf<button class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-muted">@svg('lucide-log-out', 'w-4 h-4') {{ __('Sign out') }}</button></form>
             </nav>
             @unless ($sub)
                 <a href="{{ route('pricing') }}" class="hidden lg:block rounded-2xl bg-night text-white p-4 hover:brightness-110">
-                    <p class="font-extrabold flex items-center gap-1.5">@svg('lucide-crown', 'w-4 h-4 text-sun') Grow your sales</p>
-                    <p class="text-xs text-white/70 mt-1">Store, promotions & analytics from Rs 990/month.</p>
+                    <p class="font-extrabold flex items-center gap-1.5">@svg('lucide-crown', 'w-4 h-4 text-sun') {{ __('Grow your sales') }}</p>
+                    <p class="text-xs text-white/70 mt-1">{{ __('Store, promotions & analytics from Rs 990/month.') }}</p>
                 </a>
             @endunless
         </aside>

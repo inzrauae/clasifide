@@ -78,34 +78,28 @@ class DashboardController extends Controller
         $user = $request->user();
         $tab = $request->query('tab', 'active');
 
-        $query = $user->listings()->with(['images', 'category'])->latest();
-        match ($tab) {
-            'active' => $query->live(),
-            'pending' => $query->whereIn('status', ['pending', 'pending_payment', 'draft']),
-            'rejected' => $query->where('status', 'rejected'),
-            'sold' => $query->where('status', 'sold'),
-            'expired' => $query->where(fn ($q) => $q->where('status', 'expired')->orWhere(fn ($w) => $w->where('status', 'active')->where('expires_at', '<=', now()))),
-            default => null,
-        };
-
-        $counts = [
-            'active' => $user->listings()->live()->count(),
-            'pending' => $user->listings()->whereIn('status', ['pending', 'pending_payment', 'draft'])->count(),
-            'rejected' => $user->listings()->where('status', 'rejected')->count(),
-            'sold' => $user->listings()->where('status', 'sold')->count(),
-            'expired' => $user->listings()->where(fn ($q) => $q->where('status', 'expired')->orWhere(fn ($w) => $w->where('status', 'active')->where('expires_at', '<=', now())))->count(),
-        ];
-
-        $pendingOrders = $user->orders()->where('type', 'posting_fee')->whereIn('status', ['pending', 'awaiting_review'])->get()
-            ->keyBy(fn ($o) => $o->meta['listing_id'] ?? 0);
+        $query = $user->listings()->with(['images', 'category'])->latest()->dashboardTab($tab);
 
         return view('dashboard.ads', [
             'listings' => $query->paginate(15)->withQueryString(),
             'tab' => $tab,
-            'counts' => $counts,
-            'pendingOrders' => $pendingOrders,
+            'counts' => self::tabCounts($user->listings()),
+            'pendingOrders' => self::pendingFeeOrders($user),
             'credits' => $user->activeSubscription?->promotions_left ?? 0,
         ]);
+    }
+
+    /** How many ads sit in each "My ads" tab, for the given (already scoped) query. */
+    public static function tabCounts($query): array
+    {
+        return collect(Listing::DASHBOARD_TABS)->map(fn ($_, $tab) => (clone $query)->dashboardTab($tab)->count())->all();
+    }
+
+    /** Unpaid premium-fee orders, keyed by the ad they belong to. */
+    public static function pendingFeeOrders($user)
+    {
+        return $user->orders()->where('type', 'posting_fee')->whereIn('status', ['pending', 'awaiting_review'])->get()
+            ->keyBy(fn ($o) => $o->meta['listing_id'] ?? 0);
     }
 
     public function saved(Request $request)
@@ -185,6 +179,6 @@ class DashboardController extends Controller
         }
         $user->fill(collect($data)->only(['name', 'email', 'phone', 'whatsapp', 'district', 'city'])->all())->save();
 
-        return back()->with('status', 'Profile saved.');
+        return back()->with('status', __('Profile saved.'));
     }
 }

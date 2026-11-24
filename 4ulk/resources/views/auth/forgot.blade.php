@@ -2,11 +2,11 @@
     <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
         @csrf
         <div>
-            <label class="label" for="email">Email</label>
+            <label class="label" for="email">{{ __('Email') }}</label>
             <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="input">
             @error('email')<p class="error">{{ $message }}</p>@enderror
         </div>
-        <button class="btn-primary w-full py-3">Send reset link</button>
-        <p class="text-center text-sm"><a href="{{ route('login') }}" class="font-semibold text-brand-dark hover:underline">Back to sign in</a></p>
+        <button class="btn-primary w-full py-3">{{ __('Send reset link') }}</button>
+        <p class="text-center text-sm"><a href="{{ route('login') }}" class="font-semibold text-brand-dark hover:underline">{{ __('Back to sign in') }}</a></p>
     </form>
 </x-auth-card>

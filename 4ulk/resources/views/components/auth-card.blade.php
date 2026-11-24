@@ -1,4 +1,6 @@
 @props(['title', 'subtitle' => null])
+@php($title = __($title))
+@php($subtitle = $subtitle ? __($subtitle) : null)
 <x-layouts.app :title="$title">
 <div class="hero-band">
     <div class="max-w-md mx-auto px-4 py-8 sm:py-14">

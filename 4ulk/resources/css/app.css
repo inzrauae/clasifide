@@ -7,8 +7,8 @@
 @source '../../app/**/*.php';
 
 @theme {
-    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-display: 'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', 'Noto Sans Sinhala', 'Iskoola Pota', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Plus Jakarta Sans', 'Noto Sans Sinhala', 'Iskoola Pota', system-ui, sans-serif;
 
     /* 4U.lk brand */
     --color-ink: #1E1B4B;

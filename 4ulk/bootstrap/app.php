@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureAdmin::class,
         ]);
+        // /si/... pages: strip the prefix and switch to Sinhala before routing
+        $middleware->prepend(\App\Http\Middleware\SetLocaleFromUrl::class);
         $middleware->web(prepend: [
             \App\Http\Middleware\ForceHttps::class,
         ]);

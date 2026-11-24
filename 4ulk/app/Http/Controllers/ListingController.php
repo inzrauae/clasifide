@@ -123,7 +123,11 @@ class ListingController extends Controller
         $used = $user->listings()->whereIn('status', ['active', 'pending', 'pending_payment'])->count();
 
         return view('listings.form', [
-            'listing' => new Listing(['district' => $user->district, 'phone' => $user->phone, 'whatsapp' => $user->whatsapp, 'contact_name' => $user->name]),
+            'listing' => new Listing([
+                'district' => $user->district, 'phone' => $user->phone, 'whatsapp' => $user->whatsapp, 'contact_name' => $user->name,
+                // ?category=vehicles opens the form with that type already picked
+                'category_id' => Category::allCached()->firstWhere('slug', $request->query('category'))?->id,
+            ]),
             'categories' => Category::allCached(),
             'conditions' => self::CONDITIONS,
             'limitReached' => $used >= $user->activeAdLimit(),
@@ -137,7 +141,7 @@ class ListingController extends Controller
         abort_if($request->filled('website'), 422); // honeypot
 
         if ($user->listings()->whereIn('status', ['active', 'pending', 'pending_payment'])->count() >= $user->activeAdLimit()) {
-            return redirect()->route('pricing')->with('error', 'You have reached the active ad limit for your package. Upgrade to post more ads.');
+            return redirect()->route('pricing')->with('error', __('You have reached the active ad limit for your package. Upgrade to post more ads.'));
         }
 
         $data = $this->validated($request);
@@ -148,7 +152,7 @@ class ListingController extends Controller
         $listing->fingerprint = SafetyService::fingerprint($listing->title, $listing->category_id);
 
         if ($dup = SafetyService::findDuplicate($user, $listing->fingerprint, $listing->phone)) {
-            return back()->withInput()->withErrors(['title' => 'You already have an ad with this title. Edit or renew that ad instead of posting it again.'])
+            return back()->withInput()->withErrors(['title' => __('You already have an ad with this title. Edit or renew that ad instead of posting it again.')])
                 ->with('duplicate_url', $dup->url());
         }
 
@@ -179,12 +183,12 @@ class ListingController extends Controller
             ]);
 
             return redirect()->route('checkout.show', $order)
-                ->with('status', "{$listing->category->name} ads need a one-time premium fee to go live.");
+                ->with('status', __(':category ads need a one-time premium fee to go live.', ['category' => $listing->category->name]));
         }
 
         $msg = $listing->status === 'active'
-            ? 'Your ad is live! Promote it to reach more buyers.'
-            : 'Thanks! Your ad is being reviewed and will go live shortly.';
+            ? __('Your ad is live! Promote it to reach more buyers.')
+            : __('Thanks! Your ad is being reviewed and will go live shortly.');
 
         return redirect()->route('promote.show', $listing)->with('status', $msg);
     }
@@ -214,7 +218,7 @@ class ListingController extends Controller
         $listing->store_id = $request->boolean('in_store') ? $user->stores()->value('id') : null;
 
         if (SafetyService::findDuplicate($user, $listing->fingerprint, $listing->phone, $listing->id)) {
-            return back()->withInput()->withErrors(['title' => 'Another of your ads already uses this title.']);
+            return back()->withInput()->withErrors(['title' => __('Another of your ads already uses this title.')]);
         }
 
         DB::transaction(function () use ($listing, $request, $user) {
@@ -237,7 +241,7 @@ class ListingController extends Controller
             $listing->save();
         });
 
-        return redirect()->route('dashboard.ads')->with('status', $listing->status === 'active' ? 'Ad updated.' : 'Ad updated and sent for review.');
+        return redirect()->route('dashboard.ads')->with('status', $listing->status === 'active' ? __('Ad updated.') : __('Ad updated and sent for review.'));
     }
 
     public function destroy(Request $request, Listing $listing)
@@ -245,7 +249,7 @@ class ListingController extends Controller
         $this->authorizeOwner($request, $listing);
         $listing->delete();
 
-        return redirect()->route('dashboard.ads')->with('status', 'Ad deleted.');
+        return redirect()->route('dashboard.ads')->with('status', __('Ad deleted.'));
     }
 
     public function markSold(Request $request, Listing $listing)
@@ -253,7 +257,7 @@ class ListingController extends Controller
         $this->authorizeOwner($request, $listing);
         $listing->update(['status' => 'sold']);
 
-        return back()->with('status', 'Marked as sold. Congratulations!');
+        return back()->with('status', __('Marked as sold. Congratulations!'));
     }
 
     /** Free re-publish for expired ads (keeps counters and URL). */
@@ -269,7 +273,7 @@ class ListingController extends Controller
             'bumped_at' => now(),
         ]);
 
-        return back()->with('status', 'Ad renewed for another '.config('marketplace.ad_lifetime_days').' days.');
+        return back()->with('status', __('Ad renewed for another :days days.', ['days' => config('marketplace.ad_lifetime_days')]));
     }
 
     // ================================================================ helpers
@@ -303,8 +307,8 @@ class ListingController extends Controller
             'photos' => ['nullable', 'array', 'max:'.$maxNew],
             'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ], [
-            'phone.regex' => 'Enter a mobile number like 0771234567.',
-            'photos.max' => 'You can add up to '.config('marketplace.max_photos').' photos.',
+            'phone.regex' => __('Enter a mobile number like 0771234567.'),
+            'photos.max' => __('You can add up to :count photos.', ['count' => config('marketplace.max_photos')]),
         ]);
 
         $category = Category::find($data['category_id']);

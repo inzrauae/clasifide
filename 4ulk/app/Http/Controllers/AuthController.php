@@ -31,7 +31,7 @@ class AuthController extends Controller
         $value = $field === 'phone' ? self::normalisePhone($data['login']) : $data['login'];
 
         if (! Auth::attempt([$field => $value, 'password' => $data['password']], $request->boolean('remember'))) {
-            return back()->withErrors(['login' => 'Those details do not match an account.'])->onlyInput('login');
+            return back()->withErrors(['login' => __('Those details do not match an account.')])->onlyInput('login');
         }
 
         $request->session()->regenerate();
@@ -60,15 +60,15 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', PasswordRule::min(8)],
             'terms' => ['accepted'],
         ], [
-            'phone.regex' => 'Enter a Sri Lankan mobile number like 0771234567.',
-            'phone.unique' => 'An account already uses this mobile number.',
+            'phone.regex' => __('Enter a Sri Lankan mobile number like 0771234567.'),
+            'phone.unique' => __('An account already uses this mobile number.'),
         ]);
 
         $user = User::create($data + ['whatsapp' => $data['phone']]);
         Auth::login($user, true);
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard')->with('status', 'Welcome to 4U.lk! Post your first ad for free.');
+        return redirect()->route('dashboard')->with('status', __('Welcome to 4U.lk! Post your first ad for free.'));
     }
 
     public function logout(Request $request)
@@ -91,7 +91,7 @@ class AuthController extends Controller
         Password::sendResetLink($request->only('email'));
 
         // Same answer whether or not the email exists
-        return back()->with('status', 'If that email has an account, a reset link is on its way.');
+        return back()->with('status', __('If that email has an account, a reset link is on its way.'));
     }
 
     public function showReset(Request $request, string $token)
@@ -113,7 +113,7 @@ class AuthController extends Controller
         });
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', 'Password changed. You can sign in now.')
+            ? redirect()->route('login')->with('status', __('Password changed. You can sign in now.'))
             : back()->withErrors(['email' => __($status)]);
     }
 

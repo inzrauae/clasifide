@@ -85,6 +85,23 @@ class Listing extends Model
             ->where(fn ($w) => $w->whereNull('expires_at')->orWhere('expires_at', '>', now()));
     }
 
+    /** Tabs on the seller's "My ads" screens. */
+    public const DASHBOARD_TABS = ['active' => 'Live', 'pending' => 'Pending', 'rejected' => 'Rejected', 'sold' => 'Sold', 'expired' => 'Expired'];
+
+    /** Filter a seller's ads down to one dashboard tab. Unknown tabs return everything. */
+    public function scopeDashboardTab(Builder $q, ?string $tab): Builder
+    {
+        return match ($tab) {
+            'active' => $q->live(),
+            'pending' => $q->whereIn('status', ['pending', 'pending_payment', 'draft']),
+            'rejected' => $q->where('status', 'rejected'),
+            'sold' => $q->where('status', 'sold'),
+            'expired' => $q->where(fn ($w) => $w->where('status', 'expired')
+                ->orWhere(fn ($e) => $e->where('status', 'active')->where('expires_at', '<=', now()))),
+            default => $q,
+        };
+    }
+
     /** Top ads first, then most recently bumped/published. */
     public function scopeRanked(Builder $q): Builder
     {
@@ -117,24 +134,28 @@ class Listing extends Model
     public function statusLabel(): string
     {
         if ($this->status === 'active' && $this->expires_at && $this->expires_at->isPast()) {
-            return 'Expired';
+            return __('Expired');
         }
 
-        return self::STATUSES[$this->status] ?? ucfirst($this->status);
+        return __(self::STATUSES[$this->status] ?? ucfirst($this->status));
     }
 
     public function priceLabel(): string
     {
         if (! $this->price) {
-            return 'Price on request';
+            return __('Price on request');
         }
 
-        return ($this->price_from ? 'From ' : '').'Rs '.number_format($this->price).($this->price_unit ?: '');
+        $price = 'Rs '.number_format($this->price).($this->price_unit ? __($this->price_unit) : '');
+
+        return $this->price_from ? __('From :price', ['price' => $price]) : $price;
     }
 
     public function place(): string
     {
-        return $this->city && $this->city !== $this->district ? "{$this->city}, {$this->district}" : $this->district;
+        $district = __($this->district);
+
+        return $this->city && $this->city !== $this->district ? "{$this->city}, {$district}" : $district;
     }
 
     public function coverUrl(): ?string
@@ -168,7 +189,7 @@ class Listing extends Model
     {
         $num = preg_replace('/\D/', '', $this->whatsapp ?: $this->phone);
         $num = preg_replace('/^0/', '94', $num);
-        $text = rawurlencode("Hi, is your ad \"{$this->title}\" on 4U.lk still available?");
+        $text = rawurlencode(__('Hi, is your ad ":title" on 4U.lk still available?', ['title' => $this->title]));
 
         return "https://wa.me/{$num}?text={$text}";
     }

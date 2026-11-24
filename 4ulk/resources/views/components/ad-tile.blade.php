@@ -3,8 +3,8 @@
     <div class="relative aspect-[4/3] overflow-hidden">
         <x-ad-image :listing="$listing" class="transition-transform duration-500 group-hover:scale-105" />
         <div class="absolute top-2 left-2 flex gap-1">
-            @if ($listing->isTop())<span class="badge bg-sun text-ink">TOP AD</span>@endif
-            @if ($listing->isUrgent())<span class="badge bg-red-600 text-white">URGENT</span>@endif
+            @if ($listing->isTop())<span class="badge bg-sun text-ink">{{ __('TOP AD') }}</span>@endif
+            @if ($listing->isUrgent())<span class="badge bg-red-600 text-white">{{ __('URGENT') }}</span>@endif
         </div>
         <x-save-button :listing="$listing" :saved="\App\Support\Saved::has($listing->id)" class="absolute top-2 right-2" />
     </div>

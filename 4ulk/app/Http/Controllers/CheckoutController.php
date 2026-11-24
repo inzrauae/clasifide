@@ -42,7 +42,7 @@ class CheckoutController extends Controller
 
         $order->update(['bank_slip' => $path, 'method' => 'bank', 'status' => 'awaiting_review']);
 
-        return redirect()->route('dashboard.billing')->with('status', 'Slip received. We will confirm your payment within a few working hours.');
+        return redirect()->route('dashboard.billing')->with('status', __('Slip received. We will confirm your payment within a few working hours.'));
     }
 
     /** PayHere sends the customer back here; the real confirmation arrives via notify(). */
@@ -52,8 +52,8 @@ class CheckoutController extends Controller
         $order->refresh();
 
         return redirect()->route('dashboard.billing')->with('status', $order->isPaid()
-            ? 'Payment received. Thank you!'
-            : 'Thanks! We are confirming your payment with PayHere. This page will update in a minute.');
+            ? __('Payment received. Thank you!')
+            : __('Thanks! We are confirming your payment with PayHere. This page will update in a minute.'));
     }
 
     public function notify(Request $request)

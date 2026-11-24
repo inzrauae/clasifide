@@ -33,10 +33,10 @@ class PricingController extends Controller
 
         if ($package->is_custom) {
             return redirect()->route('advertise', ['enterprise' => 1])
-                ->with('status', 'Tell us about your business and our team will prepare an Enterprise plan.');
+                ->with('status', __('Tell us about your business and our team will prepare an Enterprise plan.'));
         }
         if ($package->isFree()) {
-            return redirect()->route('dashboard')->with('status', 'You are on the Free plan.');
+            return redirect()->route('dashboard')->with('status', __('You are on the Free plan.'));
         }
 
         $order = Order::create([

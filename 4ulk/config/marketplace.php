@@ -3,7 +3,7 @@
 return [
 
     'name' => env('APP_NAME', '4U.lk'),
-    'tagline' => 'Everything local. Just for you.',
+    'tagline' => 'Everything. Just for you.',
     'support_phone' => env('SUPPORT_PHONE', '011 000 0000'),
     'support_email' => env('SUPPORT_EMAIL', 'hello@4u.lk'),
 

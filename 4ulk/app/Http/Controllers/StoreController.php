@@ -55,7 +55,7 @@ class StoreController extends Controller
     public function save(Request $request)
     {
         $user = $request->user();
-        abort_unless($user->storeLimit() > 0 || $user->isAdmin(), 403, 'Stores are part of the Starter package and above.');
+        abort_unless($user->storeLimit() > 0 || $user->isAdmin(), 403, __('Stores are part of the Starter package and above.'));
 
         $store = $user->stores()->first() ?? new Store;
 
@@ -98,6 +98,6 @@ class StoreController extends Controller
             $user->listings()->whereNull('store_id')->update(['store_id' => $store->id]);
         }
 
-        return redirect()->route('dashboard.store')->with('status', 'Store saved. Your store page is live at '.route('stores.show', $store));
+        return redirect()->route('dashboard.store')->with('status', __('Store saved. Your store page is live at :url', ['url' => route('stores.show', $store)]));
     }
 }

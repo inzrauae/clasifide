@@ -1,5 +1,8 @@
 import Alpine from 'alpinejs';
 
+// Sinhala pages put their translations in window.i18n (see layouts/app.blade.php)
+const t = (text) => (window.i18n && window.i18n[text]) || text;
+
 const csrf = () => document.querySelector('meta[name="csrf-token"]')?.content;
 
 const post = (url) =>
@@ -66,7 +69,7 @@ document.addEventListener('alpine:init', () => {
                 this.label = j.phone;
                 this.tel = j.tel;
             } catch (e) {
-                Alpine.store('toast').show('Could not load the number. Try again.');
+                Alpine.store('toast').show(t('Could not load the number. Try again.'));
             }
             this.busy = false;
         },
@@ -81,7 +84,7 @@ document.addEventListener('alpine:init', () => {
                 const r = await post(url);
                 const j = await r.json();
                 this.saved = j.saved;
-                Alpine.store('toast').show(j.saved ? 'Saved to your favourites' : 'Removed from favourites');
+                Alpine.store('toast').show(t(j.saved ? 'Saved to your favourites' : 'Removed from favourites'));
             } catch (e) {
                 this.saved = !this.saved;
             }
@@ -98,7 +101,7 @@ document.addEventListener('alpine:init', () => {
                 return;
             }
             await navigator.clipboard?.writeText(url);
-            Alpine.store('toast').show('Link copied');
+            Alpine.store('toast').show(t('Link copied'));
         },
     }));
 
@@ -112,18 +115,18 @@ document.addEventListener('alpine:init', () => {
             return Object.keys(districts).filter((d) => d.toLowerCase().includes(this.q.toLowerCase()));
         },
         nearMe(onPick) {
-            if (!navigator.geolocation) return Alpine.store('toast').show('Location is not available on this device');
+            if (!navigator.geolocation) return Alpine.store('toast').show(t('Location is not available on this device'));
             this.locating = true;
             navigator.geolocation.getCurrentPosition(
                 (p) => {
                     this.locating = false;
                     const d = nearest(p.coords.latitude, p.coords.longitude, districts);
-                    Alpine.store('toast').show(`Showing ads near you in ${d}`);
+                    Alpine.store('toast').show(t('Showing ads near you in :place').replace(':place', d));
                     onPick(d);
                 },
                 () => {
                     this.locating = false;
-                    Alpine.store('toast').show('Allow location access to find ads near you');
+                    Alpine.store('toast').show(t('Allow location access to find ads near you'));
                 },
                 { timeout: 8000, maximumAge: 600000 }
             );

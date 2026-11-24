@@ -34,18 +34,18 @@ class PromotionController extends Controller
         $cfg = PromotionService::types()[$data['type']];
 
         if (! in_array($listing->status, ['active', 'pending'], true)) {
-            return back()->with('error', 'Only live ads can be promoted.');
+            return back()->with('error', __('Only live ads can be promoted.'));
         }
 
         if ($data['pay_with'] === 'credit') {
             $sub = $user->activeSubscription;
             if (! $sub || $sub->promotions_left < $cfg['credits']) {
-                return back()->with('error', 'Not enough promotion credits. Pay for this promotion or upgrade your package.');
+                return back()->with('error', __('Not enough promotion credits. Pay for this promotion or upgrade your package.'));
             }
             $sub->decrement('promotions_left', $cfg['credits']);
             PromotionService::apply($listing, $data['type'], 'credit');
 
-            return redirect()->route('dashboard.ads')->with('status', "{$cfg['name']} applied using {$cfg['credits']} credit(s).");
+            return redirect()->route('dashboard.ads')->with('status', __(':promotion applied using :count credit(s).', ['promotion' => __($cfg['name']), 'count' => $cfg['credits']]));
         }
 
         $order = Order::create([

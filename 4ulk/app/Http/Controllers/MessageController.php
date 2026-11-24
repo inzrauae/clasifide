@@ -44,7 +44,7 @@ class MessageController extends Controller
         $user = $request->user();
         abort_unless($listing->isLive(), 404);
         if ($listing->user_id === $user->id) {
-            return back()->with('error', 'This is your own ad.');
+            return back()->with('error', __('This is your own ad.'));
         }
 
         $data = $request->validate(['body' => ['required', 'string', 'min:2', 'max:1500']]);
@@ -54,7 +54,7 @@ class MessageController extends Controller
         if (! $conversation) {
             $limit = config('marketplace.safety.new_conversations_per_day');
             if (Conversation::where('buyer_id', $user->id)->where('created_at', '>', now()->subDay())->count() >= $limit) {
-                return back()->with('error', 'You have started a lot of chats today. Please try again tomorrow.');
+                return back()->with('error', __('You have started a lot of chats today. Please try again tomorrow.'));
             }
             $conversation = Conversation::create([
                 'listing_id' => $listing->id,
@@ -134,19 +134,19 @@ class MessageController extends Controller
         }
         $conversation->update($changes);
 
-        return back()->with('status', 'Saved.');
+        return back()->with('status', __('Saved.'));
     }
 
     /** Shared send logic with spam protection. Returns an error message or null. */
     private function send(Conversation $conversation, $user, string $body): ?string
     {
         if ($conversation->blocked) {
-            return 'The seller is not accepting messages in this chat.';
+            return __('The seller is not accepting messages in this chat.');
         }
 
         $key = 'msg:'.$user->id;
         if (RateLimiter::tooManyAttempts($key, config('marketplace.safety.messages_per_minute'))) {
-            return 'You are sending messages too quickly. Wait a moment and try again.';
+            return __('You are sending messages too quickly. Wait a moment and try again.');
         }
         RateLimiter::hit($key, 60);
 
@@ -155,7 +155,7 @@ class MessageController extends Controller
         $copies = Message::where('sender_id', $user->id)->where('body', $body)
             ->where('created_at', '>', now()->subHour())->distinct()->count('conversation_id');
         if ($copies >= 4) {
-            return 'This message has already been sent to several sellers. Please write to each seller individually.';
+            return __('This message has already been sent to several sellers. Please write to each seller individually.');
         }
 
         $flagged = SafetyService::messageLooksSpammy($body);

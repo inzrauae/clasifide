@@ -16,7 +16,7 @@ class BlockBannedUsers
             Auth::logout();
             $request->session()->invalidate();
 
-            return redirect()->route('login')->withErrors(['email' => 'This account has been suspended. Contact support if you think this is a mistake.']);
+            return redirect()->route('login')->withErrors(['email' => __('This account has been suspended. Contact support if you think this is a mistake.')]);
         }
 
         // Cheap "last seen" for seller profiles (at most once every 5 minutes)

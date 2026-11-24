@@ -17,7 +17,7 @@ class ReviewController extends Controller
 
         $conversation = Conversation::where('buyer_id', $viewer->id)->where('seller_id', $user->id)->latest('last_message_at')->first();
         if (! $conversation) {
-            return back()->with('error', 'You can review a seller after you have chatted with them about an ad.');
+            return back()->with('error', __('You can review a seller after you have chatted with them about an ad.'));
         }
 
         $data = $request->validate([
@@ -35,6 +35,6 @@ class ReviewController extends Controller
         $score = 30 + ($avg - 1) * 12 + ($user->isVerified() ? 15 : 0) + min(7, (int) $user->created_at->diffInMonths(now()));
         $user->forceFill(['trust_score' => (int) max(0, min(100, $score))])->save();
 
-        return back()->with('status', 'Thanks for your review!');
+        return back()->with('status', __('Thanks for your review!'));
     }
 }

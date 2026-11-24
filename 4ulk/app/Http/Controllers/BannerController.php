@@ -71,7 +71,7 @@ class BannerController extends Controller
             return redirect()->route('checkout.show', $order);
         }
 
-        return back()->with('status', 'Thanks! Our advertising team will call you within one working day to confirm your booking.');
+        return back()->with('status', __('Thanks! Our advertising team will call you within one working day to confirm your booking.'));
     }
 
     public function click(Banner $banner)

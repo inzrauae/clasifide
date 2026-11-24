@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -32,27 +31,9 @@ class SettingsController extends Controller
             'analytics' => $request->boolean('analytics'),
             'lead_tools' => $request->boolean('lead_tools'),
             'is_active' => $request->boolean('is_active'),
-            'features' => collect(preg_split('/\r?\n/', $data['features_text'] ?? ''))->map('trim')->filter()->values()->all(),
+            'features' => collect(preg_split('/\r?\n/', $data['features_text'] ?? ''))->map(fn ($v) => trim($v))->filter()->values()->all(),
         ]);
 
         return back()->with('status', "{$package->name} package saved.");
-    }
-
-    public function categories()
-    {
-        return view('admin.categories', ['categories' => Category::whereNull('parent_id')->orderBy('sort')->withCount('listings')->get()]);
-    }
-
-    public function updateCategory(Request $request, Category $category)
-    {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:60'],
-            'posting_fee' => ['required', 'integer', 'min:0'],
-            'free_ads_per_month' => ['required', 'integer', 'min:0', 'max:100'],
-            'sort' => ['required', 'integer'],
-        ]);
-        $category->update($data + ['is_active' => $request->boolean('is_active')]);
-
-        return back()->with('status', "{$category->name} saved.");
     }
 }

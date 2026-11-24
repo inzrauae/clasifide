@@ -54,7 +54,7 @@ class ListingInteractionController extends Controller
             }
         }
 
-        return back()->with('status', 'Thanks. Our team will review this ad within 24 hours.');
+        return back()->with('status', __('Thanks. Our team will review this ad within 24 hours.'));
     }
 
     public function favorite(Request $request, Listing $listing)

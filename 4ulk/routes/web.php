@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryDashboardController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -84,6 +85,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/billing', [DashboardController::class, 'billing'])->name('dashboard.billing');
     Route::get('/dashboard/profile', [DashboardController::class, 'profile'])->name('dashboard.profile');
     Route::put('/dashboard/profile', [DashboardController::class, 'updateProfile'])->name('dashboard.profile.update');
+    Route::get('/dashboard/categories', [CategoryDashboardController::class, 'index'])->name('dashboard.categories');
+    Route::get('/dashboard/categories/{category}', [CategoryDashboardController::class, 'show'])->name('dashboard.categories.show');
     Route::get('/dashboard/store', [StoreController::class, 'edit'])->name('dashboard.store');
     Route::post('/dashboard/store', [StoreController::class, 'save'])->name('dashboard.store.save');
 
@@ -130,6 +133,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/packages', [Admin\SettingsController::class, 'packages'])->name('packages');
     Route::put('/packages/{package}', [Admin\SettingsController::class, 'updatePackage'])->name('packages.update');
-    Route::get('/categories', [Admin\SettingsController::class, 'categories'])->name('categories');
-    Route::put('/categories/{category:id}', [Admin\SettingsController::class, 'updateCategory'])->name('categories.update');
+    // One back office per ad type (Vehicles, Property, Jobs ...)
+    Route::get('/categories', [Admin\CategoryController::class, 'index'])->name('categories');
+    Route::get('/categories/{category}', [Admin\CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/categories/{category}/ads', [Admin\CategoryController::class, 'ads'])->name('categories.ads');
+    Route::get('/categories/{category}/settings', [Admin\CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [Admin\CategoryController::class, 'update'])->name('categories.update');
 });

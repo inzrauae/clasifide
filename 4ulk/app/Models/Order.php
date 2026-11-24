@@ -45,7 +45,7 @@ class Order extends Model
 
     public function typeLabel(): string
     {
-        return self::TYPES[$this->type] ?? $this->type;
+        return __(self::TYPES[$this->type] ?? $this->type);
     }
 
     public function getRouteKeyName(): string
