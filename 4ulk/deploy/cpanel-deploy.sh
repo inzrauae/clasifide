@@ -31,6 +31,9 @@ for c in "${PHP_BIN:-}" php /opt/cpanel/ea-php83/root/usr/bin/php /opt/cpanel/ea
 done
 [ -n "$PHP" ] || die "No PHP 8.2+ found. Set it in cPanel → MultiPHP Manager, or run with PHP_BIN=/opt/cpanel/ea-php82/root/usr/bin/php"
 echo "Using $PHP ($("$PHP" -r 'echo PHP_VERSION;'))"
+MISSING="$("$PHP" -r 'echo implode(" ", array_filter(["pdo_mysql","mbstring","openssl","tokenizer","dom","xml","ctype","fileinfo","gd","bcmath","curl","filter","session"], fn ($e) => ! extension_loaded($e)));')"
+[ -z "$MISSING" ] || die "PHP extensions turned off: $MISSING
+Turn them on in cPanel → Select PHP Version → Extensions (tick each one; it saves automatically), then run this again."
 
 # ---------------------------------------------------------------- Composer
 say "Installing PHP libraries (composer)"
@@ -93,12 +96,23 @@ mkdir -p "$WEB/uploads"
 for f in index.html index.htm default.html; do
     [ -f "$WEB/$f" ] && mv "$WEB/$f" "$WEB/$f.bak" && echo "moved host placeholder $f to $f.bak"
 done
+# Keep the host's original .htaccess / .user.ini once, and carry over any
+# cPanel/CloudLinux-generated blocks (PHP version handler, ini directives)
+for f in .htaccess .user.ini; do
+    [ -f "$WEB/$f" ] && [ ! -f "$WEB/$f.host-original" ] && ! grep -q '4U.lk' "$WEB/$f" && cp "$WEB/$f" "$WEB/$f.host-original"
+done
+HOST_BLOCKS=""
+[ -f "$WEB/.htaccess" ] && HOST_BLOCKS="$(awk '/^# .*BEGIN .*(cPanel|CloudLinux|LiteSpeed|php)/{keep=1} keep{print} /^# .*END .*(cPanel|CloudLinux|LiteSpeed|php)/{keep=0}' "$WEB/.htaccess")"
 rm -rf "$WEB/build"
 # Everything in public/ except its index.php and uploads/ (user photos live only on the server)
 (cd "$APP/public" && for item in $(ls -A); do
     case "$item" in index.php|uploads|storage) continue ;; esac
     cp -R "$item" "$WEB/"
 done)
+if [ -n "$HOST_BLOCKS" ]; then
+    printf '\n%s\n' "$HOST_BLOCKS" >> "$WEB/.htaccess"
+    echo "kept the host's generated .htaccess settings"
+fi
 cp "$APP/deploy/cpanel/index.php" "$WEB/index.php"
 cp "$APP/deploy/cpanel/.user.ini" "$WEB/.user.ini"
 rm -f "$WEB/setup-check.php"
