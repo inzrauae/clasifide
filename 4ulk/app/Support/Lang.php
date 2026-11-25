@@ -30,6 +30,8 @@ class Lang
             'Location is not available on this device',
             'Allow location access to find ads near you',
             'Showing ads near you in :place',
+            'Search for',
+            'Category',
         ])->mapWithKeys(fn ($s) => [$s => __($s)])->all();
     }
 

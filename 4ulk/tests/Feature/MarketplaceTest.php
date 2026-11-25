@@ -72,6 +72,21 @@ class MarketplaceTest extends TestCase
         }
     }
 
+    public function test_search_suggestions(): void
+    {
+        $u = $this->seller();
+        $this->live($u, ['title' => 'Toyota Aqua 2015 hybrid']);
+        $this->live($u, ['title' => 'Toyota Axio for sale', 'status' => 'sold']);
+        $this->live($u, ['title' => 'Honda Vezel 2017']);
+
+        $r = $this->getJson('/search/suggest?q=toyota')->assertOk();
+        $this->assertSame(['Toyota Aqua 2015 hybrid'], array_column($r->json('ads'), 'title')); // sold ads are left out
+
+        $this->getJson('/search/suggest?q=elect')->assertOk()->assertJsonPath('categories.0.name', 'Electronics');
+        $this->getJson('/search/suggest?q=t')->assertOk()->assertExactJson(['categories' => [], 'ads' => []]);
+        $this->getJson('/search/suggest?q=100%25')->assertOk()->assertJsonCount(0, 'ads'); // % is not a wildcard
+    }
+
     public function test_register_and_login_with_phone(): void
     {
         $this->post('/register', [

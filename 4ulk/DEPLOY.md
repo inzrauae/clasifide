@@ -1,5 +1,15 @@
 # Deploying 4U.lk on cPanel
 
+> **With cPanel Terminal (recommended):** clone the GitHub repo and run one script. It installs libraries, writes `.env`, copies the web files to `public_html`, migrates and caches.
+>
+> ```bash
+> cd ~ && git clone https://github.com/inzrauae/clasifide.git
+> APP_URL=https://yourdomain.lk DB_DATABASE=cpuser_db DB_USERNAME=cpuser_user DB_PASSWORD='db-password' > ADMIN_EMAIL=you@example.com ADMIN_PASSWORD='admin-password' bash ~/clasifide/4ulk/deploy/cpanel-deploy.sh
+> ```
+> Updates: `cd ~/clasifide && git pull && bash 4ulk/deploy/cpanel-deploy.sh`. Addon domain: add `WEB_ROOT=~/public_html/yourdomain.lk`.
+>
+> No terminal? Use the zip steps below.
+
 You need **PHP 8.2 or newer** and a **MySQL or MariaDB** database. Everything goes in **one folder**: your domain's document root.
 
 - Main domain: the folder is usually `public_html`.

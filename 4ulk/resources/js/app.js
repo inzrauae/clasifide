@@ -133,6 +133,80 @@ document.addEventListener('alpine:init', () => {
         },
     }));
 
+    // Search-as-you-type suggestions under the search bar
+    Alpine.data('searchSuggest', (url, cat) => ({
+        term: '',
+        items: [],
+        active: -1,
+        show: false,
+        timer: null,
+        ctrl: null,
+        cache: {},
+        init() {
+            this.term = this.$refs.input.value;
+        },
+        label: (s) => t(s),
+        close() {
+            this.show = false;
+            this.active = -1;
+        },
+        fetchSoon() {
+            clearTimeout(this.timer);
+            const q = this.term.trim();
+            if (q.length < 2) {
+                this.items = [];
+                return this.close();
+            }
+            this.timer = setTimeout(() => this.load(q), 200);
+        },
+        async load(q) {
+            if (!this.cache[q]) {
+                this.ctrl?.abort();
+                this.ctrl = new AbortController();
+                try {
+                    const u = new URL(url, location.origin);
+                    u.searchParams.set('q', q);
+                    if (cat) u.searchParams.set('cat', cat);
+                    const r = await fetch(u, { headers: { Accept: 'application/json' }, signal: this.ctrl.signal });
+                    if (!r.ok) return;
+                    this.cache[q] = await r.json();
+                } catch (e) {
+                    return;
+                }
+            }
+            if (q !== this.term.trim()) return; // the visitor kept typing
+            const d = this.cache[q];
+            const search = new URL(this.$root.closest('form').action);
+            search.searchParams.set('q', q);
+            if (cat) search.searchParams.set('cat', cat);
+            this.items = [
+                { kind: 'search', title: q, url: search.toString() },
+                ...d.categories.map((c) => ({ kind: 'category', title: c.name, url: c.url })),
+                ...d.ads.map((a) => ({ kind: 'ad', ...a })),
+            ];
+            this.active = -1;
+            this.show = true;
+        },
+        move(step) {
+            if (!this.show || !this.items.length) return;
+            this.active = (this.active + step + this.items.length) % this.items.length;
+        },
+        pick(e) {
+            // Enter with nothing highlighted submits the form as usual (keeps the chosen district)
+            if (!this.show || this.active < 0) return this.close();
+            const it = this.items[this.active];
+            if (it.kind === 'search') return this.close();
+            e.preventDefault();
+            window.location.href = it.url;
+        },
+        highlight(title) {
+            const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+            const words = this.term.trim().split(/\s+/).filter(Boolean).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+            if (!words.length) return esc(title);
+            return esc(title).replace(new RegExp('(' + words.map(esc).join('|') + ')', 'gi'), '<mark class="bg-transparent text-brand-dark font-extrabold">$1</mark>');
+        },
+    }));
+
     // Photo picker on the post-ad form
     Alpine.data('photoPicker', (max, existing) => ({
         files: [],

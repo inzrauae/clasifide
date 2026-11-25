@@ -15,6 +15,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SearchSuggestController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 // ------------------------------------------------------------------ public
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/ads', [ListingController::class, 'index'])->name('listings.index');
+Route::get('/search/suggest', SearchSuggestController::class)->middleware('throttle:60,1')->name('search.suggest');
 // The ad page's slug must not swallow /ad/{id}/edit, /whatsapp, /promote, /pay-fee
 Route::get('/ad/{listing}/{slug?}', [ListingController::class, 'show'])->whereNumber('listing')
     ->where('slug', '(?!(edit|whatsapp|promote|pay-fee)$)[A-Za-z0-9\-]+')->name('listings.show');
