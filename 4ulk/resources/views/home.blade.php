@@ -27,9 +27,9 @@
         </div>
         {{-- popular searches: swipeable chips on phones, wrapped on larger screens --}}
         <div class="mt-4 -mx-4 px-4 flex sm:flex-wrap sm:justify-center items-center gap-2 overflow-x-auto no-scrollbar text-[13px]">
-            <span class="shrink-0 text-white/60 font-semibold">{{ __('Popular:') }}</span>
+            <span class="shrink-0 text-white font-bold drop-shadow-[0_1px_6px_rgba(14,8,32,.6)]">{{ __('Popular:') }}</span>
             @foreach (array_slice($popular, 0, 6) as [$label, $params])
-                <a href="{{ route('listings.index', $params) }}" class="tap shrink-0 rounded-full bg-white/10 ring-1 ring-white/15 px-3.5 py-2 text-white/90 hover:bg-white/20 backdrop-blur-sm">{{ $label }}</a>
+                <a href="{{ route('listings.index', $params) }}" class="tap relative shrink-0 rounded-full bg-white px-3.5 py-2 font-semibold text-ink shadow-[0_4px_14px_rgba(14,8,32,.35)] ring-1 ring-white hover:bg-sun hover:ring-sun transition-colors">{{ $label }}</a>
             @endforeach
         </div>
     </div>

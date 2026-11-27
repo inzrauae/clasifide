@@ -6,6 +6,9 @@
 #     APP_URL=https://yourdomain.lk DB_DATABASE=... DB_USERNAME=... DB_PASSWORD='...' \
 #     ADMIN_EMAIL=you@example.com ADMIN_PASSWORD='...' bash ~/clasifide/4ulk/deploy/cpanel-deploy.sh
 #
+#   Google sign-in (once; it stays in .env after that):
+#     GOOGLE_CLIENT_ID=... GOOGLE_CLIENT_SECRET='...' bash 4ulk/deploy/cpanel-deploy.sh
+#
 #   Every update after that:
 #     cd ~/clasifide && git pull && bash 4ulk/deploy/cpanel-deploy.sh
 #
@@ -73,11 +76,14 @@ if [ ! -f "$APP/.env" ]; then
     chmod 600 "$APP/.env"
     "$PHP" "$APP/artisan" key:generate --force
 fi
-for k in APP_URL DB_DATABASE DB_USERNAME DB_PASSWORD ADMIN_EMAIL ADMIN_PASSWORD; do
+for k in APP_URL DB_DATABASE DB_USERNAME DB_PASSWORD ADMIN_EMAIL ADMIN_PASSWORD GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET; do
     [ -n "${!k:-}" ] && set_env "$k" "${!k}" && echo "set $k"
 done
 set_env PUBLIC_PATH "$WEB"
 set_env INSTALL_KEY ""   # the web installer is not needed with terminal access
+# Google sign-in returns to APP_URL/auth/google/callback (that exact URL must be listed in the Google Cloud console)
+grep -qE '^GOOGLE_CLIENT_ID=.+' "$APP/.env" || set_env GOOGLE_CLIENT_ID "809439970082-vdlf74ge2ctins7nhvnu5vt6kpq30c4f.apps.googleusercontent.com"
+grep -qE '^GOOGLE_CLIENT_SECRET=.+' "$APP/.env"     || echo "NOTE: Google sign-in is off until you add the secret: GOOGLE_CLIENT_SECRET='...' bash 4ulk/deploy/cpanel-deploy.sh"
 
 grep -qE '^DB_PASSWORD=.+' "$APP/.env" || die "DB_PASSWORD is empty in $APP/.env. Re-run with DB_DATABASE=... DB_USERNAME=... DB_PASSWORD='...'"
 

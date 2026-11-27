@@ -87,3 +87,38 @@
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ---------------------------------------------------------------
+   Sinhala pages (/si). Sinhala vowel signs (ි ී ු ූ ෙ ෘ) sit above
+   and below the letter, so the English spacing cuts or crowds them.
+   --------------------------------------------------------------- */
+html:lang(si) {
+    /* roomier line heights for every text size and leading-* utility */
+    --text-xs--line-height: 1.65;
+    --text-sm--line-height: 1.65;
+    --text-base--line-height: 1.7;
+    --text-lg--line-height: 1.6;
+    --text-xl--line-height: 1.55;
+    --text-2xl--line-height: 1.5;
+    --text-3xl--line-height: 1.45;
+    --text-4xl--line-height: 1.4;
+    --text-5xl--line-height: 1.35;
+    --leading-none: 1.3;
+    --leading-tight: 1.45;
+    --leading-snug: 1.5;
+    --leading-normal: 1.65;
+    --leading-relaxed: 1.75;
+}
+html:lang(si) body { line-height: 1.65; }
+
+@layer utilities {
+    /* headings with fixed leading-[…] values */
+    html:lang(si) :is(h1, h2, h3, h4) { line-height: 1.4 !important; }
+
+    /* letter-spacing pulls vowel signs away from their letters */
+    html:lang(si) :is([class*='tracking-'], .badge) { letter-spacing: normal !important; }
+
+    /* one-line "…" text and line-clamps cut the tops/bottoms of signs: give the clip box room */
+    html:lang(si) .truncate { padding-block: .2em; margin-block: -.2em; }
+    html:lang(si) [class*='line-clamp-'] { padding-block: .15em; line-height: 1.6; }
+}

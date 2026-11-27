@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SetLocaleFromUrl
 {
     /** Routes that never get a language prefix: the admin panel and machine callbacks. */
-    private const UNPREFIXED_ROUTES = ['admin.*', 'payhere.notify', 'install'];
+    private const UNPREFIXED_ROUTES = ['admin.*', 'payhere.notify', 'install', 'auth.google.callback'];
 
     public function handle(Request $request, Closure $next): Response
     {

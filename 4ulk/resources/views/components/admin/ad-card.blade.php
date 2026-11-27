@@ -7,7 +7,13 @@
             <span class="badge bg-slate-100 text-slate-700">{{ strtoupper($ad->trashed() ? 'deleted' : $ad->statusLabel()) }}</span>
             @if ($ad->risk_score)<span class="badge {{ $ad->risk_score >= 40 ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800' }}">RISK {{ $ad->risk_score }}</span>@endif
             @if ($ad->reports_count)<span class="badge bg-red-600 text-white">{{ $ad->reports_count }} REPORTS</span>@endif
-            @if ($ad->isTop())<span class="badge bg-sun text-ink">TOP</span>@endif
+            @foreach (['top' => [$ad->isTop(), 'bg-sun text-ink'], 'featured' => [$ad->isFeatured(), 'bg-violet-100 text-brand-dark'], 'urgent' => [$ad->isUrgent(), 'bg-red-100 text-red-700']] as $promo => [$on, $cls])
+                @if ($on)
+                    <form method="POST" action="{{ route('admin.listings.unpromote', [$ad, $promo]) }}" class="inline-flex" onsubmit="return confirm('Remove {{ config("marketplace.promotions.$promo.name") }} from ad #{{ $ad->id }}?')">@csrf @method('DELETE')
+                        <button class="badge {{ $cls }} hover:opacity-80" title="Until {{ $ad->{$promo.'_until'}->format('d M Y, g:i a') }}. Click to remove.">{{ strtoupper($promo) }} @svg('lucide-x', 'w-3 h-3')</button>
+                    </form>
+                @endif
+            @endforeach
         </div>
         <a href="{{ $ad->url() }}" target="_blank" class="block font-bold mt-0.5 hover:text-brand-dark">{{ $ad->title }}</a>
         <p class="text-sm text-muted">{{ $ad->priceLabel() }} · {{ $ad->category->name }} · {{ $ad->place() }} · {{ $ad->created_at->diffForHumans() }}</p>

@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Services\ImageService;
 use App\Services\ListingPublisher;
 use App\Services\SafetyService;
+use App\Support\SpecFilters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -47,6 +48,11 @@ class ListingController extends Controller
         $catCounts = (clone $base)->selectRaw('category_id, count(*) as n')->groupBy('category_id')->pluck('n', 'category_id');
 
         $query = (clone $base)->when($category, fn ($w) => $w->where('category_id', $category->id));
+
+        // Filters that belong to the chosen category (Brand, Fuel type, Bedrooms…)
+        $specFilters = $category ? SpecFilters::for($category) : [];
+        $activeSpecs = SpecFilters::active($specFilters, $request->query('spec'));
+        SpecFilters::apply($query, $activeSpecs);
         $districtCounts = Listing::live()->when($category, fn ($w) => $w->where('category_id', $category->id))
             ->selectRaw('district, count(*) as n')->groupBy('district')->pluck('n', 'district');
 
@@ -69,6 +75,8 @@ class ListingController extends Controller
             'catCounts' => $catCounts,
             'districtCounts' => $districtCounts,
             'conditions' => self::CONDITIONS,
+            'specFilters' => $specFilters,
+            'activeSpecs' => $activeSpecs,
             'banner' => Banner::pick('search_top'),
         ]);
     }
@@ -106,6 +114,7 @@ class ListingController extends Controller
             'listing' => $listing,
             'seller' => $seller,
             'isOwner' => $isOwner,
+            'ownAd' => $user && $user->id === $listing->user_id,
             'saved' => $user ? $user->favorites()->whereKey($listing->id)->exists() : false,
             'rating' => $seller->ratingAverage(),
             'reviewsCount' => $seller->reviewsReceived()->where('is_visible', true)->count(),

@@ -14,6 +14,14 @@
         request('member') ? [__('Members only'), ['member' => null]] : null,
         request('urgent') ? [__('Urgent'), ['urgent' => null]] : null,
     ]);
+    foreach ($activeSpecs as $name => $f) {
+        $chips[] = [\App\Support\SpecFilters::label($name, $f), ['spec' => array_diff_key((array) request('spec'), [$name => 1]) ?: null]];
+    }
+    // Query params as flat hidden inputs (keeps nested ones like spec[Brand])
+    $hidden = function (array $keep) {
+        $pairs = array_filter(explode('&', http_build_query($keep)));
+        return collect($pairs)->map(fn ($p) => array_map('urldecode', explode('=', $p, 2) + [1 => '']))->all();
+    };
 @endphp
 <x-layouts.app :title="$heading" :description="__('Find :what on 4U.lk. :count ads.', ['what' => $heading, 'count' => $listings->total()])">
 <div class="bg-white border-b border-line">
@@ -35,9 +43,9 @@
                 <div class="card p-4">
                     <h3 class="text-sm font-extrabold mb-2">{{ __('Category') }}</h3>
                     <ul class="text-[13.5px] space-y-0.5">
-                        <li><a href="{{ $with(['cat' => null]) }}" class="flex justify-between px-2 py-1.5 rounded-lg {{ ! $category ? 'bg-[#EDE9FE] text-brand-dark font-bold' : 'hover:bg-mist' }}">{{ __('All categories') }} <span class="text-faint text-xs">{{ $catCounts->sum() }}</span></a></li>
+                        <li><a href="{{ $with(['cat' => null, 'spec' => null]) }}" class="flex justify-between px-2 py-1.5 rounded-lg {{ ! $category ? 'bg-[#EDE9FE] text-brand-dark font-bold' : 'hover:bg-mist' }}">{{ __('All categories') }} <span class="text-faint text-xs">{{ $catCounts->sum() }}</span></a></li>
                         @foreach ($categories as $c)
-                            <li><a href="{{ $with(['cat' => $c->slug]) }}" class="flex justify-between gap-2 px-2 py-1.5 rounded-lg {{ $category?->id === $c->id ? 'bg-[#EDE9FE] text-brand-dark font-bold' : 'hover:bg-mist' }}">
+                            <li><a href="{{ $with(['cat' => $c->slug, 'spec' => $category?->id === $c->id ? request('spec') : null]) }}" class="flex justify-between gap-2 px-2 py-1.5 rounded-lg {{ $category?->id === $c->id ? 'bg-[#EDE9FE] text-brand-dark font-bold' : 'hover:bg-mist' }}">
                                 <span class="flex items-center gap-2 min-w-0">@svg('lucide-'.$c->icon, 'w-4 h-4 text-brand shrink-0') <span class="truncate">{{ $c->name }}</span></span>
                                 <span class="text-faint text-xs">{{ $catCounts[$c->id] ?? 0 }}</span></a></li>
                         @endforeach
@@ -56,9 +64,37 @@
                 @endif
 
                 <form method="GET" action="{{ route('listings.index') }}" class="card p-4 space-y-4">
-                    @foreach (array_diff_key($params, array_flip(['min', 'max', 'condition', 'verified', 'member', 'urgent'])) as $k => $v)
-                        @if (is_string($v))<input type="hidden" name="{{ $k }}" value="{{ $v }}">@endif
+                    @foreach ($hidden(array_diff_key($params, array_flip(['min', 'max', 'condition', 'verified', 'member', 'urgent', 'spec']))) as [$k, $v])
+                        <input type="hidden" name="{{ $k }}" value="{{ $v }}">
                     @endforeach
+                    @if ($specFilters)
+                        <div class="space-y-3 pb-4 border-b border-line-soft">
+                            <h3 class="text-sm font-extrabold flex items-center gap-1.5">@svg('lucide-'.$category->icon, 'w-4 h-4 text-brand') {{ __(':category filters', ['category' => $category->label()]) }}</h3>
+                            @foreach ($specFilters as $f)
+                                @php($id = 'spec-'.$loop->index)
+                                @php($cur = ((array) request('spec'))[$f['name']] ?? null)
+                                <div>
+                                    <label for="{{ $id }}" class="block text-[12.5px] font-bold text-muted mb-1">{{ __($f['name']) }}@if (($f['unit'] ?? null)) <span class="font-normal text-faint">({{ $f['unit'] }})</span>@endif</label>
+                                    @if ($f['kind'] === 'choice')
+                                        <select id="{{ $id }}" name="spec[{{ $f['name'] }}]" class="input !py-2 !text-sm">
+                                            <option value="">{{ __('Any') }}</option>
+                                            @foreach ($f['options'] as $opt => $n)
+                                                <option value="{{ $opt }}" @selected(is_string($cur) && mb_strtolower($cur) === mb_strtolower($opt)) @disabled($n === 0 && ! (is_string($cur) && mb_strtolower($cur) === mb_strtolower($opt)))>{{ __($opt) }}{{ $n ? " ($n)" : '' }}</option>
+                                            @endforeach
+                                        </select>
+                                    @elseif ($f['kind'] === 'range')
+                                        <div class="flex items-center gap-2">
+                                            <input id="{{ $id }}" type="number" step="any" min="0" name="spec[{{ $f['name'] }}][min]" value="{{ is_array($cur) ? ($cur['min'] ?? '') : '' }}" placeholder="{{ $f['min'] !== null ? number_format($f['min'], 0, '.', '') : __('Min') }}" class="input !py-2 !text-sm" aria-label="{{ __($f['name']) }} {{ __('Min') }}">
+                                            <span class="text-faint">–</span>
+                                            <input type="number" step="any" min="0" name="spec[{{ $f['name'] }}][max]" value="{{ is_array($cur) ? ($cur['max'] ?? '') : '' }}" placeholder="{{ $f['max'] !== null ? number_format($f['max'], 0, '.', '') : __('Max') }}" class="input !py-2 !text-sm" aria-label="{{ __($f['name']) }} {{ __('Max') }}">
+                                        </div>
+                                    @else
+                                        <input id="{{ $id }}" type="text" name="spec[{{ $f['name'] }}]" value="{{ is_string($cur) ? $cur : '' }}" placeholder="{{ __('Any') }}" maxlength="100" class="input !py-2 !text-sm">
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                     <div>
                         <h3 class="text-sm font-extrabold mb-2">{{ __('Price (Rs)') }}</h3>
                         <div class="flex items-center gap-2">
@@ -97,8 +133,8 @@
                 <div class="flex gap-2">
                     <button @click="filters = true" class="lg:hidden btn-ghost !py-2">@svg('lucide-sliders-horizontal', 'w-4 h-4') {{ __('Filters') }}</button>
                     <form method="GET" action="{{ route('listings.index') }}">
-                        @foreach (array_diff_key($params, ['sort' => 1]) as $k => $v)
-                            @if (is_string($v))<input type="hidden" name="{{ $k }}" value="{{ $v }}">@endif
+                        @foreach ($hidden(array_diff_key($params, ['sort' => 1])) as [$k, $v])
+                            <input type="hidden" name="{{ $k }}" value="{{ $v }}">
                         @endforeach
                         <select name="sort" onchange="this.form.submit()" class="input !py-2 !text-sm !w-auto" aria-label="{{ __('Sort') }}">
                             @foreach ($sorts as $k => $label)<option value="{{ $k }}" @selected((string) request('sort') === (string) $k)>{{ $label }}</option>@endforeach

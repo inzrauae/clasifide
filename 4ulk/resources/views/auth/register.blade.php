@@ -1,5 +1,6 @@
 <x-auth-card title="Create your account" subtitle="Free forever for personal sellers">
     <form method="POST" action="{{ route('register') }}" class="space-y-4" x-data="{ type: '{{ old('account_type', 'individual') }}' }">
+        <x-google-button />
         @csrf
         <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="grid grid-cols-2 gap-2">

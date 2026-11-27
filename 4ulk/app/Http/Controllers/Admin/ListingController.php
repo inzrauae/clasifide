@@ -20,7 +20,7 @@ class ListingController extends Controller
     }
 
     /** Moderation tabs shared by the main queue and each category's queue. */
-    public const TABS = ['pending' => 'To review', 'flagged' => 'Flagged', 'active' => 'Live', 'pending_payment' => 'Awaiting fee', 'rejected' => 'Rejected', 'sold' => 'Sold', 'expired' => 'Expired', 'deleted' => 'Deleted', 'all' => 'All'];
+    public const TABS = ['pending' => 'To review', 'flagged' => 'Flagged', 'active' => 'Live', 'promoted' => 'Promoted', 'pending_payment' => 'Awaiting fee', 'rejected' => 'Rejected', 'sold' => 'Sold', 'expired' => 'Expired', 'deleted' => 'Deleted', 'all' => 'All'];
 
     /** The moderation queue for one status tab, with the search box applied. */
     public static function queue(Request $request, string $status): Builder
@@ -29,7 +29,8 @@ class ListingController extends Controller
             ->withCount(['reports' => fn ($q) => $q->where('status', 'open')])
             ->when($status === 'flagged', fn ($q) => $q->where('is_flagged', true)->whereNull('deleted_at'))
             ->when($status === 'deleted', fn ($q) => $q->onlyTrashed())
-            ->when(! in_array($status, ['flagged', 'deleted', 'all'], true), fn ($q) => $q->where('status', $status)->whereNull('deleted_at'))
+            ->when($status === 'promoted', fn ($q) => $q->whereNull('deleted_at')->where(fn ($w) => $w->where('top_until', '>', now())->orWhere('featured_until', '>', now())->orWhere('urgent_until', '>', now())))
+            ->when(! in_array($status, ['flagged', 'deleted', 'all', 'promoted'], true), fn ($q) => $q->where('status', $status)->whereNull('deleted_at'))
             ->when($request->filled('q'), fn ($q) => $q->where(fn ($w) => $w->where('title', 'like', '%'.$request->q.'%')->orWhere('phone', 'like', '%'.$request->q.'%')->orWhere('id', $request->q)))
             ->orderByDesc('risk_score')->latest();
     }
@@ -66,6 +67,17 @@ class ListingController extends Controller
         PromotionService::apply($listing, $data['type'], 'admin');
 
         return back()->with('status', "Promotion added to ad #{$listing->id}.");
+    }
+
+    /** Take a running Top / Featured / Urgent promotion off an ad straight away. */
+    public function unpromote(Listing $listing, string $type)
+    {
+        $listing->forceFill([$type.'_until' => null])->save();
+        $listing->promotions()->where('type', $type)->where('ends_at', '>', now())->update(['ends_at' => now()]);
+
+        $name = config("marketplace.promotions.$type.name", ucfirst($type));
+
+        return back()->with('status', "{$name} removed from ad #{$listing->id}.");
     }
 
     public function destroy(Listing $listing)

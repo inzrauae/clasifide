@@ -156,15 +156,31 @@
                 </div>
                 @if ($seller->last_seen_at)<p class="mt-2 text-[12px] text-muted">{{ __('Active :when', ['when' => $seller->last_seen_at->diffForHumans()]) }}</p>@endif
 
-                @unless ($isOwner)
-                    <div class="mt-4 space-y-2 hidden lg:block">
-                        <button x-data="phoneReveal('{{ route('listings.phone', $listing) }}', @js($listing->maskedPhone().' · '.__('Show number')))" @click="reveal()" class="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-ink text-white font-bold">
-                            @svg('lucide-phone', 'w-4 h-4') <span x-text="label">{{ $listing->maskedPhone() }} · {{ __('Show number') }}</span>
+                {{-- Contact options: call, chat, WhatsApp --}}
+                <div class="mt-4 rounded-xl border border-line-soft divide-y divide-line-soft overflow-hidden">
+                    <button type="button" x-data="phoneReveal('{{ route('listings.phone', $listing) }}', @js($listing->maskedPhone()))" @click="reveal()" class="tap w-full flex items-center gap-3 px-3.5 py-3 text-left hover:bg-mist">
+                        <span class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">@svg('lucide-phone', 'w-4 h-4')</span>
+                        <span class="min-w-0">
+                            <span class="block font-extrabold text-[15px] tracking-wide" x-text="label">{{ $listing->maskedPhone() }}</span>
+                            <span class="block text-[12px] text-muted" x-text="tel ? @js(__('Tap to call')) : @js(__('Click to show phone number'))">{{ __('Click to show phone number') }}</span>
+                        </span>
+                    </button>
+                    @if ($ownAd)
+                        <div class="w-full flex items-center gap-3 px-3.5 py-3 opacity-60" title="{{ __('This is your own ad.') }}">
+                            <span class="w-9 h-9 rounded-full bg-violet-100 text-brand-dark flex items-center justify-center shrink-0">@svg('lucide-message-square', 'w-4 h-4')</span>
+                            <span><span class="block font-bold text-[14px]">{{ __('Chat') }}</span><span class="block text-[12px] text-muted">{{ __('Buyers can message you here') }}</span></span>
+                        </div>
+                    @else
+                        <button type="button" @click="{{ auth()->check() ? 'chat = true' : "window.location='".route('login')."'" }}" class="tap w-full flex items-center gap-3 px-3.5 py-3 text-left hover:bg-mist">
+                            <span class="w-9 h-9 rounded-full bg-violet-100 text-brand-dark flex items-center justify-center shrink-0">@svg('lucide-message-square', 'w-4 h-4')</span>
+                            <span><span class="block font-bold text-[14px]">{{ __('Chat') }}</span><span class="block text-[12px] text-muted">{{ __('Message the seller on 4U.lk') }}</span></span>
                         </button>
-                        <button @click="{{ auth()->check() ? 'chat = true' : "window.location='".route('login')."'" }}" class="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl brand-gradient text-white font-bold">@svg('lucide-message-square', 'w-4 h-4') {{ __('Chat') }}</button>
-                        <a href="{{ route('listings.whatsapp', $listing) }}" target="_blank" rel="noopener" class="tap flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-wa text-white font-bold">@svg('lucide-send', 'w-4 h-4') WhatsApp</a>
-                    </div>
-                @endunless
+                    @endif
+                    <a href="{{ route('listings.whatsapp', $listing) }}" target="_blank" rel="noopener" class="tap w-full flex items-center gap-3 px-3.5 py-3 hover:bg-mist">
+                        <span class="w-9 h-9 rounded-full bg-wa text-white flex items-center justify-center shrink-0">@svg('lucide-send', 'w-4 h-4')</span>
+                        <span><span class="block font-bold text-[14px]">WhatsApp</span><span class="block text-[12px] text-muted">{{ __('Chat on WhatsApp') }}</span></span>
+                    </a>
+                </div>
             </div>
 
             <div class="rounded-2xl bg-[#FFFBEB] border border-[#FDE68A] p-4 text-[13px] text-[#78350F] leading-relaxed">
@@ -199,7 +215,9 @@
             <button @click="{{ auth()->check() ? 'chat = true' : "window.location='".route('login')."'" }}" class="tap flex items-center justify-center gap-1.5 py-3 rounded-xl brand-gradient text-white text-sm font-bold">@svg('lucide-message-square', 'w-4 h-4') {{ __('Chat') }}</button>
             <a href="{{ route('listings.whatsapp', $listing) }}" target="_blank" rel="noopener" class="tap flex items-center justify-center gap-1.5 py-3 rounded-xl bg-wa text-white text-sm font-bold">@svg('lucide-send', 'w-4 h-4') WhatsApp</a>
         </div>
+    @endunless
 
+    @unless ($ownAd)
         @auth
             {{-- Chat sheet --}}
             <div x-show="chat" x-cloak @keydown.escape.window="chat = false" @click="chat = false" class="fixed inset-0 z-[80] bg-deep/50 backdrop-blur-[2px] flex items-end sm:items-center justify-center">

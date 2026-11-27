@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryDashboardController;
 use App\Http\Controllers\CheckoutController;
@@ -56,6 +57,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->middleware('throttle:20,1')->name('auth.google');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->middleware('throttle:20,1')->name('auth.google.callback');
     Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1');
     Route::get('/forgot-password', [AuthController::class, 'showForgot'])->name('password.request');
     Route::post('/forgot-password', [AuthController::class, 'sendReset'])->middleware('throttle:3,1')->name('password.email');
@@ -114,6 +117,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/listings/{listing}/approve', [Admin\ListingController::class, 'approve'])->name('listings.approve');
     Route::post('/listings/{listing}/reject', [Admin\ListingController::class, 'reject'])->name('listings.reject');
     Route::post('/listings/{listing}/promote', [Admin\ListingController::class, 'promote'])->name('listings.promote');
+    Route::delete('/listings/{listing}/promote/{type}', [Admin\ListingController::class, 'unpromote'])->whereIn('type', ['top', 'featured', 'urgent'])->name('listings.unpromote');
     Route::delete('/listings/{listing}', [Admin\ListingController::class, 'destroy'])->name('listings.destroy');
 
     Route::get('/reports', [Admin\ReportController::class, 'index'])->name('reports');

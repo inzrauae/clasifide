@@ -1,5 +1,6 @@
 <x-auth-card title="Sign in" subtitle="Welcome back to 4U.lk">
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
+        <x-google-button />
         @csrf
         <div>
             <label class="label" for="login">{{ __('Email or mobile number') }}</label>

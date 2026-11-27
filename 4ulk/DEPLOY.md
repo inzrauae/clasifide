@@ -108,6 +108,22 @@ In your PayHere account, set the **Notify URL** to `https://yourdomain.lk/payher
 
 ---
 
+## 10. Google sign-in ("Continue with Google")
+
+Add these lines to `4ulk/.env` on the server (File Manager → `4ulk/.env` → Edit), or run the
+deploy script once with `GOOGLE_CLIENT_ID=... GOOGLE_CLIENT_SECRET='...'` in front of it:
+
+```
+GOOGLE_CLIENT_ID=809439970082-vdlf74ge2ctins7nhvnu5vt6kpq30c4f.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=<the client secret from Google Cloud>
+GOOGLE_REDIRECT_URI="${APP_URL}/auth/google/callback"
+```
+
+`APP_URL` must be exactly `https://4u.lk`. In Google Cloud console → Credentials → the OAuth client,
+**Authorized redirect URIs** must list `https://4u.lk/auth/google/callback` (add
+`http://127.0.0.1:8000/auth/google/callback` too for testing on your computer). Without the secret,
+the Google button is simply hidden.
+
 ## Troubleshooting
 
 | You see | Fix |
