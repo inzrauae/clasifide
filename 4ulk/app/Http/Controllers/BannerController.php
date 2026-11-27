@@ -33,14 +33,14 @@ class BannerController extends Controller
             'contact_email' => ['required', 'email'],
             'contact_phone' => ['required', 'string', 'max:20'],
             'placement' => ['required', Rule::in(array_keys(config('marketplace.banner_placements')))],
-            'weeks' => ['required', 'integer', 'between:1,52'],
+            'months' => ['required', 'integer', 'between:1,'.config('marketplace.banner_max_months', 12)],
             'starts_at' => ['required', 'date', 'after_or_equal:today'],
             'url' => ['nullable', 'url', 'max:255'],
             'image' => ['nullable', 'image', 'max:4096'],
             'message' => ['nullable', 'string', 'max:1500'],
         ]);
 
-        $price = config("marketplace.banner_placements.{$data['placement']}.price") * $data['weeks'];
+        $price = config("marketplace.banner_placements.{$data['placement']}.price") * $data['months'];
         $starts = \Illuminate\Support\Carbon::parse($data['starts_at']);
 
         $banner = Banner::create([
@@ -49,9 +49,10 @@ class BannerController extends Controller
             'contact_email' => $data['contact_email'],
             'contact_phone' => $data['contact_phone'],
             'placement' => $data['placement'],
-            'weeks' => $data['weeks'],
+            'months' => $data['months'],
+            'weeks' => $data['months'] * 4,
             'starts_at' => $starts,
-            'ends_at' => $starts->copy()->addWeeks($data['weeks'])->subDay(),
+            'ends_at' => $starts->copy()->addMonthsNoOverflow($data['months'])->subDay(),
             'url' => $data['url'] ?? null,
             'alt' => $data['message'] ?? null,
             'image' => $request->hasFile('image') ? ImageService::store($request->file('image'), 'banners', 1600)['path'] : null,
@@ -63,7 +64,7 @@ class BannerController extends Controller
             $order = Order::create([
                 'user_id' => $request->user()->id,
                 'type' => 'banner',
-                'description' => "Banner: {$banner->placementLabel()} – {$data['weeks']} week(s)",
+                'description' => "Banner: {$banner->placementLabel()} – {$data['months']} month(s)",
                 'amount' => $price,
                 'meta' => ['banner_id' => $banner->id],
             ]);

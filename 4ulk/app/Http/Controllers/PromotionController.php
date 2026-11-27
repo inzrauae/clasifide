@@ -29,9 +29,14 @@ class PromotionController extends Controller
 
         $data = $request->validate([
             'type' => ['required', Rule::in(array_keys(PromotionService::types()))],
+            'days' => ['nullable', 'integer'],
             'pay_with' => ['required', Rule::in(['credit', 'pay'])],
         ]);
+        if (isset($data['days']) && ! isset(PromotionService::options($data['type'])[$data['days']])) {
+            return back()->with('error', __('Please choose how long to promote your ad.'));
+        }
         $cfg = PromotionService::types()[$data['type']];
+        $opt = PromotionService::option($data['type'], isset($data['days']) ? (int) $data['days'] : null);
 
         if (! in_array($listing->status, ['active', 'pending'], true)) {
             return back()->with('error', __('Only live ads can be promoted.'));
@@ -39,21 +44,21 @@ class PromotionController extends Controller
 
         if ($data['pay_with'] === 'credit') {
             $sub = $user->activeSubscription;
-            if (! $sub || $sub->promotions_left < $cfg['credits']) {
+            if (! $sub || $sub->promotions_left < $opt['credits']) {
                 return back()->with('error', __('Not enough promotion credits. Pay for this promotion or upgrade your package.'));
             }
-            $sub->decrement('promotions_left', $cfg['credits']);
-            PromotionService::apply($listing, $data['type'], 'credit');
+            $sub->decrement('promotions_left', $opt['credits']);
+            PromotionService::apply($listing, $data['type'], 'credit', null, $opt['days']);
 
-            return redirect()->route('dashboard.ads')->with('status', __(':promotion applied using :count credit(s).', ['promotion' => __($cfg['name']), 'count' => $cfg['credits']]));
+            return redirect()->route('dashboard.ads')->with('status', __(':promotion applied using :count credit(s).', ['promotion' => __($cfg['name']), 'count' => $opt['credits']]));
         }
 
         $order = Order::create([
             'user_id' => $user->id,
             'type' => 'promotion',
-            'description' => "{$cfg['name']}".($cfg['days'] ? " ({$cfg['days']} days)" : '').': '.Str::limit($listing->title, 60),
-            'amount' => $cfg['price'],
-            'meta' => ['listing_id' => $listing->id, 'promotion' => $data['type']],
+            'description' => "{$cfg['name']}".($opt['days'] ? " ({$opt['days']} days)" : '').': '.Str::limit($listing->title, 60),
+            'amount' => $opt['price'],
+            'meta' => ['listing_id' => $listing->id, 'promotion' => $data['type'], 'days' => $opt['days']],
         ]);
 
         return redirect()->route('checkout.show', $order);

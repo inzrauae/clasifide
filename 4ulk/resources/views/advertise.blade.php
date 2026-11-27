@@ -1,5 +1,5 @@
-<x-layouts.app :title="$enterprise ? __('Enterprise plans – 4U.lk') : __('Advertise on 4U.lk – banner ads from Rs :price a week', ['price' => number_format(collect($placements)->min('price'))])" :description="__('Banner advertising on 4U.lk: home page, search results and ad page placements across Sri Lanka. Simple weekly prices.')">
-<div x-data="{ p: '{{ old('placement', 'home_top') }}', w: {{ (int) old('weeks', 1) }}, prices: @js(collect($placements)->map->price), names: @js(collect($placements)->map(fn ($pl) => __($pl['name']))) }">
+<x-layouts.app :title="$enterprise ? __('Enterprise plans – 4U.lk') : __('Advertise on 4U.lk – banner ads from Rs :price a month', ['price' => number_format(collect($placements)->min('price'))])" :description="__('Banner advertising on 4U.lk: home page, search results and ad page placements across Sri Lanka. Simple monthly prices.')">
+<div x-data="{ p: '{{ old('placement', 'home_top') }}', w: {{ (int) old('months', 1) }}, max: {{ (int) config('marketplace.banner_max_months', 12) }}, prices: @js(collect($placements)->map->price), names: @js(collect($placements)->map(fn ($pl) => __($pl['name']))) }">
 
 {{-- ============================================================ HERO --}}
 <section class="hero-band text-white overflow-hidden">
@@ -73,15 +73,16 @@
                         @endif
                     </div>
 
-                    <p class="mt-3 font-extrabold leading-snug">{{ __($pl['name']) }}</p>
+                    <p class="mt-3 text-[11px] font-extrabold uppercase tracking-wider text-brand">{{ __(':tier banner', ['tier' => __($pl['tier'] ?? '')]) }}</p>
+                    <p class="font-extrabold leading-snug">{{ __($pl['name']) }}</p>
                     <p class="mt-0.5 text-[13px] text-muted flex-1">{{ __($pl['blurb'] ?? '') }}</p>
                     <div class="mt-3 pt-3 border-t border-line-soft">
                         <p class="flex items-baseline gap-1">
                             <span class="text-sm font-bold text-muted">{{ __('Rs') }}</span>
                             <span class="font-display text-[2rem] leading-none font-extrabold text-ink">{{ number_format($pl['price']) }}</span>
-                            <span class="text-sm text-muted">{{ __('/ week') }}</span>
+                            <span class="text-sm text-muted">{{ __('/ month') }}</span>
                         </p>
-                        <p class="mt-1 text-xs text-muted">{{ __('Rs :price for 4 weeks · artwork :size', ['price' => number_format($pl['price'] * 4), 'size' => $pl['size']]) }}</p>
+                        <p class="mt-1 text-xs text-muted">{{ __('Rs :price for 3 months · artwork :size', ['price' => number_format($pl['price'] * 3), 'size' => $pl['size']]) }}</p>
                     </div>
                     <span class="mt-3 btn w-full" :class="p === '{{ $key }}' ? 'brand-gradient text-white' : 'bg-mist text-brand-dark'">
                         <span x-show="p === '{{ $key }}'" class="inline-flex items-center gap-1.5">@svg('lucide-circle-check', 'w-4 h-4') {{ __('Selected') }}</span>
@@ -102,7 +103,7 @@
                     ['lucide-chart-column', 'Views & clicks report', 'See how many times your banner was shown and clicked, any time.'],
                     ['lucide-mouse-pointer-click', 'Link to anywhere', 'Send clicks to your website, Facebook page, WhatsApp or 4U.lk store.'],
                     ['lucide-shield-check', 'Checked before launch', 'Our team checks every banner, so your brand appears next to safe content.'],
-                    ['lucide-calendar-days', 'Pick your dates', 'Start on any day and run from 1 to 52 weeks. Great for sales and launches.'],
+                    ['lucide-calendar-days', 'Pick your dates', 'Start on any day and run from 1 to 12 months. Great for sales and launches.'],
                     ['lucide-palette', 'Need artwork?', 'No designer? Send your logo and offer and we can help you make a banner.'],
                 ] as [$icon, $t, $d])
                     <li class="card p-4 flex gap-3">
@@ -129,14 +130,14 @@
             <h2 class="font-display text-2xl font-extrabold">{{ $enterprise ? __('Request a call') : __('Book your banner') }}</h2>
 
             <div><label class="label">{{ __('Ad spot') }}</label>
-                <select name="placement" x-model="p" class="input">@foreach ($placements as $key => $pl)<option value="{{ $key }}">{{ __($pl['name']) }} – {{ __('Rs :price/week', ['price' => number_format($pl['price'])]) }}</option>@endforeach</select></div>
+                <select name="placement" x-model="p" class="input">@foreach ($placements as $key => $pl)<option value="{{ $key }}">{{ __($pl['tier'] ?? '') }} · {{ __($pl['name']) }} – {{ __('Rs :price/month', ['price' => number_format($pl['price'])]) }}</option>@endforeach</select></div>
             <div class="grid grid-cols-2 gap-2">
                 <div><label class="label">{{ __('Start date') }}</label><input type="date" name="starts_at" value="{{ old('starts_at', now()->addDays(2)->toDateString()) }}" min="{{ now()->toDateString() }}" required class="input">@error('starts_at')<p class="error">{{ $message }}</p>@enderror</div>
-                <div><label class="label">{{ __('Weeks') }}</label>
+                <div><label class="label">{{ __('Months') }}</label>
                     <div class="flex items-center rounded-xl border border-line overflow-hidden">
-                        <button type="button" @click="w = Math.max(1, (w || 1) - 1)" class="w-10 h-[42px] text-lg font-bold hover:bg-mist" aria-label="{{ __('Fewer weeks') }}">−</button>
-                        <input type="number" name="weeks" x-model.number="w" min="1" max="52" required class="w-full min-w-0 text-center font-bold focus:outline-none">
-                        <button type="button" @click="w = Math.min(52, (w || 1) + 1)" class="w-10 h-[42px] text-lg font-bold hover:bg-mist" aria-label="{{ __('More weeks') }}">+</button>
+                        <button type="button" @click="w = Math.max(1, (w || 1) - 1)" class="w-10 h-[42px] text-lg font-bold hover:bg-mist" aria-label="{{ __('Fewer months') }}">−</button>
+                        <input type="number" name="months" x-model.number="w" min="1" :max="max" required class="w-full min-w-0 text-center font-bold focus:outline-none">
+                        <button type="button" @click="w = Math.min(max, (w || 1) + 1)" class="w-10 h-[42px] text-lg font-bold hover:bg-mist" aria-label="{{ __('More months') }}">+</button>
                     </div>
                 </div>
             </div>
@@ -150,7 +151,7 @@
             <div><label class="label">{{ __('Message') }}</label><textarea name="message" rows="2" class="input !text-sm" placeholder="{{ $enterprise ? __('Number of branches, ads per month, categories…') : __('Anything we should know?') }}">{{ old('message') }}</textarea></div>
 
             <div class="rounded-xl bg-mist p-4">
-                <div class="flex justify-between text-sm text-muted"><span x-text="names[p]"></span><span x-text="'Rs ' + (prices[p] || 0).toLocaleString() + ' × ' + (w || 1) + ' ' + @js(__('wk'))"></span></div>
+                <div class="flex justify-between text-sm text-muted"><span x-text="names[p]"></span><span x-text="'Rs ' + (prices[p] || 0).toLocaleString() + ' × ' + (w || 1) + ' ' + @js(__('mo'))"></span></div>
                 <div class="mt-1 flex justify-between items-baseline"><span class="font-bold">{{ __('Total') }}</span><span class="font-display text-2xl font-extrabold text-brand-dark" x-text="'Rs ' + ((prices[p] || 0) * (w || 1)).toLocaleString()"></span></div>
             </div>
             <button class="btn-primary w-full !py-3 !text-[15px]">{{ auth()->check() ? __('Continue to payment') : __('Send booking request') }} @svg('lucide-arrow-right', 'w-4 h-4')</button>

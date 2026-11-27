@@ -13,10 +13,32 @@ class PromotionService
         return config('marketplace.promotions');
     }
 
-    /** Apply a promotion to an ad, extending any time it already has. */
-    public static function apply(Listing $listing, string $type, string $paidWith, ?Order $order = null): ListingPromotion
+    /**
+     * The lengths a seller can choose for a promotion, shortest first:
+     * [3 => ['days' => 3, 'price' => 250, 'credits' => 1], 7 => [...], ...]. Bump has one "one time" option.
+     */
+    public static function options(string $type): array
     {
         $cfg = self::types()[$type];
+        $opts = $cfg['options'] ?? [(int) $cfg['days'] => ['price' => $cfg['price'], 'credits' => $cfg['credits']]];
+        ksort($opts);
+
+        return collect($opts)->map(fn ($o, $days) => ['days' => (int) $days, 'price' => (int) $o['price'], 'credits' => (int) $o['credits']])->all();
+    }
+
+    /** One option for a promotion; the default length when $days is not given or not offered. */
+    public static function option(string $type, ?int $days = null): array
+    {
+        $opts = self::options($type);
+
+        return $opts[$days] ?? $opts[(int) self::types()[$type]['days']] ?? reset($opts);
+    }
+
+    /** Apply a promotion to an ad, extending any time it already has. */
+    public static function apply(Listing $listing, string $type, string $paidWith, ?Order $order = null, ?int $days = null): ListingPromotion
+    {
+        $cfg = self::types()[$type];
+        $cfg['days'] = self::option($type, $days)['days'];
         $now = now();
         $ends = null;
 

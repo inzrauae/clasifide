@@ -64,7 +64,7 @@ class OrderService
             case 'promotion':
                 $listing = Listing::find($meta['listing_id']);
                 if ($listing) {
-                    PromotionService::apply($listing, $meta['promotion'], 'order', $order);
+                    PromotionService::apply($listing, $meta['promotion'], 'order', $order, isset($meta['days']) ? (int) $meta['days'] : null);
                 }
                 break;
 

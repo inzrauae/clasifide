@@ -21,6 +21,8 @@ return [
 
     // ---------------------------------------------------------------
     // Featured ads / promotions (pay per ad, or spend package credits)
+    // 'options' = the lengths a seller can pick: days => price (LKR) + package credits.
+    // 'days' / 'price' / 'credits' = the default choice (also used when an admin gives one free).
     // ---------------------------------------------------------------
     'promotions' => [
         'top' => [
@@ -29,13 +31,23 @@ return [
             'days' => 7,
             'price' => 750,
             'credits' => 2,
+            'options' => [
+                3 => ['price' => 400, 'credits' => 1],
+                7 => ['price' => 750, 'credits' => 2],
+                30 => ['price' => 1990, 'credits' => 5],
+            ],
         ],
         'featured' => [
             'name' => 'Featured on Home',
             'blurb' => 'Shown in the Featured section on the home page.',
             'days' => 7,
-            'price' => 1200,
-            'credits' => 3,
+            'price' => 450,
+            'credits' => 2,
+            'options' => [
+                3 => ['price' => 250, 'credits' => 1],
+                7 => ['price' => 450, 'credits' => 2],
+                30 => ['price' => 990, 'credits' => 4],
+            ],
         ],
         'urgent' => [
             'name' => 'Urgent',
@@ -43,6 +55,11 @@ return [
             'days' => 7,
             'price' => 350,
             'credits' => 1,
+            'options' => [
+                3 => ['price' => 200, 'credits' => 1],
+                7 => ['price' => 350, 'credits' => 1],
+                30 => ['price' => 890, 'credits' => 3],
+            ],
         ],
         'bump' => [
             'name' => 'Bump Up',
@@ -54,13 +71,14 @@ return [
     ],
 
     // ---------------------------------------------------------------
-    // Banner advertising for other businesses (price per week, LKR)
+    // Banner advertising for other businesses: Small / Medium / Premium, price per month (LKR)
     // ---------------------------------------------------------------
+    'banner_max_months' => 12,
     'banner_placements' => [
-        'home_top' => ['name' => 'Home page – top leaderboard', 'size' => '1200 × 200 px', 'price' => 9500, 'blurb' => 'The first thing every visitor sees. Maximum brand reach.', 'tag' => 'Best reach'],
-        'home_middle' => ['name' => 'Home page – between sections', 'size' => '1200 × 200 px', 'price' => 6500, 'blurb' => 'A big, wide banner as visitors scroll the home page.', 'tag' => null],
-        'search_top' => ['name' => 'Search results – top', 'size' => '1200 × 160 px', 'price' => 5500, 'blurb' => 'Above the results, in front of people ready to buy.', 'tag' => 'High intent'],
-        'listing_sidebar' => ['name' => 'Ad page – sidebar', 'size' => '600 × 500 px', 'price' => 4500, 'blurb' => 'Next to every ad buyers open. Great value for local businesses.', 'tag' => 'Best value'],
+        'home_top' => ['tier' => 'Premium', 'name' => 'Home page – top leaderboard', 'size' => '1200 × 200 px', 'price' => 12000, 'blurb' => 'The first thing every visitor sees. Maximum brand reach.', 'tag' => 'Best reach'],
+        'home_middle' => ['tier' => 'Medium', 'name' => 'Home page – between sections', 'size' => '1200 × 200 px', 'price' => 6000, 'blurb' => 'A big, wide banner as visitors scroll the home page.', 'tag' => null],
+        'search_top' => ['tier' => 'Medium', 'name' => 'Search results – top', 'size' => '1200 × 160 px', 'price' => 6000, 'blurb' => 'Above the results, in front of people ready to buy.', 'tag' => 'High intent'],
+        'listing_sidebar' => ['tier' => 'Small', 'name' => 'Ad page – sidebar', 'size' => '600 × 500 px', 'price' => 3000, 'blurb' => 'Next to every ad buyers open. Great value for local businesses.', 'tag' => 'Best value'],
     ],
 
     // ---------------------------------------------------------------

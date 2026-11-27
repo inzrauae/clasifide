@@ -7,6 +7,6 @@
 @else
     <a href="{{ route('advertise') }}" {{ $attributes->merge(['class' => 'flex items-center justify-between gap-3 rounded-2xl border-2 border-dashed border-[#C4B5FD] bg-white/60 px-4 py-3 text-sm hover:bg-mist']) }}>
         <span class="flex items-center gap-2 text-[#4C1D95] font-semibold">@svg('lucide-megaphone', 'w-4 h-4') {{ __('Advertise your business here') }}</span>
-        <span class="text-brand-dark font-bold whitespace-nowrap">{{ __('From Rs :price/week', ['price' => number_format(config("marketplace.banner_placements.$placement.price", 4500))]) }}</span>
+        <span class="text-brand-dark font-bold whitespace-nowrap">{{ __('From Rs :price/month', ['price' => number_format(config("marketplace.banner_placements.$placement.price", 3000))]) }}</span>
     </a>
 @endif

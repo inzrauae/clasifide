@@ -215,10 +215,14 @@
                         </div>
                         <p class="mt-3 font-extrabold">{{ __($p['name']) }}</p>
                         <p class="text-[13px] text-muted mt-0.5 flex-1">{{ __($p['blurb']) }}</p>
-                        <p class="mt-3 pt-3 border-t border-line-soft flex items-baseline justify-between">
-                            <span class="font-display text-xl font-extrabold">Rs {{ number_format($p['price']) }}</span>
-                            <span class="text-xs text-muted">{{ $p['days'] ? __(':count days', ['count' => $p['days']]) : __('one time') }} · {{ __('or :count credits', ['count' => $p['credits']]) }}</span>
-                        </p>
+                        <ul class="mt-3 pt-3 border-t border-line-soft space-y-1">
+                            @foreach (\App\Services\PromotionService::options($key) as $o)
+                                <li class="flex items-baseline justify-between gap-2">
+                                    <span class="text-xs text-muted">{{ $o['days'] ? __(':count days', ['count' => $o['days']]) : __('one time') }} · {{ __('or :count credits', ['count' => $o['credits']]) }}</span>
+                                    <span class="font-display text-lg font-extrabold whitespace-nowrap">Rs {{ number_format($o['price']) }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endforeach
             </div>
@@ -295,7 +299,7 @@
             <p class="mt-1 text-white/70 text-sm">{{ __('Put your brand in front of buyers across Sri Lanka on the home page, search results and ad pages.') }}</p>
             <ul class="mt-4 space-y-1.5 text-sm flex-1">
                 @foreach (collect($placements)->take(4) as $pl)
-                    <li class="flex justify-between gap-3 border-b border-white/10 pb-1.5"><span class="text-white/80">{{ __($pl['name']) }}</span><span class="font-bold whitespace-nowrap">{{ __('Rs :price/wk', ['price' => number_format($pl['price'])]) }}</span></li>
+                    <li class="flex justify-between gap-3 border-b border-white/10 pb-1.5"><span class="text-white/80"><b class="text-white">{{ __($pl['tier'] ?? '') }}</b> · {{ __($pl['name']) }}</span><span class="font-bold whitespace-nowrap">{{ __('Rs :price/mo', ['price' => number_format($pl['price'])]) }}</span></li>
                 @endforeach
             </ul>
             <a href="{{ route('advertise') }}" class="btn-sun mt-5 self-start">{{ __('Book a banner') }}</a>

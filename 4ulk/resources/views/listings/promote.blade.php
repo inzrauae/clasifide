@@ -19,9 +19,13 @@
 
     <div class="mt-5 grid sm:grid-cols-2 gap-4">
         @foreach ($promotions as $key => $p)
-            <form method="POST" action="{{ route('promote.store', $listing) }}" class="card p-5 flex flex-col">
+            @php($opts = \App\Services\PromotionService::options($key))
+            @php($default = \App\Services\PromotionService::option($key))
+            <form method="POST" action="{{ route('promote.store', $listing) }}" class="card p-5 flex flex-col"
+                  x-data="{ days: {{ $default['days'] }}, opts: @js($opts), credits: {{ $credits }} }">
                 @csrf
                 <input type="hidden" name="type" value="{{ $key }}">
+                <input type="hidden" name="days" :value="days">
                 <div class="flex items-start justify-between gap-3">
                     <div>
                         <h2 class="text-lg font-extrabold">{{ __($p['name']) }}</h2>
@@ -31,11 +35,31 @@
                         @svg(['top' => 'lucide-trending-up', 'featured' => 'lucide-star', 'urgent' => 'lucide-zap', 'bump' => 'lucide-rocket'][$key] ?? 'lucide-rocket', 'w-5 h-5')
                     </span>
                 </div>
-                <p class="mt-3 text-2xl font-extrabold text-brand-dark">Rs {{ number_format($p['price']) }} <span class="text-sm font-semibold text-muted">{{ $p['days'] ? '/ '.__(':count days', ['count' => $p['days']]) : __('one time') }}</span></p>
-                <div class="mt-4 flex gap-2 mt-auto pt-4">
-                    <button name="pay_with" value="pay" class="btn-primary flex-1">{{ __('Pay Rs :amount', ['amount' => number_format($p['price'])]) }}</button>
-                    @if ($credits >= $p['credits'])
-                        <button name="pay_with" value="credit" class="btn-ghost flex-1">{{ __('Use :count credits', ['count' => $p['credits']]) }}</button>
+
+                @if (count($opts) > 1)
+                    <div class="mt-4 grid grid-cols-3 gap-2" role="radiogroup" aria-label="{{ __('How long') }}">
+                        @foreach ($opts as $o)
+                            <button type="button" role="radio" :aria-checked="days === {{ $o['days'] }}" @click="days = {{ $o['days'] }}"
+                                    class="rounded-xl border-2 px-2 py-2 text-center transition-colors"
+                                    :class="days === {{ $o['days'] }} ? 'border-brand bg-mist' : 'border-line hover:border-[#C4B5FD]'">
+                                <span class="block text-[13px] font-bold">{{ __(':count days', ['count' => $o['days']]) }}</span>
+                                <span class="block text-[12px] text-muted">Rs {{ number_format($o['price']) }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                @endif
+
+                <p class="mt-3 text-2xl font-extrabold text-brand-dark">
+                    Rs <span x-text="opts[days].price.toLocaleString()">{{ number_format($default['price']) }}</span>
+                    <span class="text-sm font-semibold text-muted">
+                        @if ($default['days'])/ <span x-text="@js(__(':count days')).replace(':count', days)">{{ __(':count days', ['count' => $default['days']]) }}</span>@else{{ __('one time') }}@endif
+                    </span>
+                </p>
+                <div class="flex gap-2 mt-auto pt-4">
+                    <button name="pay_with" value="pay" class="btn-primary flex-1">{{ __('Pay') }} Rs <span x-text="opts[days].price.toLocaleString()">{{ number_format($default['price']) }}</span></button>
+                    @if ($credits > 0)
+                        <button name="pay_with" value="credit" class="btn-ghost flex-1" x-show="credits >= opts[days].credits" x-cloak
+                                x-text="@js(__('Use :count credits')).replace(':count', opts[days].credits)">{{ __('Use :count credits', ['count' => $default['credits']]) }}</button>
                     @endif
                 </div>
             </form>
